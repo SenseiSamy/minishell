@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/01/05 16:17:21 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int	i;
-
-	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
+	while (*s1 && *s2 && *s1 == *s2)
 	{
-		printf("argv[%d] = %s\n", i, envp[i]);
-		i++;
+		s1++;
+		s2++;
 	}
-	return (EXIT_SUCCESS);
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

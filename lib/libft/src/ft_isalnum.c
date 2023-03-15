@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2022/11/07 11:03:30 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+bool	ft_isalnum(int c)
 {
-	int	i;
-
-	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
-	{
-		printf("argv[%d] = %s\n", i, envp[i]);
-		i++;
-	}
-	return (EXIT_SUCCESS);
+	return (ft_isalpha(c) || ft_isdigit(c));
 }

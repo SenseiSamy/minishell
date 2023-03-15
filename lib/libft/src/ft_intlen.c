@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/01/04 17:33:30 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/03/11 22:15:43 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_intlen(int n)
 {
 	int	i;
 
 	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		++i;
+	while (n != 0)
 	{
-		printf("argv[%d] = %s\n", i, envp[i]);
-		i++;
+		n /= 10;
+		++i;
 	}
-	return (EXIT_SUCCESS);
+	return (i);
 }

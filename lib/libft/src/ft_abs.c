@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/01/05 16:12:51 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_abs(int n)
 {
-	int	i;
-
-	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
-	{
-		printf("argv[%d] = %s\n", i, envp[i]);
-		i++;
-	}
-	return (EXIT_SUCCESS);
+	if (n < 0)
+		return (-n);
+	return (n);
 }

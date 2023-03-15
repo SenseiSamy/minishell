@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2022/11/07 15:19:35 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strdup(const char *s)
 {
-	int	i;
+	char	*ptr;
+	size_t	len;
 
-	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
-	{
-		printf("argv[%d] = %s\n", i, envp[i]);
-		i++;
-	}
-	return (EXIT_SUCCESS);
+	len = ft_strlen(s);
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ptr)
+		return (NULL);
+	ft_memcpy(ptr, s, len);
+	ptr[len] = '\0';
+	return (ptr);
 }

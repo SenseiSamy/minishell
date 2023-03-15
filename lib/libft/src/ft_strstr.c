@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/01/04 16:17:18 by cfrancie@st       #+#    #+#             */
+/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strstr(const char *big, const char *little)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
+	j = 0;
+	if (little[0] == '\0')
+		return ((char *)big);
+	while (big[i])
 	{
-		printf("argv[%d] = %s\n", i, envp[i]);
+		while (big[i + j] == little[j])
+		{
+			if (little[j + 1] == '\0')
+				return ((char *)big + i);
+			j++;
+		}
+		j = 0;
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (NULL);
 }

@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2022/11/07 11:45:00 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	int	i;
+	const char	*s;
+	char		*d;
+	size_t		n;
+	size_t		dlen;
 
-	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
+	s = src;
+	d = dst;
+	n = size;
+	while (n-- != 0 && *d != '\0')
+		d++;
+	dlen = d - dst;
+	n = size - (d - dst);
+	if (n == 0)
+		return (size + ft_strlen(s));
+	while (*s != '\0')
 	{
-		printf("argv[%d] = %s\n", i, envp[i]);
-		i++;
+		if (n != 1)
+		{
+			*d++ = *s;
+			n--;
+		}
+		s++;
 	}
-	return (EXIT_SUCCESS);
+	*d = '\0';
+	return (dlen + (s - src));
 }

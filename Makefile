@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/03/06 16:41:55 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/03/15 19:28:14 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,13 @@ EXEC	= minishell
 CC		= cc
 FLAGS	= -Wall -Wextra -Werror
 
-ifeq ($(MAKECMDGOALS),debug)
+ifeq ($(MAKECMDGOALS),leaks)
 	FLAGS += -ggdb3
 endif
 
 # **************************************************************************** #
 
-LDIR	= ./lib/libft
+LDIR	= ./lib/libft/
 CDIR	= ./src/
 ODIR	= ./bin/
 HDIR	= ./inc/
@@ -31,7 +31,8 @@ HDIR	= ./inc/
 # **************************************************************************** #
 
 LNAME	= libft.a
-CNAME	= main.c
+CNAME	= main.c builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c \
+		builtins/export.c builtins/pwd.c builtins/unset.c
 ONAME	= $(CNAME:.c=.o)
 HNAME	= minishell.h
 
@@ -46,31 +47,31 @@ LFILES	= $(addprefix $(LDIR), $(LNAME))
 
 all: $(EXEC)
 
-$(EXEC): $(OFILES) $(LFILES)
-	$(CC) $(FLAGS) -o $(EXEC) $(OFILES) -L$(LDIR) -lft
-
 $(ODIR)%.o: $(CDIR)%.c $(HFILES)
-	$(CC) $(FLAGS) -o $@ -c $< -I$(HDIR)
+	mkdir -p $(ODIR)
+	$(CC) $(FLAGS) -I $(HDIR) -I $(LDIR) -c $< -o $@
+
+$(EXEC): $(OFILES) $(LFILES)
+	$(CC) $(FLAGS) -I $(HDIR) -I $(LDIR) -L $(LDIR) -lft $^ -o $@
 
 $(LFILES):
 	make -C $(LDIR)
 
 clean:
-	rm -f $(OFILES)
-	make clean -C $(LDIR)
+	rm -rf $(ODIR)
+	make -C $(LDIR) clean
 
 fclean: clean
 	rm -f $(EXEC)
-	make fclean -C $(LDIR)
+	make -C $(LDIR) fclean
 
 re: fclean all
 
-debug: re
-
-leaks: re
-	valgrind --leak-check=full --show-leak-kinds=all ./$(EXEC)
+leaks:
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXEC)
 
 norme:
 	norminette $(CFILES) $(HFILES)
+	make -C $(LDIR) norme
 
-.PHONY: all clean fclean re debug leaks norme
+.PHONY: all clean fclean re leaks norme

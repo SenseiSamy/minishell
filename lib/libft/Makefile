@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/03/02 22:11:40 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/03/13 04:10:09 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,158 +15,131 @@ NAME	= libft.a
 # **************************************************************************** #
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror
 
-# **************************************************************************** #
-
-SRCS	= ./srcs/
-OBJS	= ./objs/
-
-# **************************************************************************** #
-
-CFILE	= $(SRCS)ctype.h/ft_isalnum.c \
-$(SRCS)ctype.h/ft_isalpha.c \
-$(SRCS)ctype.h/ft_isascii.c \
-$(SRCS)ctype.h/ft_isblank.c \
-$(SRCS)ctype.h/ft_iscntrl.c \
-$(SRCS)ctype.h/ft_isdigit.c \
-$(SRCS)ctype.h/ft_isgraph.c \
-$(SRCS)ctype.h/ft_isprint.c \
-$(SRCS)ctype.h/ft_ispunct.c \
-$(SRCS)ctype.h/ft_isspace.c \
-$(SRCS)ctype.h/ft_isxdigit.c \
-$(SRCS)ctype.h/ft_tolower.c \
-$(SRCS)ctype.h/ft_toupper.c \
-$(SRCS)other/ft_abs.c \
-$(SRCS)other/ft_intlen.c \
-$(SRCS)other/ft_ldabs.c \
-$(SRCS)other/ft_max.c \
-$(SRCS)other/ft_min.c \
-$(SRCS)other/ft_putchar.c \
-$(SRCS)other/ft_putchar_fd.c \
-$(SRCS)other/ft_putendl_fd.c \
-$(SRCS)other/ft_putnbr_fd.c \
-$(SRCS)other/ft_putstr.c \
-$(SRCS)other/ft_putstr_fd.c \
-$(SRCS)other/ft_search_char.c \
-$(SRCS)other/ft_split.c \
-$(SRCS)other/ft_striteri.c \
-$(SRCS)other/ft_strjoin.c \
-$(SRCS)other/ft_strmapi.c \
-$(SRCS)other/ft_strtrim.c \
-$(SRCS)other/ft_substr.c \
-$(SRCS)other/ft_swap.c \
-$(SRCS)other/ft_free_split.c \
-$(SRCS)stdlib.h/ft_atof.c \
-$(SRCS)stdlib.h/ft_atoi.c \
-$(SRCS)stdlib.h/ft_atol.c \
-$(SRCS)stdlib.h/ft_calloc.c \
-$(SRCS)stdlib.h/ft_itoa.c \
-$(SRCS)stdlib.h/ft_strdup.c \
-$(SRCS)string.h/ft_bzero.c \
-$(SRCS)string.h/ft_memchr.c \
-$(SRCS)string.h/ft_memcmp.c \
-$(SRCS)string.h/ft_memcpy.c \
-$(SRCS)string.h/ft_memmove.c \
-$(SRCS)string.h/ft_memset.c \
-$(SRCS)string.h/ft_strcat.c \
-$(SRCS)string.h/ft_strchr.c \
-$(SRCS)string.h/ft_strcmp.c \
-$(SRCS)string.h/ft_strlcat.c \
-$(SRCS)string.h/ft_strlcpy.c \
-$(SRCS)string.h/ft_strlen.c \
-$(SRCS)string.h/ft_strncat.c \
-$(SRCS)string.h/ft_strncmp.c \
-$(SRCS)string.h/ft_strncpy.c \
-$(SRCS)string.h/ft_strndup.c \
-$(SRCS)string.h/ft_strnstr.c \
-$(SRCS)string.h/ft_strrchr.c \
-$(SRCS)string.h/ft_strstr.c \
-$(SRCS)string.h/ft_strnlen.c \
-
-CBFILE	= $(SRCS)other/bonus/ft_lstdelone.c \
-$(SRCS)other/bonus/ft_lstlast.c \
-$(SRCS)other/bonus/ft_lstnew.c \
-$(SRCS)other/bonus/ft_lstadd_back.c \
-$(SRCS)other/bonus/ft_lstmap.c \
-$(SRCS)other/bonus/ft_lstiter.c \
-$(SRCS)other/bonus/ft_lstadd_front.c \
-$(SRCS)other/bonus/ft_lstclear.c \
-$(SRCS)other/bonus/ft_lstsize.c \
-
-OFILE	= $(CFILE:$(SRCS)%.c=$(OBJS)%.o)
-
-ifeq ($(MAKECMDGOALS), bonus)
-	OFILE += $(CBFILE:$(SRCS)%.c=$(OBJS)%.o)
+ifeq ($(MAKECMDGOALS), debug)
+	FLAGS += -g3 -ggdb3
 endif
 
 # **************************************************************************** #
 
-COUNTER = 0
-TOTAL	= $(words $(CFILE))
+CDIR	= ./src/
+ODIR	= ./bin/
+
+# **************************************************************************** #
+
+CNAME	= ft_strcat.c \
+ft_memcmp.c \
+ft_isblank.c \
+ft_swap.c \
+ft_min.c \
+ft_strndup.c \
+ft_max.c \
+ft_putchar.c \
+ft_memcpy.c \
+ft_calloc.c \
+ft_putendl_fd.c \
+ft_strnstr.c \
+ft_strstr.c \
+ft_strncpy.c \
+ft_isalpha.c \
+ft_strtrim.c \
+ft_memmove.c \
+ft_isalnum.c \
+ft_strcmp.c \
+ft_isdigit.c \
+ft_atof.c \
+ft_isxdigit.c \
+ft_strncat.c \
+ft_ldabs.c \
+ft_iscntrl.c \
+ft_putstr.c \
+ft_abs.c \
+ft_isprint.c \
+ft_tolower.c \
+ft_toupper.c \
+ft_search_char.c \
+ft_strncmp.c \
+ft_strlen.c \
+ft_putstr_fd.c \
+ft_bzero.c \
+ft_atol.c \
+ft_strnlen.c \
+ft_memset.c \
+ft_substr.c \
+ft_strmapi.c \
+ft_ispunct.c \
+ft_strchr.c \
+ft_atoi.c \
+ft_isascii.c \
+ft_itoa.c \
+ft_putchar_fd.c \
+ft_strjoin.c \
+ft_split.c \
+ft_isspace.c \
+ft_free_split.c \
+ft_strlcat.c \
+ft_putnbr_fd.c \
+ft_isgraph.c \
+ft_memchr.c \
+ft_strrchr.c \
+ft_striteri.c \
+ft_strdup.c \
+ft_intlen.c \
+ft_strlcpy.c \
+
+BNAME	= ft_lstdelone.c \
+ft_lstlast.c \
+ft_lstnew.c \
+ft_lstadd_back.c \
+ft_lstmap.c \
+ft_lstiter.c \
+ft_lstadd_front.c \
+ft_lstclear.c \
+ft_lstsize.c \
+
+ONAME	= $(CNAME:.c=.o)
+BONAME	= $(BNAME:.c=.o)
+
+# **************************************************************************** #
+
+CFILES	= $(addprefix $(CDIR), $(CNAME))
+OFILES	= $(addprefix $(ODIR), $(ONAME))
+BFILES	= $(addprefix $(CDIR), $(BNAME))
+BOFILES	= $(addprefix $(ODIR), $(BONAME))
+HFILES	= $(addprefix ./, libft.h)
+
+ifeq ($(MAKECMDGOALS), bonus)
+	OFILES += $(BOFILES)
+endif
 
 # **************************************************************************** #
 
 all: $(NAME)
 
-# **************************************************************************** #
+bonus: $(NAME)
 
-$(NAME): $(OFILE)
-	@ar rc $(NAME) $(OFILE)
-	@ranlib $(NAME)
-	@echo -e "$(GREEN)----------------$(YELLOW)[$(NAME) created]$(GREEN)----------------$(NO_COLOR)"
+$(ODIR): 
+	mkdir -p $(ODIR)
 
-# **************************************************************************** #
+$(NAME): $(ODIR) $(OFILES)
+	ar rc $(NAME) $(OFILES)
+	ranlib $(NAME)
 
-$(OBJS)%.o: $(SRCS)%.c
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
-	@$(eval COUNTER=$(shell echo $$(($(COUNTER)+1))))
-	@echo -e "$(YELLOW)[$(GREEN)$(shell echo $$(($(COUNTER)*100/$(TOTAL))))%$(YELLOW)]$(NO_COLOR) Building C object $(GREEN)$<$(NO_COLOR)"
-
-# **************************************************************************** #
+$(ODIR)%.o: $(CDIR)%.c $(HFILES)
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJS)
-	@echo -e "$(RED)----------------$(YELLOW)[$(OBJS) deleted]$(RED)----------------$(NO_COLOR)"
-
-# **************************************************************************** #
+	rm -rf $(ODIR)
 
 fclean: clean
-	@rm -f $(NAME)
-	@echo -e "$(RED)----------------$(YELLOW)[$(NAME) deleted]$(RED)----------------$(NO_COLOR)"
-
-# **************************************************************************** #
-
-bonus:
-	@$(MAKE) all
-
-# **************************************************************************** #
+	rm -f $(NAME)
 
 re: fclean all
 
-# **************************************************************************** #
+debug: re
 
-.PHONY: all clean fclean bonus re
+norme:
+	@norminette $(CFILES) $(CBFILES) $(HFILES)
 
-# **************************************************************************** #
-
-BLACK			=	\033[0;30m
-RED				=	\033[0;31m
-GREEN			=	\033[0;32m
-ORANGE			=	\033[0;33m
-BLUE			=	\033[0;34m
-PURPLE			=	\033[0;35m
-CYAN			=	\033[0;36m
-LIGHT_GRAY		=	\033[0;37m
-DARK_GRAY		=	\033[1;30m
-LIGHT_RED		=	\033[1;31m
-LIGHT_GREEN		=	\033[1;32m
-YELLOW			=	\033[1;33m
-LIGHT_BLUE		=	\033[1;34m
-LIGHT_PURPLE	=	\033[1;35m
-LIGHT_CYAN		=	\033[1;36m
-WHITE			=	\033[1;37m
-NO_COLOR		=	\033[0m
-
-# **************************************************************************** #
+.PHONY: all bonus clean fclean re debug norme

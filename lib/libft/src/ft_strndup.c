@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/01/04 16:35:02 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strndup(const char *src, size_t size)
 {
-	int	i;
+	char	*dest;
+	size_t	i;
 
 	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
+	dest = (char *)malloc(sizeof(char) * (size + 1));
+	if (!dest)
+		return (NULL);
+	while (i < size)
 	{
-		printf("argv[%d] = %s\n", i, envp[i]);
+		dest[i] = src[i];
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	dest[i] = '\0';
+	return (dest);
 }

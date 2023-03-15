@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/01/04 16:42:06 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+long	ft_atol(const char *str)
 {
-	int	i;
+	long	res;
+	char	sign;
 
-	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
+	res = 0;
+	sign = 1;
+	while (*str == ' ' || *str == '\t' || *str == '\n'
+		|| *str == '\v' || *str == '\f' || *str == '\r')
+		++str;
+	if (*str == '-' || *str == '+')
 	{
-		printf("argv[%d] = %s\n", i, envp[i]);
-		i++;
+		if (*str == '-')
+			sign = -1;
+		++str;
 	}
-	return (EXIT_SUCCESS);
+	while (*str >= '0' && *str <= '9')
+	{
+		res = res * 10 + *str - '0';
+		++str;
+	}
+	return (res * sign);
 }

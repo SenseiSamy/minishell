@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Created: 2022/11/07 14:59:51 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_atoi(const char *nptr)
 {
-	int	i;
+	int		res;
+	char	sign;
 
-	i = 0;
-	(void)argc;
-	(void)argv;
-	while (envp[i])
+	res = 0;
+	sign = 1;
+	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\n'
+		|| *nptr == '\v' || *nptr == '\f' || *nptr == '\r')
+		++nptr;
+	if (*nptr == '-' || *nptr == '+')
 	{
-		printf("argv[%d] = %s\n", i, envp[i]);
-		i++;
+		if (*nptr == '-')
+			sign = -1;
+		++nptr;
 	}
-	return (EXIT_SUCCESS);
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		res = res * 10 + *nptr - '0';
+		++nptr;
+	}
+	return (res * sign);
 }
