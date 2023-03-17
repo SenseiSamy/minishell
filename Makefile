@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/03/15 19:28:14 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/03/17 16:21:07 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,31 +47,24 @@ LFILES	= $(addprefix $(LDIR), $(LNAME))
 
 all: $(EXEC)
 
-$(ODIR)%.o: $(CDIR)%.c $(HFILES)
-	mkdir -p $(ODIR)
-	$(CC) $(FLAGS) -I $(HDIR) -I $(LDIR) -c $< -o $@
-
 $(EXEC): $(OFILES) $(LFILES)
-	$(CC) $(FLAGS) -I $(HDIR) -I $(LDIR) -L $(LDIR) -lft $^ -o $@
+	$(CC) $(FLAGS) -o $(EXEC) $(OFILES) -L$(LDIR) -lft
+
+$(ODIR)%.o: $(CDIR)%.c $(HFILES)
+	@mkdir -p $(@D)
+	$(CC) $(FLAGS) -I$(HDIR) -I$(LDIR) -c $< -o $@
 
 $(LFILES):
-	make -C $(LDIR)
+	$(MAKE) -C $(LDIR)
 
 clean:
+	$(MAKE) -C $(LDIR) clean
 	rm -rf $(ODIR)
-	make -C $(LDIR) clean
 
 fclean: clean
+	$(MAKE) -C $(LDIR) fclean
 	rm -f $(EXEC)
-	make -C $(LDIR) fclean
 
 re: fclean all
 
-leaks:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXEC)
-
-norme:
-	norminette $(CFILES) $(HFILES)
-	make -C $(LDIR) norme
-
-.PHONY: all clean fclean re leaks norme
+.PHONY: all clean fclean re
