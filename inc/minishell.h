@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:32:34 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:24:29 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,39 @@
 # define ctrlc 130
 # define ctrlslash 131
 
-enum	e_token
-{
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	APPEND_OUT,
-	APPEND_ERR,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
-};
+/* ************************************************************************** */
 
-int		g_signal;
+# define OTHER "other"
+# define ECHO "echo"
+# define CD "cd"
+# define PWD "pwd"
+# define EXPORT "export"
+# define UNSET "unset"
+# define ENV "env"
+# define EXIT "exit"
 
 /* ************************************************************************** */
+/*
+-chemin de l'executable (ex: /usr/bin/python)
+-arguments de la commande, comme argv (ex: {"/usr/bin", "-l", "NULL"})
+-nom du fichier d'une commande tel que "< Makefile cat", vaut NULL sinon
+-nom du fichier d'une commande tel que "cat lol > Makefile" ou "cat lol >> 
+Makefile", vaut NULL sinon
+-vaut 1 si le redirect out est un >, vaut 2 si c'est un >>, vaut 0 sinon
+-vaut 1 si il y a une here_doc (<<), vaut 0 sinon;
+*/
+typedef struct s_cmd
+{
+	char	*cmd;
+	char	**args;
+	char	*redirect_in;
+	char	*redirect_out;
+	int		redirect_out_type;
+	int		here_doc;
+	int		fd_in;
+	int		fd_out;
+	pid_t	pid;
+}			t_cmd;
 
 /* ************************************************************************** */
 
