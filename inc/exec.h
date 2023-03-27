@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/22 19:04:08 by snaji            ###   ########.fr       */
+/*   Updated: 2023/03/27 21:52:54 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	assign_pipes(t_exec *exec);
 void	free_pipes(int n, int **pipes);
 void	free_exec(t_exec *exec);
 void	process_exit(t_exec *exec, char *command, char *error);
+int		close_cmd_fds(t_exec *exec);
 int		close2(int *fd);
+int		exec(char **env, int n_cmd, t_cmd *cmds);
 
 #endif

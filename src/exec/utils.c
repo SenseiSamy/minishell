@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/22 19:12:21 by snaji            ###   ########.fr       */
+/*   Updated: 2023/03/27 21:52:52 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 void	process_exit(t_exec *exec, char *command, char *error)
 {
 	if (error)
-		ft_fprintf(2, "minishell: %s: %s\n", command, error);
+	{
+		ft_putstr_fd(command, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(error, 2);
+	}
 	free_exec(exec);
 	if (error)
 		exit(EXIT_FAILURE);

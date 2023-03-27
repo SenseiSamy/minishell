@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/22 19:13:02 by snaji            ###   ########.fr       */
+/*   Updated: 2023/03/27 21:52:48 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static void	open_redirections(t_cmd *cmd)
 static void	exec_command(t_exec *exec, int i)
 {
 	if (exec->cmds[i].fd_in == -1)
-		exit_pipex(exec, exec->cmds[i].redirect_in, strerror(errno));
+		process_exit(exec, exec->cmds[i].redirect_in, strerror(errno));
 	if (exec->cmds[i].fd_out == -1)
-		exit_pipex(exec, exec->cmds[i].redirect_out, strerror(errno));
+		process_exit(exec, exec->cmds[i].redirect_out, strerror(errno));
 	if (dup2(exec->cmds[i].fd_in, 0) == -1)
 		process_exit(exec, exec->cmds[i].args[0], strerror(errno));
 	if (dup2(exec->cmds[i].fd_out, 1) == -1)
@@ -74,6 +74,7 @@ int	exec(char **env, int n_cmd, t_cmd *cmds)
 {
 	t_exec	exec;
 
+	exec.env = env;
 	exec.n_cmd = n_cmd;
 	exec.cmds = cmds;
 	if (pipe_setup(&exec) == EXIT_FAILURE)
