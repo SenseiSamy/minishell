@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/27 21:52:52 by snaji            ###   ########.fr       */
+/*   Updated: 2023/03/29 01:11:53 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_exec(t_exec *exec)
 
 int	close2(int *fd)
 {
-	if (*fd >= 0)
+	if (*fd >= 3)
 	{
 		if (close(*fd) == -1)
 			return (EXIT_FAILURE);

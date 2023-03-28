@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/27 21:52:48 by snaji            ###   ########.fr       */
+/*   Updated: 2023/03/29 01:17:11 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ int	exec(char **env, int n_cmd, t_cmd *cmds)
 		return (EXIT_FAILURE);
 	assign_pipes(&exec);
 	if (exec_commands(&exec) == EXIT_FAILURE)
-		return (perror("minishell"), EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+		return (free_exec(&exec), perror("minishell"), EXIT_FAILURE);
+	return (free_exec(&exec), EXIT_SUCCESS);
 }
