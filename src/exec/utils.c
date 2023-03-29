@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/29 01:11:53 by snaji            ###   ########.fr       */
+/*   Updated: 2023/03/29 23:35:35 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ void	free_exec(t_exec *exec)
 {
 	if (exec->pipes)
 		free_pipes(exec->n_pipes, exec->pipes);
+	if (exec->hdocs)
+	{
+		if (close_cmd_fds(exec) == EXIT_FAILURE)
+			perror("minishell");
+		free(exec->hdocs);
+	}
 	if (exec->cmds)
 		if (close_cmd_fds(exec) == EXIT_FAILURE)
 			perror("minishell");

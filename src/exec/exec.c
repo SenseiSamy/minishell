@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/29 01:17:11 by snaji            ###   ########.fr       */
+/*   Updated: 2023/03/30 00:02:09 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static void	open_redirections(t_cmd *cmd)
 	{
 		if (cmd->redirect_out_type == 1)
 			cmd->fd_out = open(cmd->redirect_out, O_WRONLY | O_TRUNC | O_CREAT,
-				S_IRWXU);
+					S_IRWXU);
 		if (cmd->redirect_out_type == 2)
 			cmd->fd_out = open(cmd->redirect_out, O_WRONLY | O_APPEND | O_CREAT,
-				S_IRWXU);
+					S_IRWXU);
 	}
 }
 
@@ -59,8 +59,8 @@ static int	exec_commands(t_exec *exec)
 			return (EXIT_FAILURE);
 		if (exec->cmds[i].pid == 0)
 			exec_command(exec, i);
-		if (close2(&exec->cmds[i].fd_in) == EXIT_FAILURE ||
-			close2(&exec->cmds[i].fd_out) == EXIT_FAILURE)
+		if (close2(&exec->cmds[i].fd_in) == EXIT_FAILURE
+			|| close2(&exec->cmds[i].fd_out) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		++i;
 	}
@@ -77,9 +77,17 @@ int	exec(char **env, int n_cmd, t_cmd *cmds)
 	exec.env = env;
 	exec.n_cmd = n_cmd;
 	exec.cmds = cmds;
+	exec.n_pipes = exec.n_cmd - 1;
+	exec.pipes = NULL;
+	exec.n_hdoc = 0;
+	exec.hdocs = NULL;
 	if (pipe_setup(&exec) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	assign_pipes(&exec);
+	if (create_hdocs(&exec) == EXIT_FAILURE)
+		return (free_exec(&exec), EXIT_FAILURE);
+	assign_hdocs(&exec);
+	here_doc(&exec);
 	if (exec_commands(&exec) == EXIT_FAILURE)
 		return (free_exec(&exec), perror("minishell"), EXIT_FAILURE);
 	return (free_exec(&exec), EXIT_SUCCESS);

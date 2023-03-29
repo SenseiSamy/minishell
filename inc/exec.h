@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/27 21:52:54 by snaji            ###   ########.fr       */
+/*   Updated: 2023/03/30 00:04:01 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <errno.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../lib/libft/libft.h"
 
 /* ************************************************************************** */
@@ -37,17 +39,25 @@
 /* ************************************************************************** */
 /*                          STRUCTURES AND TYPEDEFS                           */
 
+typedef struct s_hdoc	t_hdoc;
 typedef struct s_cmd	t_cmd;
 typedef struct s_exec	t_exec;
 
+struct s_hdoc
+{
+	int		cmd_n;
+	char	*limiter;
+	int		pipe[2];
+};
+
 struct s_cmd
 {
-	char	*cmd; // chemin de l'executable (ex: /usr/bin/python)
-	char	**args; // arguments de la commande, comme argv (ex: {"/usr/bin", "-l", "NULL"})
-	char	*redirect_in; // nom du fichier d'une commande tel que "< Makefile cat", vaut NULL sinon
-	char	*redirect_out; // nom du fichier d'une commande tel que "cat lol > Makefile" ou "cat lol >> Makefile", vaut NULL sinon
-	int		redirect_out_type; // vaut 1 si le redirect out est un >, vaut 2 si c'est un >>, vaut 0 sinon
-	int		here_doc; // vaut 1 si il y a une here_doc (<<), vaut 0 sinon; 
+	char	*cmd;
+	char	**args;
+	char	*redirect_in;
+	char	*redirect_out;
+	int		redirect_out_type;
+	char	*here_doc;
 	int		fd_in;
 	int		fd_out;
 	pid_t	pid;
@@ -60,6 +70,8 @@ struct s_exec
 	int		**pipes;
 	int		n_cmd;
 	t_cmd	*cmds;
+	int		n_hdoc;
+	t_hdoc	*hdocs;
 };
 
 /* ************************************************************************** */
@@ -69,6 +81,10 @@ int		pipe_setup(t_exec *exec);
 int		**create_pipes(int n);
 void	assign_pipes(t_exec *exec);
 void	free_pipes(int n, int **pipes);
+int		create_hdocs(t_exec *exec);
+void	assign_hdocs(t_exec *exec);
+int		close_hdocs(t_exec *exec);
+int		here_doc(t_exec *exec);
 void	free_exec(t_exec *exec);
 void	process_exit(t_exec *exec, char *command, char *error);
 int		close_cmd_fds(t_exec *exec);
