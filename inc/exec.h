@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/30 00:04:01 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/02 01:12:38 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,14 @@
 /* ************************************************************************** */
 /*                          STRUCTURES AND TYPEDEFS                           */
 
-typedef struct s_hdoc	t_hdoc;
 typedef struct s_cmd	t_cmd;
 typedef struct s_exec	t_exec;
-
-struct s_hdoc
-{
-	int		cmd_n;
-	char	*limiter;
-	int		pipe[2];
-};
 
 struct s_cmd
 {
 	char	*cmd;
 	char	**args;
-	char	*redirect_in;
-	char	*redirect_out;
-	int		redirect_out_type;
-	char	*here_doc;
+	char	**redirect;
 	int		fd_in;
 	int		fd_out;
 	pid_t	pid;
@@ -70,8 +59,7 @@ struct s_exec
 	int		**pipes;
 	int		n_cmd;
 	t_cmd	*cmds;
-	int		n_hdoc;
-	t_hdoc	*hdocs;
+	int		**hdocs;
 };
 
 /* ************************************************************************** */
@@ -81,10 +69,10 @@ int		pipe_setup(t_exec *exec);
 int		**create_pipes(int n);
 void	assign_pipes(t_exec *exec);
 void	free_pipes(int n, int **pipes);
+void	open_redirections(t_exec *exec, int n);
 int		create_hdocs(t_exec *exec);
-void	assign_hdocs(t_exec *exec);
-int		close_hdocs(t_exec *exec);
-int		here_doc(t_exec *exec);
+void	free_hdocs(t_exec *exec);
+int		here_docs(t_exec *exec);
 void	free_exec(t_exec *exec);
 void	process_exit(t_exec *exec, char *command, char *error);
 int		close_cmd_fds(t_exec *exec);

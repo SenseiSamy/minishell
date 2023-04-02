@@ -6,33 +6,15 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/30 00:02:09 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/02 02:11:21 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/exec.h"
 
-static void	open_redirections(t_cmd *cmd)
-{
-	if (cmd->redirect_in)
-		cmd->fd_in = open(cmd->redirect_in, O_RDONLY);
-	if (cmd->redirect_out)
-	{
-		if (cmd->redirect_out_type == 1)
-			cmd->fd_out = open(cmd->redirect_out, O_WRONLY | O_TRUNC | O_CREAT,
-					S_IRWXU);
-		if (cmd->redirect_out_type == 2)
-			cmd->fd_out = open(cmd->redirect_out, O_WRONLY | O_APPEND | O_CREAT,
-					S_IRWXU);
-	}
-}
-
 static void	exec_command(t_exec *exec, int i)
 {
-	if (exec->cmds[i].fd_in == -1)
-		process_exit(exec, exec->cmds[i].redirect_in, strerror(errno));
-	if (exec->cmds[i].fd_out == -1)
-		process_exit(exec, exec->cmds[i].redirect_out, strerror(errno));
+	open_redirections(exec, i);
 	if (dup2(exec->cmds[i].fd_in, 0) == -1)
 		process_exit(exec, exec->cmds[i].args[0], strerror(errno));
 	if (dup2(exec->cmds[i].fd_out, 1) == -1)
@@ -52,8 +34,6 @@ static int	exec_commands(t_exec *exec)
 	i = 0;
 	while (i < exec->n_cmd)
 	{
-		if (exec->cmds[i].redirect_in || exec->cmds[i].redirect_out)
-			open_redirections(&exec->cmds[i]);
 		exec->cmds[i].pid = fork();
 		if (exec->cmds[i].pid == -1)
 			return (EXIT_FAILURE);
@@ -79,15 +59,14 @@ int	exec(char **env, int n_cmd, t_cmd *cmds)
 	exec.cmds = cmds;
 	exec.n_pipes = exec.n_cmd - 1;
 	exec.pipes = NULL;
-	exec.n_hdoc = 0;
 	exec.hdocs = NULL;
 	if (pipe_setup(&exec) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	assign_pipes(&exec);
 	if (create_hdocs(&exec) == EXIT_FAILURE)
 		return (free_exec(&exec), EXIT_FAILURE);
-	assign_hdocs(&exec);
-	here_doc(&exec);
+	if (here_docs(&exec) == EXIT_FAILURE)
+		return (free_exec(&exec), perror("minishell"), EXIT_FAILURE);
 	if (exec_commands(&exec) == EXIT_FAILURE)
 		return (free_exec(&exec), perror("minishell"), EXIT_FAILURE);
 	return (free_exec(&exec), EXIT_SUCCESS);

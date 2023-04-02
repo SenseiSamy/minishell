@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 18:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/03/30 00:02:26 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/02 01:14:37 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,11 @@ void	assign_pipes(t_exec *exec)
 	i = 0;
 	while (i < exec->n_cmd)
 	{
-		if (exec->cmds[i].redirect_in || exec->cmds[i].here_doc)
-			exec->cmds[i].fd_in = -2;
-		else if (i == 0)
+		if (i == 0)
 			exec->cmds[i].fd_in = 0;
 		else
 			exec->cmds[i].fd_in = exec->pipes[i - 1][0];
-		if (exec->cmds[i].redirect_out)
-			exec->cmds[i].fd_out = -2;
-		else if (i == exec->n_cmd - 1)
+		if (i == exec->n_cmd - 1)
 			exec->cmds[i].fd_out = 1;
 		else
 			exec->cmds[i].fd_out = exec->pipes[i][1];
