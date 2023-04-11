@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/09 21:58:11 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/11 19:15:20 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@
 # define UNSET "unset"
 # define ENV "env"
 # define EXIT "exit"
+
+# define REDIRECT_IN "<"
+# define REDIRECT_OUT ">"
+# define REDIRECT_OUT_APPEND ">>"
+# define REDIRECT_IN_APPEND "<<"
 
 /* ************************************************************************** */
 /*
@@ -87,5 +92,9 @@ char	**take_redirect(char *line);
 /*utils*/
 char	*take_word(char *line, int i);
 int		ft_strstrlen(char **str);
+
+
+/*ft_exit*/
+void	ft_exit(int error_value, char *error_msg);
 
 #endif
