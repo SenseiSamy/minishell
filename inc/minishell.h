@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/11 19:15:20 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/11 22:35:52 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,6 @@ typedef struct s_data
 }	t_data;
 
 /* ************************************************************************** */
-/*cmd.c*/
-char	*take_cmd(char *cmd, char **envp);
-/*redirect.c*/
-char	**take_redirect(char *line);
-/*utils*/
-char	*take_word(char *line, int i);
-int		ft_strstrlen(char **str);
-
-
-/*ft_exit*/
-void	ft_exit(int error_value, char *error_msg);
+t_cmd	complet_cmd(char *line, char **envp);
 
 #endif
