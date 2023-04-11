@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/02 01:12:38 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/11 23:20:16 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	free_exec(t_exec *exec);
 void	process_exit(t_exec *exec, char *command, char *error);
 int		close_cmd_fds(t_exec *exec);
 int		close2(int *fd);
+void	free_array_of_str(char **arr);
 int		exec(char **env, int n_cmd, t_cmd *cmds);
 
 #endif

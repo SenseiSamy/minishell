@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/02 02:12:20 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/11 23:23:03 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ int	close2(int *fd)
 		*fd = -2;
 	}
 	return (EXIT_SUCCESS);
+}
+
+void	free_array_of_str(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
 }

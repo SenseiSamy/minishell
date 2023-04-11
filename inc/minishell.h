@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:32:34 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:27:29 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,34 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include "exec.h"
 
 /* ************************************************************************** */
 
 # define ctrlc 130
 # define ctrlslash 131
+
+typedef struct s_minishell	t_minishell;
+typedef struct s_env		t_env;
+
+struct s_env
+{
+	char	*key;
+	char	*value;
+	t_env	*next;
+};
+
+struct s_minishell
+{
+	t_env	*env;
+	char	*line;
+	char	**cmd_line;
+	t_cmd	**cmd;
+	int		nb_cmd;
+	int		nb_redir;
+	int		status;
+	int		exit;
+};
 
 enum	e_token
 {
@@ -46,9 +69,12 @@ enum	e_token
 	DOUBLE_QUOTE,
 };
 
-int		g_signal;
-
 /* ************************************************************************** */
+
+t_env	*create_env(char **old_env);
+int		add_to_env( t_env **env, char *key, char *value);
+void	print_env(t_env *env);
+void	free_env(t_env *env);
 
 /* ************************************************************************** */
 
