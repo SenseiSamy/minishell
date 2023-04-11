@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/02/19 19:17:17 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/11 22:05:28 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -631,10 +631,123 @@ void		ft_putnbr_fd(int n, int fd);
 void		ft_putstr_fd(char *s, int fd);
 
 /**
+ * @brief The  realloc()  function  changes the size of the memory block pointed
+ * to by ptr to size bytes.  The contents of the memory will be unchanged in the
+ * range from the start of the region up to the minimum of the old and new
+ * sizes. If the new size is larger than the old size, the added memory will not
+ * be initialized. If ptr is NULL, then the call is equivalent to malloc(size),
+ * for all values of size. If size is equal to zero, and ptr is not NULL, then
+ * the call is equivalent to free(ptr) (but see "Nonportable behavior" for
+ * portability issues). Unless ptr is NULL, it must have been returned by an
+ * earlier call to malloc or related functions. If the area pointed to was
+ * moved, a free(ptr) is done.
+ * 
+ * @param ptr 
+ * @param size 
+ * @return void* 
+ */
+void		*realloc(void *ptr, size_t size);
+
+/**
  * @brief The ft_putstr() function writes the string 's' to the standard output.
  * 
  * @param str 
- */
+ */static char *get_env_path(char **envp)
+{
+    int i;
+
+    for (i = 0; envp[i]; i++)
+    {
+        if (strncmp(envp[i], "PATH=", 5) == 0)
+            return (envp[i] + 5);
+    }
+    return (NULL);
+}
+
+static char *find_cmd_path(char *cmd, char **envp)
+{
+    char *env_path;
+    char *path;
+    char *tmp;
+    char *full_path;
+
+    env_path = get_env_path(envp);
+    if (!env_path)
+        return (NULL);
+    path = strtok(env_path, ":");
+    while (path)
+    {
+        tmp = strdup(path);
+        full_path = realloc(tmp, strlen(tmp) + strlen(cmd) + 2);
+        strcat(full_path, "/");
+        strcat(full_path, cmd);
+        if (access(full_path, X_OK) == 0)
+            return (full_path);
+        free(full_path);
+        path = strtok(NULL, ":");
+    }
+    return (NULL);
+}
+
+static char **parse_args(char *line)
+{
+    char **args;
+    char *token;
+    int i;
+
+    args = malloc(sizeof(char *) * (strlen(line) / 2 + 1));
+    i = 0;
+    token = strtok(line, " ");
+    while (token)
+    {
+        args[i++] = strdup(token);
+        token = strtok(NULL, " ");
+    }
+    args[i] = NULL;
+    return (args);
+}
+
+static char **parse_redirect(char *line)
+{
+    char **redirect;
+    char *token;
+    int i;
+
+    redirect = malloc(sizeof(char *) * (strlen(line) / 2 + 1));
+    i = 0;
+    token = strtok(line, " ");
+    while (token)
+    {
+        if (strcmp(token, REDIRECT_IN) == 0 ||
+            strcmp(token, REDIRECT_OUT) == 0 ||
+            strcmp(token, REDIRECT_OUT_APPEND) == 0 ||
+            strcmp(token, REDIRECT_IN_APPEND) == 0)
+        {
+            redirect[i++] = strdup(token);
+            token = strtok(NULL, " ");
+            if (token)
+                redirect[i++] = strdup(token);
+        }
+        else
+            token = strtok(NULL, " ");
+    }
+    redirect[i] = NULL;
+    return (redirect);
+}
+
+t_cmd complet_cmd(char *line, char **envp)
+{
+    t_cmd cmd;
+    char *line_copy;
+
+    line_copy = strdup(line);
+    cmd.args = parse_args(line_copy);
+    cmd.cmd = find_cmd_path(cmd.args[0], envp);
+    strcpy(line_copy, line);
+    cmd.redirect = parse_redirect(line_copy);
+    free(line_copy);
+    return (cmd);
+}
 void		ft_putstr(char *str);
 
 /**
