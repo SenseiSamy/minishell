@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/20 18:24:29 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:58:11 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,32 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
-	char	*redirect_in;
-	char	*redirect_out;
-	int		redirect_out_type;
-	int		here_doc;
+	char	**redirect;
 	int		fd_in;
 	int		fd_out;
 	pid_t	pid;
-}			t_cmd;
+}	t_cmd;
+
+typedef struct s_env
+{
+	char	*name;
+	char	*value;
+}	t_env;
+
+typedef struct s_data
+{
+	t_env	**env_var;
+	t_cmd	**cmd;
+	char	**envp;
+}	t_data;
 
 /* ************************************************************************** */
+/*cmd.c*/
+char	*take_cmd(char *cmd, char **envp);
+/*redirect.c*/
+char	**take_redirect(char *line);
+/*utils*/
+char	*take_word(char *line, int i);
+int		ft_strstrlen(char **str);
 
 #endif
