@@ -6,11 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:54:47 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/11 22:32:02 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/11 23:45:33 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "parsing.h"
 
 static char	*join_tokens(char *token1, char *token2)
 {
@@ -56,6 +56,11 @@ t_cmd	complet_cmd(char *line, char **envp)
 	t_cmd	cmd;
 	char	*line_copy;
 
+	if (check_syntax(line) == false)
+	{
+		cmd.cmd = NULL;
+		return (cmd);
+	}
 	line_copy = ft_strdup(line);
 	cmd.args = parse_args(line_copy);
 	cmd.cmd = find_cmd_path(cmd.args[0], envp);

@@ -6,11 +6,13 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 02:47:38 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/11 22:39:03 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/11 23:44:55 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-bool	handle_redirection_error(const char *line, int start, int end, int *i)
+#include "parsing.h"
+
+static bool	handle_red_error(const char *line, int start, int end, int *i)
 {
 	char	unexpected_symbols[NAME_MAX];
 
@@ -48,7 +50,7 @@ static bool	check_redirection(const char *line, int *i)
 		while (ft_isspace(line[*i]))
 			(*i)++;
 		end = *i;
-		return (handle_redirection_error(line, start, end, i));
+		return (handle_red_error(line, start, end, i));
 	}
 	return (true);
 }

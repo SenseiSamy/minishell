@@ -6,11 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:32:03 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/11 22:37:09 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/11 23:45:08 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "parsing.h"
 
 static char	*get_env_path(char **envp)
 {
