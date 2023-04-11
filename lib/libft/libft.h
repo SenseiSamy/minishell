@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/02/19 19:17:17 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/11 23:10:16 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -629,6 +629,24 @@ void		ft_putnbr_fd(int n, int fd);
  * @param fd 
  */
 void		ft_putstr_fd(char *s, int fd);
+
+/**
+ * @brief The  realloc()  function  changes the size of the memory block pointed
+ * to by ptr to size bytes.  The contents of the memory will be unchanged in the
+ * range from the start of the region up to the minimum of the old and new
+ * sizes. If the new size is larger than the old size, the added memory will not
+ * be initialized. If ptr is NULL, then the call is equivalent to malloc(size),
+ * for all values of size. If size is equal to zero, and ptr is not NULL, then
+ * the call is equivalent to free(ptr) (but see "Nonportable behavior" for
+ * portability issues). Unless ptr is NULL, it must have been returned by an
+ * earlier call to malloc or related functions. If the area pointed to was
+ * moved, a free(ptr) is done.
+ * 
+ * @param ptr 
+ * @param size 
+ * @return void* 
+ */
+void		*realloc(void *ptr, size_t size);
 
 /**
  * @brief The ft_putstr() function writes the string 's' to the standard output.

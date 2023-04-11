@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/11 22:37:09 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/04/11 22:02:36 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/04/11 23:09:25 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "../libft.h"
 
+void	*ft_realloc(void *ptr, size_t size)
+{
+	void	*new;
 
-# include "minishell.h"
-
-char	**parse_args(char *line);
-char	*find_cmd_path(char *cmd, char **envp);
-
-#endif
+	if (!ptr)
+		return (malloc(size));
+	if (!size)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	new = malloc(size);
+	if (!new)
+		return (NULL);
+	ft_memcpy(new, ptr, size);
+	free(ptr);
+	return (new);
+}
