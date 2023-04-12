@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/05 18:27:29 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/12 20:37:51 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,6 @@
 # define ctrlslash 131
 
 typedef struct s_minishell	t_minishell;
-typedef struct s_env		t_env;
-
-struct s_env
-{
-	char	*key;
-	char	*value;
-	t_env	*next;
-};
 
 struct s_minishell
 {
@@ -71,9 +63,16 @@ enum	e_token
 
 /* ************************************************************************** */
 
+/* BUILTINS*/
+
+void	env(t_env *env);
+
+/* ENVIRONMENT */
+
 t_env	*create_env(char **old_env);
 int		add_to_env( t_env **env, char *key, char *value);
-void	print_env(t_env *env);
+t_env	*get_value(t_env *env, char *key);
+void	remove_var(t_env **env, char *key);
 void	free_env(t_env *env);
 
 /* ************************************************************************** */

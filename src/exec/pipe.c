@@ -6,11 +6,11 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 18:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/02 01:14:37 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/12 21:29:46 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "minishell.h"
 
 int	pipe_setup(t_exec *exec)
 {
@@ -75,20 +75,4 @@ void	free_pipes(int n, int **pipes)
 		++i;
 	}
 	free(pipes);
-}
-
-int	close_cmd_fds(t_exec *exec)
-{
-	int	i;
-
-	i = 0;
-	while (i < exec->n_cmd - 1)
-	{
-		if (close2(&exec->cmds[i].fd_in) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		if (close2(&exec->cmds[i].fd_out) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		++i;
-	}
-	return (EXIT_SUCCESS);
 }

@@ -6,11 +6,11 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/11 23:23:03 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/12 21:51:44 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "minishell.h"
 
 void	process_exit(t_exec *exec, char *command, char *error)
 {
@@ -28,13 +28,33 @@ void	process_exit(t_exec *exec, char *command, char *error)
 
 void	free_exec(t_exec *exec)
 {
+	close_all_fds(exec);
 	if (exec->pipes)
 		free_pipes(exec->n_pipes, exec->pipes);
 	if (exec->hdocs)
 		free_hdocs(exec);
-	if (exec->cmds)
-		if (close_cmd_fds(exec) == EXIT_FAILURE)
-			perror("minishell");
+}
+
+int	close_all_fds(t_exec *exec)
+{
+	int	i;
+
+	i = 0;
+	while (i < exec->n_cmd - 1)
+	{
+		if (exec->pipes)
+		{
+			close2(&exec->pipes[i][0]);
+			close2(&exec->pipes[i][1]);
+		}
+		if (exec->hdocs)
+		{
+			close2(&exec->hdocs[i][0]);
+			close2(&exec->hdocs[i][1]);
+		}
+		++i;
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	close2(int *fd)

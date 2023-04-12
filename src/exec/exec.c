@@ -6,25 +6,49 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/02 02:11:21 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/12 22:22:33 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "minishell.h"
+
+static int	builtin(t_exec *exec, int i)
+{
+	if (ft_strcmp(exec->cmds[i].cmd, "env") == 0)
+		env(exec->env);
+	//else if (ft_strcmp(exec->cmds[i].cmd, "export"))
+	else
+		return (0);
+	return (1);
+}
 
 static void	exec_command(t_exec *exec, int i)
 {
+	char	*path;
+	char	**env;
+
 	open_redirections(exec, i);
 	if (dup2(exec->cmds[i].fd_in, 0) == -1)
 		process_exit(exec, exec->cmds[i].args[0], strerror(errno));
 	if (dup2(exec->cmds[i].fd_out, 1) == -1)
 		process_exit(exec, exec->cmds[i].args[0], strerror(errno));
-	close_cmd_fds(exec);
+	close_all_fds(exec);
+	if (builtin(exec, i) == 1)
+		exit(EXIT_SUCCESS);
 	if (exec->cmds[i].cmd)
-		execve(exec->cmds[i].cmd, exec->cmds[i].args, exec->env);
-	else
-		process_exit(exec, exec->cmds[i].args[0], CMD_ERROR);
-	process_exit(exec, exec->cmds[i].args[0], strerror(errno));
+	{
+		path = get_path(exec->cmds[i].cmd, exec->env);
+		if (!path)
+			process_exit(exec, exec->cmds[i].args[0], CMD_ERROR);
+		env = pass_env_to_cmd(exec->env);
+		if (!env)
+			process_exit(exec, exec->cmds[i].args[0], MALLOC_ERROR);
+		execve(path, exec->cmds[i].args, env);
+		free(path);
+		free(env);
+		process_exit(exec, exec->cmds[i].args[0], strerror(errno));
+	}
+	exit(EXIT_SUCCESS);
 }
 
 static int	exec_commands(t_exec *exec)
@@ -50,7 +74,7 @@ static int	exec_commands(t_exec *exec)
 	return (EXIT_SUCCESS);
 }
 
-int	exec(char **env, int n_cmd, t_cmd *cmds)
+int	exec(t_env *env, int n_cmd, t_cmd *cmds)
 {
 	t_exec	exec;
 

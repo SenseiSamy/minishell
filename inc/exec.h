@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/11 23:20:16 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/12 22:06:53 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../lib/libft/libft.h"
+# include "libft.h"
 
 /* ************************************************************************** */
 /*                                  DEFINES                                   */
@@ -41,6 +41,14 @@
 
 typedef struct s_cmd	t_cmd;
 typedef struct s_exec	t_exec;
+typedef struct s_env	t_env;
+
+struct s_env
+{
+	char	*key;
+	char	*value;
+	t_env	*next;
+};
 
 struct s_cmd
 {
@@ -54,7 +62,7 @@ struct s_cmd
 
 struct s_exec
 {
-	char	**env;
+	t_env	*env;
 	int		n_pipes;
 	int		**pipes;
 	int		n_cmd;
@@ -75,9 +83,11 @@ void	free_hdocs(t_exec *exec);
 int		here_docs(t_exec *exec);
 void	free_exec(t_exec *exec);
 void	process_exit(t_exec *exec, char *command, char *error);
-int		close_cmd_fds(t_exec *exec);
+int		close_all_fds(t_exec *exec);
 int		close2(int *fd);
 void	free_array_of_str(char **arr);
-int		exec(char **env, int n_cmd, t_cmd *cmds);
+char	**pass_env_to_cmd(t_env *env);
+char	*get_path(char *prog_name, t_env *env);
+int		exec(t_env *env, int n_cmd, t_cmd *cmds);
 
 #endif
