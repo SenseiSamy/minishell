@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 02:20:54 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/12 03:40:52 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:31:24 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_cmd	*create_command(char *cmd_str)
 	t_cmd	*new_cmd;
 
 	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	new_cmd->cmd = strdup(cmd_str);
+	new_cmd->cmd = ft_strdup(cmd_str);
 	new_cmd->args = NULL;
 	new_cmd->redirect = NULL;
 	new_cmd->fd_in = 0;
@@ -52,9 +52,9 @@ void	add_arg_to_command(t_cmd *current_cmd, char *arg_str)
 	if (current_cmd->args)
 		while (current_cmd->args[argc])
 			argc++;
-	current_cmd->args = (char **)realloc(current_cmd->args, (argc + 2)
+	current_cmd->args = (char **)ft_realloc(current_cmd->args, (argc + 2)
 			* sizeof(char *));
-	current_cmd->args[argc] = strdup(arg_str);
+	current_cmd->args[argc] = ft_strdup(arg_str);
 	current_cmd->args[argc + 1] = NULL;
 }
 

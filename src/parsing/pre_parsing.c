@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 01:34:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/12 02:20:08 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:32:27 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*copy_substring(char *str, int start, int end)
 	char	*substring;
 
 	substring = (char *)malloc(end - start + 2);
-	memcpy(substring, &str[start], end - start + 1);
+	ft_memcpy(substring, &str[start], end - start + 1);
 	substring[end - start + 1] = '\0';
 	return (substring);
 }

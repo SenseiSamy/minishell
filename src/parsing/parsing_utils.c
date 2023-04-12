@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 03:22:03 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/12 03:41:02 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:31:47 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	*get_env_var_value(char *var_name, char **envp)
 	size_t	name_len;
 
 	i = 0;
-	name_len = strlen(var_name);
+	name_len = ft_strlen(var_name);
 	while (envp[i])
 	{
-		if (strncmp(envp[i], var_name, name_len) == 0
+		if (ft_strncmp(envp[i], var_name, name_len) == 0
 			&& envp[i][name_len] == '=')
 			return (&envp[i][name_len + 1]);
 		i++;
@@ -42,7 +42,7 @@ void	handle_dollar_token(t_token **token, char **envp)
 		if (value)
 		{
 			free((*token)->str);
-			(*token)->str = strdup(value);
+			(*token)->str = ft_strdup(value);
 			(*token)->type = WORD;
 			to_remove = next_token;
 			(*token)->next = next_token->next;
@@ -65,16 +65,17 @@ void	handle_redirect_token(t_token **token, t_cmd **current_cmd)
 	next_token = (*token)->next;
 	if (next_token && next_token->type == WORD)
 	{
-		new_str = malloc(strlen((*token)->str) + strlen(next_token->str) + 2);
-		strcpy(new_str, (*token)->str);
-		strcat(new_str, " ");
-		strcat(new_str, next_token->str);
+		new_str = malloc(ft_strlen((*token)->str)
+				+ ft_strlen(next_token->str) + 2);
+		ft_strcpy(new_str, (*token)->str);
+		ft_strcat(new_str, " ");
+		ft_strcat(new_str, next_token->str);
 		redirect_type = (*token)->type;
 		redirect_count = 0;
 		if ((*current_cmd)->redirect)
 			while ((*current_cmd)->redirect[redirect_count])
 				redirect_count++;
-		(*current_cmd)->redirect = (char **)realloc((*current_cmd)->redirect,
+		(*current_cmd)->redirect = (char **)ft_realloc((*current_cmd)->redirect,
 				(redirect_count + 2) * sizeof(char *));
 		(*current_cmd)->redirect[redirect_count] = new_str;
 		(*current_cmd)->redirect[redirect_count + 1] = NULL;
