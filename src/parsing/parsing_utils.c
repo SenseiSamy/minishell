@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 03:22:03 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/12 03:39:32 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/12 03:41:02 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,4 @@ void	handle_redirect_token(t_token **token, t_cmd **current_cmd)
 		free(to_remove);
 	}
 }
+// TODO: erreur de norm et utiliser libft pour une fois
