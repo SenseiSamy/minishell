@@ -5,72 +5,93 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 18:54:47 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/11 23:45:33 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/04/12 02:20:54 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/04/12 03:22:47 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static char	*join_tokens(char *token1, char *token2)
+t_cmd	*create_command(char *cmd_str)
 {
-	char	*result;
+	t_cmd	*new_cmd;
 
-	result = malloc(strlen(token1) + strlen(token2) + 2);
-	strcpy(result, token1);
-	ft_strcat(result, " ");
-	ft_strcat(result, token2);
-	return (result);
+	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	new_cmd->cmd = strdup(cmd_str);
+	new_cmd->args = NULL;
+	new_cmd->redirect = NULL;
+	new_cmd->fd_in = 0;
+	new_cmd->fd_out = 1;
+	new_cmd->pid = 0;
+	return (new_cmd);
 }
 
-static char	**parse_redirect(char *line)
+t_cmd	*add_command(t_cmd **commands, char *cmd_str)
 {
-	char	**redirect;
-	char	*token;
-	char	*tmp;
-	int		i;
+	t_cmd	*new_cmd;
+	t_cmd	*current;
 
-	redirect = malloc(sizeof(char *) * (strlen(line) / 2 + 1));
-	i = 0;
-	token = strtok(line, " ");
-	while (token)
+	new_cmd = create_command(cmd_str);
+	if (*commands == NULL)
+		*commands = new_cmd;
+	else
 	{
-		if (ft_strcmp(token, REDIRECT_IN) == 0
-			|| ft_strcmp(token, REDIRECT_OUT) == 0
-			|| ft_strcmp(token, REDIRECT_OUT_APPEND) == 0
-			|| ft_strcmp(token, REDIRECT_IN_APPEND) == 0)
+		current = *commands;
+		while (current->pid != 0)
+			current = (t_cmd *)((intptr_t)current->pid);
+		current->pid = (intptr_t)new_cmd;
+	}
+	return (new_cmd);
+}
+
+void	add_arg_to_command(t_cmd *current_cmd, char *arg_str)
+{
+	int	argc;
+
+	argc = 0;
+	if (current_cmd->args)
+		while (current_cmd->args[argc])
+			argc++;
+	current_cmd->args = (char **)realloc(current_cmd->args, (argc + 2)
+			* sizeof(char *));
+	current_cmd->args[argc] = strdup(arg_str);
+	current_cmd->args[argc + 1] = NULL;
+}
+
+t_cmd	*process_tokens(t_token *tokens, char **envp)
+{
+	t_cmd	*commands;
+	t_cmd	*current_cmd;
+	bool	new_command;
+
+	commands = NULL;
+	current_cmd = NULL;
+	new_command = true;
+	while (tokens && tokens->type != END)
+	{
+		if (tokens->type == WORD && new_command)
 		{
-			tmp = ft_strdup(token);
-			token = strtok(NULL, " ");
-			redirect[i++] = join_tokens(tmp, token);
+			current_cmd = add_command(&commands, tokens->str);
+			new_command = false;
 		}
-		token = strtok(NULL, " ");
+		else if (tokens->type == WORD && !new_command)
+			add_arg_to_command(current_cmd, tokens->str);
+		else if (tokens->type == DOLLAR)
+		{
+			handle_dollar_token(&tokens, envp);
+			if (tokens->type == WORD && new_command)
+			{
+				current_cmd = add_command(&commands, tokens->str);
+				new_command = false;
+			}
+			else if (tokens->type == WORD && !new_command)
+				add_arg_to_command(current_cmd, tokens->str);
+		}
+		else if (tokens->type >= REDI_IN && tokens->type <= REDI_IN_APPEND)
+			handle_redirect_token(&tokens, &current_cmd);
+		else if (tokens->type == PIPE)
+			new_command = true;
+		tokens = tokens->next;
 	}
-	redirect[i] = NULL;
-	return (redirect);
-}
-
-// line = une commande split de pipe
-t_cmd	complet_cmd(char *line, char **envp)
-{
-	t_cmd	cmd;
-	char	*line_copy;
-
-	if (check_syntax(line) == false)
-	{
-		cmd.cmd = NULL;
-		return (cmd);
-	}
-	line_copy = ft_strdup(line);
-	cmd.args = parse_args(line_copy);
-	cmd.cmd = find_cmd_path(cmd.args[0], envp);
-	if (cmd.cmd)
-	{
-		free(cmd.args[0]);
-		cmd.args[0] = ft_strdup(cmd.cmd);
-	}
-	strcpy(line_copy, line);
-	cmd.redirect = parse_redirect(line_copy);
-	free(line_copy);
-	return (cmd);
+	return (commands);
 }
