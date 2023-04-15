@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 18:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/12 21:29:46 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/15 19:12:02 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ int	**create_pipes(int n)
 
 	pipes = ft_calloc(n, sizeof (*pipes));
 	if (!pipes)
-		return (NULL);
+		return (errno = EMEM, NULL);
 	i = 0;
 	while (i < n)
 	{
 		pipes[i] = ft_calloc(2, sizeof (*pipes[i]));
-		if (!pipes[i] || pipe(pipes[i]) == -1)
+		if (pipes[i] == NULL)
+			return (errno = EMEM, free_pipes(n, pipes), NULL);
+		if (pipe(pipes[i]) == -1)
 			return (free_pipes(n, pipes), NULL);
 		++i;
 	}

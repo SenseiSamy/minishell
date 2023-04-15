@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/12 22:06:53 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/15 19:15:00 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@
 /*                                  DEFINES                                   */
 
 # define SYS_ERROR "An error occured with a system call"
-# define MALLOC_ERROR "An error occured during a memory allocation"
+# define MALLOC_ERROR "A memory allocation failed"
 # define CMD_ERROR "command not found"
 # define EXEC_CMD "An error occured while executing a command"
+# define EMEM 132
 
 /* ************************************************************************** */
 /*                          STRUCTURES AND TYPEDEFS                           */
@@ -88,6 +89,10 @@ int		close2(int *fd);
 void	free_array_of_str(char **arr);
 char	**pass_env_to_cmd(t_env *env);
 char	*get_path(char *prog_name, t_env *env);
+int		is_a_builtin(t_cmd *cmd);
+int		builtin(t_exec *exec, int i);
+int		exec_one_builtin(t_exec *exec);
+void	perror2(char *str);
 int		exec(t_env *env, int n_cmd, t_cmd *cmds);
 
 #endif

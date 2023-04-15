@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/12 20:37:51 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/15 19:16:26 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ enum	e_token
 /* BUILTINS*/
 
 void	env(t_env *env);
+int		export(t_env **env, char **args);
+void	unset(t_env **env, char **args);
 
 /* ENVIRONMENT */
 

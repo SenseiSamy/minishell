@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:04:23 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/12 22:08:13 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/15 19:06:17 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	add_to_env(t_env **env, char *key, char *value)
 	{
 		*env = ft_calloc(1, sizeof (t_env));
 		if (*env == NULL)
-			return (EXIT_FAILURE);
+			return (errno = EMEM, EXIT_FAILURE);
 		(*env)->key = key;
 		(*env)->value = value;
 		(*env)->next = NULL;
@@ -59,7 +59,7 @@ int	add_to_env(t_env **env, char *key, char *value)
 		i = i->next;
 	i->next = ft_calloc(1, sizeof (t_env));
 	if (i->next == NULL)
-		return (EXIT_FAILURE);
+		return (errno = EMEM, EXIT_FAILURE);
 	i->next->key = key;
 	i->next->value = value;
 	i->next->next = NULL;

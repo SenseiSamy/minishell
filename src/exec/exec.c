@@ -6,21 +6,11 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/12 22:22:33 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/15 19:14:14 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	builtin(t_exec *exec, int i)
-{
-	if (ft_strcmp(exec->cmds[i].cmd, "env") == 0)
-		env(exec->env);
-	//else if (ft_strcmp(exec->cmds[i].cmd, "export"))
-	else
-		return (0);
-	return (1);
-}
 
 static void	exec_command(t_exec *exec, int i)
 {
@@ -33,8 +23,8 @@ static void	exec_command(t_exec *exec, int i)
 	if (dup2(exec->cmds[i].fd_out, 1) == -1)
 		process_exit(exec, exec->cmds[i].args[0], strerror(errno));
 	close_all_fds(exec);
-	if (builtin(exec, i) == 1)
-		exit(EXIT_SUCCESS);
+	if (is_a_builtin(&exec->cmds[i]))
+		exit(builtin(exec, i));
 	if (exec->cmds[i].cmd)
 	{
 		path = get_path(exec->cmds[i].cmd, exec->env);
@@ -55,6 +45,8 @@ static int	exec_commands(t_exec *exec)
 {
 	int	i;
 
+	if (exec->n_cmd == 1 && is_a_builtin(&exec->cmds[0]))
+		return (exec_one_builtin(exec));
 	i = 0;
 	while (i < exec->n_cmd)
 	{
@@ -85,13 +77,13 @@ int	exec(t_env *env, int n_cmd, t_cmd *cmds)
 	exec.pipes = NULL;
 	exec.hdocs = NULL;
 	if (pipe_setup(&exec) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		return (perror2("minishell"), EXIT_FAILURE);
 	assign_pipes(&exec);
 	if (create_hdocs(&exec) == EXIT_FAILURE)
 		return (free_exec(&exec), EXIT_FAILURE);
 	if (here_docs(&exec) == EXIT_FAILURE)
-		return (free_exec(&exec), perror("minishell"), EXIT_FAILURE);
+		return (free_exec(&exec), perror2("minishell"), EXIT_FAILURE);
 	if (exec_commands(&exec) == EXIT_FAILURE)
-		return (free_exec(&exec), perror("minishell"), EXIT_FAILURE);
+		return (free_exec(&exec), perror2("minishell"), EXIT_FAILURE);
 	return (free_exec(&exec), EXIT_SUCCESS);
 }
