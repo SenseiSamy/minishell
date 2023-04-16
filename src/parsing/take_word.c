@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 22:02:22 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/16 03:21:02 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/16 05:31:51 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ char	*take_word(t_var *input)
 		return (get_redir_word(input, &var));
 	while (input->str[input->i] != '\0' && !ft_isspace(input->str[input->i]))
 	{
+		if (input->i >= (int)ft_strlen(input->str))
+			break ;
 		if (input->str[input->i] == '\'' || input->str[input->i] == '"')
 		{
 			var.quote_string = get_quotes_string(input, input->str[input->i]);
@@ -92,12 +94,10 @@ char	*take_word(t_var *input)
 			free(var.quote_string);
 		}
 		else
-		{
-			var.result[var.i] = input->str[input->i];
-			var.i++;
-		}
+			var.result[var.i++] = input->str[input->i];
 		input->i++;
 	}
 	var.result[var.i] = '\0';
 	return (ft_strdup(var.result));
 }
+// NOTE: utilser i < (int)ft_strlen(input->str) pour eviter les segfaults
