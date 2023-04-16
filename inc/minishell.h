@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/11 22:35:52 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/16 03:43:06 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,12 @@ typedef struct s_data
 
 /* ************************************************************************** */
 t_cmd	complet_cmd(char *line, char **envp);
+
+/* ************************************************************************** */
+int		ft_cd(const char *path);
+void	ft_env(void);
+int		ft_pwd(void);
+int		ft_unset(const char *name);
+void	ft_exit(int status);
 
 #endif
