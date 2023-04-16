@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:38:14 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/15 19:11:41 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 14:54:37 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static char	*find_path(char *prog_name, char *paths)
 
 char	*get_path(char *prog_name, t_env *env)
 {
+	t_env	*tmp;
 	char	*paths;
 
 	if (!prog_name || !env)
@@ -47,7 +48,10 @@ char	*get_path(char *prog_name, t_env *env)
 			return (ft_strdup(prog_name));
 		return (NULL);
 	}
-	paths = get_value(env, "PATH")->value;
+	tmp = env_get(env, "PATH");
+	if (!tmp)
+		return (NULL);
+	paths = tmp->value;
 	if (!paths)
 		return (NULL);
 	prog_name = ft_strjoin("/", prog_name);

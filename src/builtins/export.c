@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 21:31:16 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/15 17:46:43 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 14:52:08 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	export_one(t_env **env, char *arg)
 		return (free(value), EXIT_FAILURE);
 	if (strcmp(key, "_") == 0)
 		return (free(key), free(value), EXIT_SUCCESS);
-	if (add_to_env(env, key, value) == EXIT_FAILURE)
+	if (env_add(env, key, value) == EXIT_FAILURE)
 		return (free(key), free(value), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

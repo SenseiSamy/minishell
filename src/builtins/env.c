@@ -6,17 +6,18 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:06:09 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/12 20:32:39 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 14:13:45 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env(t_env *env)
+int	env(t_env *env)
 {
 	while (env != NULL)
 	{
 		printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
+	return (0);
 }

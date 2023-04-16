@@ -6,67 +6,49 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:04:23 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/15 19:06:17 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 14:42:26 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_env	*create_env(char **old_env)
+t_env	*env_new(char *key, char *value)
 {
-	t_env	*env;
-	char	*key;
-	char	*value;
-	int		j;
-	int		i;
+	t_env	*new;
 
-	i = 0;
-	env = NULL;
-	while (old_env[i])
-	{
-		j = 0;
-		while (old_env[i][j] && old_env[i][j] != '=')
-			++j;
-		key = ft_strndup(old_env[i], j);
-		value = ft_strdup(ft_strchr(old_env[i], '=') + 1);
-		if (key == NULL || value == NULL)
-			return (NULL);
-		if (add_to_env(&env, key, value) == EXIT_FAILURE)
-			return (NULL);
-		++i;
-	}
-	return (env);
+	new = ft_calloc(1, sizeof (t_env));
+	if (new == NULL)
+		return (errno = EMEM, NULL);
+	new->key = key;
+	new->value = value;
+	new->next = NULL;
+	return (new);	
 }
 
-int	add_to_env(t_env **env, char *key, char *value)
+int	env_add(t_env **env, char *key, char *value)
 {
 	t_env	*i;
 
-	if (env == NULL)
-		return (EXIT_FAILURE);
+	i = env_get(*env, key);
+	if (i != NULL)
+		env_delone(env, key);
 	if (*env == NULL)
 	{
-		*env = ft_calloc(1, sizeof (t_env));
+		*env = env_new(key, value);
 		if (*env == NULL)
-			return (errno = EMEM, EXIT_FAILURE);
-		(*env)->key = key;
-		(*env)->value = value;
-		(*env)->next = NULL;
+			return (EXIT_FAILURE);
 		return (EXIT_SUCCESS);
 	}
 	i = *env;
 	while (i->next != NULL)
 		i = i->next;
-	i->next = ft_calloc(1, sizeof (t_env));
+	i->next = env_new(key, value);
 	if (i->next == NULL)
-		return (errno = EMEM, EXIT_FAILURE);
-	i->next->key = key;
-	i->next->value = value;
-	i->next->next = NULL;
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-t_env	*get_value(t_env *env, char *key)
+t_env	*env_get(t_env *env, char *key)
 {
 	while (env)
 	{
@@ -77,14 +59,14 @@ t_env	*get_value(t_env *env, char *key)
 	return (NULL);
 }
 
-void	remove_var(t_env **env, char *key)
+void	env_delone(t_env **env, char *key)
 {
 	t_env	*to_remove;
 	t_env	*tmp;
 	t_env	*ptr;
 
 	ptr = *env;
-	to_remove = get_value(*env, key);
+	to_remove = env_get(*env, key);
 	if (to_remove == NULL)
 		return ;
 	if (ptr == to_remove)
@@ -102,20 +84,3 @@ void	remove_var(t_env **env, char *key)
 	free(to_remove->value);
 	free(to_remove);
 }
-
-void	free_env(t_env *env)
-{
-	t_env	*i;
-
-	if (env == NULL)
-		return ;
-	while (env != NULL)
-	{
-		free(env->key);
-		free(env->value);
-		i = env->next;
-		free(env);
-		env = i;
-	}
-}
-

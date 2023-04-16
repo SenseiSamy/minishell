@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/15 18:47:11 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 14:52:52 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ int	builtin(t_exec *exec, int i)
 
 int	exec_one_builtin(t_exec *exec)
 {
+	int	status;
+
 	open_redirections(exec, 0);
 	if (dup2(exec->cmds[0].fd_in, 0) == -1)
 		return (EXIT_FAILURE);
 	if (dup2(exec->cmds[0].fd_out, 1) == -1)
 		return (EXIT_FAILURE);
 	close_all_fds(exec);
-	return (builtin(exec, 0));
+	status = builtin(exec, 0);
+	return (env_add(&exec->env, "?", ft_itoa(status)));
 }

@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/15 19:16:26 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 14:42:41 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,18 @@ enum	e_token
 
 /* BUILTINS*/
 
-void	env(t_env *env);
+int		env(t_env *env);
 int		export(t_env **env, char **args);
-void	unset(t_env **env, char **args);
+int		unset(t_env **env, char **args);
 
 /* ENVIRONMENT */
 
-t_env	*create_env(char **old_env);
-int		add_to_env( t_env **env, char *key, char *value);
-t_env	*get_value(t_env *env, char *key);
-void	remove_var(t_env **env, char *key);
-void	free_env(t_env *env);
+t_env	*env_copy(char **old_env);
+t_env	*env_new(char *key, char *value);
+int		env_add(t_env **env, char *key, char *value);
+t_env	*env_get(t_env *env, char *key);
+void	env_delone(t_env **env, char *key);
+void	env_free(t_env *env);
 
 /* ************************************************************************** */
 

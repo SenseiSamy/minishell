@@ -3,26 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:16 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/16 14:59:11 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	i;
+	t_exec	e;
 
-	i = 0;
 	(void)argc;
 	(void)argv;
-	while (envp[i])
-	{
-		printf("argv[%d] = %s\n", i, envp[i]);
-		i++;
-	}
+	e.env = env_copy(envp);
+	env_add(&e.env, ft_strdup("USER"), ft_strdup("LOOOL"));
+	env(e.env);
+	env_free(e.env);
 	return (EXIT_SUCCESS);
 }

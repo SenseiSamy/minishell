@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/15 19:14:14 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 14:53:00 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ static void	exec_command(t_exec *exec, int i)
 static int	exec_commands(t_exec *exec)
 {
 	int	i;
+	int	status;
 
+	status = 0;
 	if (exec->n_cmd == 1 && is_a_builtin(&exec->cmds[0]))
 		return (exec_one_builtin(exec));
 	i = 0;
@@ -62,8 +64,8 @@ static int	exec_commands(t_exec *exec)
 	}
 	i = 0;
 	while (i < exec->n_cmd)
-		waitpid(exec->cmds[i++].pid, NULL, 0);
-	return (EXIT_SUCCESS);
+		waitpid(exec->cmds[i++].pid, &status, 0);
+	return (env_add(&exec->env, "?", ft_itoa(status)));
 }
 
 int	exec(t_env *env, int n_cmd, t_cmd *cmds)
