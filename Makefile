@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
+#    By: snaji <snaji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/03/17 16:21:07 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/17 23:12:31 by snaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ EXEC	= minishell
 # **************************************************************************** #
 
 CC		= cc
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -g3
 
 ifeq ($(MAKECMDGOALS),leaks)
 	FLAGS += -ggdb3
@@ -31,8 +31,9 @@ HDIR	= ./inc/
 # **************************************************************************** #
 
 LNAME	= libft.a
-CNAME	= main.c builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c \
-		builtins/export.c builtins/pwd.c builtins/unset.c
+CNAME	= main.c environment.c environment_utils.c signal.c \
+		builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c builtins/export.c builtins/pwd.c builtins/unset.c \
+		exec/exec.c exec/builtins.c exec/here_doc.c exec/path.c exec/pipe.c exec/redirections.c exec/utils.c exec/utils2.c
 ONAME	= $(CNAME:.c=.o)
 HNAME	= minishell.h
 
@@ -48,7 +49,7 @@ LFILES	= $(addprefix $(LDIR), $(LNAME))
 all: $(EXEC)
 
 $(EXEC): $(OFILES) $(LFILES)
-	$(CC) $(FLAGS) -o $(EXEC) $(OFILES) -L$(LDIR) -lft
+	$(CC) $(FLAGS) -o $(EXEC) $(OFILES) -L$(LDIR) -lft -lreadline
 
 $(ODIR)%.o: $(CDIR)%.c $(HFILES)
 	@mkdir -p $(@D)

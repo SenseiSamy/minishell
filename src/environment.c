@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:04:23 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 14:42:26 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 17:58:31 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	env_add(t_env **env, char *key, char *value)
 {
 	t_env	*i;
 
+	if (key == NULL)
+		return (EXIT_FAILURE);
 	i = env_get(*env, key);
 	if (i != NULL)
 		env_delone(env, key);

@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/12 21:51:44 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 19:59:39 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	process_exit(t_exec *exec, char *command, char *error)
 	}
 	free_exec(exec);
 	if (error)
-		exit(EXIT_FAILURE);
+		exit(1);
 	exit(EXIT_SUCCESS);
 }
 

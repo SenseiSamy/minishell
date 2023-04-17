@@ -1,24 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 18:06:09 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 17:43:49 by snaji            ###   ########.fr       */
+/*   Created: 2023/04/17 22:38:33 by snaji             #+#    #+#             */
+/*   Updated: 2023/04/17 23:21:21 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
-int	env(t_env *env)
+static void	handle_sigint(int sig)
 {
-	while (env != NULL)
-	{
-		if (ft_strcmp(env->key, "?") != 0)
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
-	return (0);
+	(void)sig;
+	//mettre valeur $? a 130
+	write(1, "\n", 1);
+	rl_replace_line("", 1);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
+static void	handle_sigquit(int sig)
+{
+	(void)sig;
+}
+
+void	signal_prompt(void)
+{
+	signal(SIGINT, &handle_sigint);
+	signal(SIGQUIT, &handle_sigquit);
+}
+
+void	signal_exec(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

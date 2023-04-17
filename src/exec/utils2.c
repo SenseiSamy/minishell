@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:12:41 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 14:55:14 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/16 18:09:58 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,4 @@ void	perror2(char *str)
 	}
 	else
 		perror(str);
-}
-
-int	exit_status_to_env(t_exec *exec, int status)
-{
-	char	*status_str;
-
-	status_str = ft_itoa(status);
-	if (status_str == NULL)
-		return (errno = EMEM, EXIT_FAILURE);
-	if (env_add(&exec->env, ft_strdup("?"), status_str) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
 }

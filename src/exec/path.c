@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:38:14 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 14:54:37 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/17 22:17:20 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_path(char *prog_name, t_env *env)
 
 	if (!prog_name || !env)
 		return (NULL);
-	if (prog_name[0] == '/')
+	if (prog_name[0] == '/' || prog_name[0] == '.')
 	{
 		if (access(prog_name, X_OK) == 0)
 			return (ft_strdup(prog_name));

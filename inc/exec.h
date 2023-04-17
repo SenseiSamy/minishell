@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/15 19:15:00 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/17 23:10:55 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int		is_a_builtin(t_cmd *cmd);
 int		builtin(t_exec *exec, int i);
 int		exec_one_builtin(t_exec *exec);
 void	perror2(char *str);
+int		choose_exit_status(char *error);
 int		exec(t_env *env, int n_cmd, t_cmd *cmds);
 
 #endif

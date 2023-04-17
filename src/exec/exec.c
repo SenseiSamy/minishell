@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 14:53:00 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/17 23:22:59 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	exec_commands(t_exec *exec)
 	i = 0;
 	while (i < exec->n_cmd)
 		waitpid(exec->cmds[i++].pid, &status, 0);
-	return (env_add(&exec->env, "?", ft_itoa(status)));
+	return (env_add(&exec->env, ft_strdup("?"), ft_itoa(status)));
 }
 
 int	exec(t_env *env, int n_cmd, t_cmd *cmds)
