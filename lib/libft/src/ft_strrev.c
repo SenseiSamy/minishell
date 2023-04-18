@@ -1,43 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 21:04:34 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/17 21:05:24 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/04/16 16:18:16 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/04/16 16:18:20 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	print_usage(void)
+void	ft_strrev(char *str)
 {
-	printf("Usage: ft_echo [-n] [string ...]\n");
-}
-
-void	ft_echo(int argc, char **argv)
-{
-	bool	no_newline;
-	int		start_arg;
 	int		i;
+	int		j;
+	char	temp;
 
-	no_newline = false;
-	start_arg = 1;
-	if (argc > 1 && strcmp(argv[1], "-n") == 0)
-	{
-		no_newline = true;
-		start_arg = 2;
-	}
 	i = 0;
-	while (i < argc)
+	j = strlen(str) - 1;
+	while (i < j)
 	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
+		temp = str[i];
+		str[i] = str[j];
+		str[j] = temp;
 		i++;
+		j--;
 	}
-	if (!no_newline)
-		printf("\n");
 }

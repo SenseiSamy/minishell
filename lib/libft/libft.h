@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/11 22:05:28 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/16 16:18:44 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,6 +371,13 @@ char		*ft_strnstr(const char *big, const char *little, size_t size);
  * @return char* 
  */
 char		*ft_strrchr(const char *s, int c);
+
+/**
+ * @brief The ft_strrev() function reverses the string str in place.
+ * 
+ * @param str 
+ */
+void		ft_strrev(char *str);
 
 /**
  * @brief The ft_strstr() function finds the first occurrence of the substring
