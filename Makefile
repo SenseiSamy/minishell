@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/11 22:38:53 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/19 03:50:48 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,9 @@ HDIR	= ./inc/
 
 LNAME	= libft.a
 CNAME	= main.c builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c \
-		builtins/export.c builtins/pwd.c builtins/unset.c
-		parsing/cmd.c parsing/parsing.c parsing/syntax_checker.c
+		builtins/export.c builtins/pwd.c builtins/unset.c \
+		parsing/cmd.c parsing/check_syntax.c parsing/check_syntax.c \
+		parsing/parsing.c parsing_take.c parsing_utils.c
 ONAME	= $(CNAME:.c=.o)
 HNAME	= minishell.h
 

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/18 03:52:39 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/19 03:48:14 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,40 @@ typedef struct s_return
 	char			*str;
 	int				i;
 	bool			on_quote;
-} t_return ;
+}					t_return;
 
-int					count_pipe(t_return (*ret));
-t_return			(take_word(t_var *var));
-t_cmd				*convert_cmd(t_return (*ret, int size));
-int					check_parsing(t_return (*ret, int size));
+typedef struct s_str_quotes
+{
+	int				length;
+	char			*result;
+	int				index;
+	bool			quote_open;
+	int				i;
+}					t_str_quotes;
+
+typedef struct s_get_env
+{
+	int				i;
+	int				j;
+	int				k;
+	int				len;
+}					t_get_env;
+
+// parsing_utils
+char				*ft_getenv(char *name, t_var *var);
+int					size_name(char *str);
+void				ft_itoa_custom(int num, char *str);
+char				*get_redirect_word(char *result, t_var *var, int i);
+
+// parsing_take
+char				*get_var_word(t_var *var);
+char				*get_str_quotes(t_var *input, char quote_type);
+
+// check_syntax
+bool				check_parsing(t_return *ret, int size);
+
+int					count_pipe(t_return *ret);
+t_return			take_word(t_var *var);
+t_cmd				*convert_cmd(t_return *ret, int size);
 
 #endif

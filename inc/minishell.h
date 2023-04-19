@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/17 21:05:42 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/19 03:48:05 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 
 /* ************************************************************************** */
 
-# define ctrlc 130
-# define ctrlslash 131
+# define CTRLC 130
+# define CTRLSLASH 131
 
 /* ************************************************************************** */
 
@@ -52,15 +52,7 @@
 # define REDIRECT_IN_APPEND "<<"
 
 /* ************************************************************************** */
-/*
--chemin de l'executable (ex: /usr/bin/python)
--arguments de la commande, comme argv (ex: {"/usr/bin", "-l", "NULL"})
--nom du fichier d'une commande tel que "< Makefile cat", vaut NULL sinon
--nom du fichier d'une commande tel que "cat lol > Makefile" ou "cat lol >> 
-Makefile", vaut NULL sinon
--vaut 1 si le redirect out est un >, vaut 2 si c'est un >>, vaut 0 sinon
--vaut 1 si il y a une here_doc (<<), vaut 0 sinon;
-*/
+
 typedef struct s_cmd
 {
 	char	*cmd;
@@ -83,8 +75,6 @@ typedef struct s_data
 	t_cmd	**cmd;
 	char	**envp;
 }			t_data;
-
-int			g_exit_status;
 
 /* ************************************************************************** */
 t_cmd		complet_cmd(char *line, char **envp);

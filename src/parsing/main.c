@@ -6,12 +6,12 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 03:53:35 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/18 03:53:49 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/19 03:49:43 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
+/*
 void	ft_free(t_var *var, t_return *ret, int limit)
 {
 	int	i;
@@ -105,3 +105,4 @@ int	main(void)
 	ft_free(&var, ret, tmp);
 	return (0);
 }
+*/

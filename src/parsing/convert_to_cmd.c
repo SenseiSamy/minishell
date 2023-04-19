@@ -6,34 +6,45 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 03:51:51 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/18 03:52:53 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/19 03:47:26 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-bool	is_redir(char *str, bool on_quote)
+typedef struct s_convert
+{
+	t_cmd	*cmds;
+	int		i_ret;
+	int		i_cmds;
+	int		i_args;
+	int		i_redir;
+	int		nb_pipes;
+}			t_convert;
+
+static bool	is_redir(char *str, bool on_quote)
 {
 	return (on_quote == false && (strcmp(str, "<") == 0 || strcmp(str,
 				"<<") == 0 || strcmp(str, ">") == 0 || strcmp(str, ">>") == 0));
 }
 
-int	count_pipes(t_return *ret)
+static int	count_pipes(t_return *ret)
 {
 	int	count;
+	int	i;
 
+	i = 0;
 	count = 0;
-	for (int i = 0; ret[i].str != NULL; i++)
+	while (ret[i].str != NULL)
 	{
-		if (strcmp(ret[i].str, "|") == 0)
-		{
+		if (ret[i].str[0] == '|' && ret[i].on_quote == false)
 			count++;
-		}
+		i++;
 	}
 	return (count);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+static char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	int		i;
@@ -57,64 +68,42 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-typedef struct s_convert
+static void	convert_utils(t_return *ret, t_convert cov, char *tmp)
 {
-	t_cmd	*cmds;
-	int		i_ret;
-	int		i_cmds;
-	int		i_args;
-	int		i_redir;
-	int		nb_pipes;
-}			t_convert;
-
-//t_return est un tableau qui contient un mot, sont index,
-	et si il est entre guillemet.
-// la fonction doit remplir le tableau de structure t_cmd,
-	il ya autant d'index dans t_cmd qu'il ya de pipe dans la variable str de t_return. les variables de chaque t_cmd doivent ressembler à ceci:
-// redir: contient les redirections (<, <<, >,
-		>>) concaténer avec le mot qui le suit.
-// args: tout les mots qui ne suivent pas une redirections et qui ne sont pas des pipe
-// cmd: premier index de args si il existe
+	if (ret[cov.i_ret].str[0] == '|')
+	{
+		cov = (t_convert){.i_args = 0, .i_redir = 0};
+		cov.i_cmds++;
+		return ;
+	}
+	if (is_redir(ret[cov.i_ret].str, ret[cov.i_ret].on_quote))
+	{
+		if (ret[cov.i_ret + 1].str != NULL)
+		{
+			tmp = ft_strjoin(ret[cov.i_ret].str, ret[cov.i_ret
+					+ 1].str);
+			cov.cmds[cov.i_cmds].redir[cov.i_redir++] = tmp;
+			cov.i_ret++;
+		}
+		return ;
+	}
+	if (ret[cov.i_ret].str != NULL)
+	{
+		if (cov.i_args == 0)
+			cov.cmds[cov.i_cmds].cmd = ret[cov.i_ret].str;
+		cov.cmds[cov.i_cmds].args[cov.i_args++] = ret[cov.i_ret].str;
+	}
+}
 
 t_cmd	*convert_cmd(t_return *ret, int size)
 {
-	t_convert	convert;
+	t_convert	cov;
 	char		*tmp;
 
-	convert.nb_pipes = count_pipes(ret);
-	convert.cmds = malloc(sizeof(t_cmd) * (convert.nb_pipes + 2));
-	convert.i_ret = -1;
-	convert.i_cmds = 0;
-	convert.i_args = 0;
-	convert.i_redir = 0;
-	while (++convert.i_ret < size)
-	{
-		if (ret[convert.i_ret].str[0] == '|')
-		{
-			convert.i_args = 0;
-			convert.i_redir = 0;
-			convert.i_cmds++;
-			continue ;
-		}
-		if (is_redir(ret[convert.i_ret].str, ret[convert.i_ret].on_quote))
-		{
-			if (ret[convert.i_ret + 1].str != NULL)
-			{
-				tmp = ft_strjoin(ret[convert.i_ret].str, ret[convert.i_ret
-						+ 1].str);
-				convert.cmds[convert.i_cmds].redir[convert.i_redir] = tmp;
-				convert.i_redir++;
-				convert.i_ret++;
-			}
-			continue ;
-		}
-		if (ret[convert.i_ret].str != NULL)
-		{
-			if (convert.i_args == 0)
-				convert.cmds[convert.i_cmds].cmd = ret[convert.i_ret].str;
-			convert.cmds[convert.i_cmds].args[convert.i_args] = ret[convert.i_ret].str;
-			convert.i_args++;
-		}
-	}
-	return (convert.cmds);
+	tmp = NULL;
+	cov = (t_convert){malloc(sizeof(t_cmd) * (count_pipes(ret) + 2)),
+		-1, 0, 0, 0, count_pipes(ret)};
+	while (++cov.i_ret < size)
+		convert_utils(ret, cov, tmp);
+	return (cov.cmds);
 }

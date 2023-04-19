@@ -6,15 +6,21 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:04:34 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/17 21:05:24 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/19 03:52:07 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_usage(void)
+static bool	no_newline_args(char **args)
 {
-	printf("Usage: ft_echo [-n] [string ...]\n");
+	int	i;
+
+	i = 0;
+	while (args[1][i])
+		if (args[1][i++] != 'n')
+			return (false);
+	return (true);
 }
 
 void	ft_echo(int argc, char **argv)
@@ -25,7 +31,7 @@ void	ft_echo(int argc, char **argv)
 
 	no_newline = false;
 	start_arg = 1;
-	if (argc > 1 && strcmp(argv[1], "-n") == 0)
+	if (argc > 1 && no_newline_args(argv))
 	{
 		no_newline = true;
 		start_arg = 2;
