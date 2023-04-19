@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:59:38 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/19 03:49:27 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/19 03:53:24 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,5 @@ bool	check_parsing(t_return *ret, int size)
 	}
 	return (true);
 }
+
+// TODO: dans le cas de <>> ça renvoie >> au lieu de > (wtf)
