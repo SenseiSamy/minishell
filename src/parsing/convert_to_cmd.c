@@ -6,45 +6,18 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 03:51:51 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/19 03:47:26 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:36:06 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-typedef struct s_convert
+bool	is_redir(char *str)
 {
-	t_cmd	*cmds;
-	int		i_ret;
-	int		i_cmds;
-	int		i_args;
-	int		i_redir;
-	int		nb_pipes;
-}			t_convert;
-
-static bool	is_redir(char *str, bool on_quote)
-{
-	return (on_quote == false && (strcmp(str, "<") == 0 || strcmp(str,
-				"<<") == 0 || strcmp(str, ">") == 0 || strcmp(str, ">>") == 0));
+	return (str[0] == '<' || str[0] == '>');
 }
 
-static int	count_pipes(t_return *ret)
-{
-	int	count;
-	int	i;
-
-	i = 0;
-	count = 0;
-	while (ret[i].str != NULL)
-	{
-		if (ret[i].str[0] == '|' && ret[i].on_quote == false)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-static char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	int		i;
@@ -68,42 +41,64 @@ static char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-static void	convert_utils(t_return *ret, t_convert cov, char *tmp)
+void	parse_return(t_return *ret, int size, t_cmd_linked **cmd)
 {
-	if (ret[cov.i_ret].str[0] == '|')
+	int				i_ret;
+	int				i_redir;
+	int				i_args;
+	t_cmd_linked	*cur;
+	char			*tmp;
+
+	i_ret = 0;
+	i_redir = 0;
+	i_args = 0;
+	cur = *cmd;
+	cur->args = calloc(sizeof(char *), 2);
+	cur->redir = calloc(sizeof(char *), 2);
+	while (i_ret < size)
 	{
-		cov = (t_convert){.i_args = 0, .i_redir = 0};
-		cov.i_cmds++;
-		return ;
-	}
-	if (is_redir(ret[cov.i_ret].str, ret[cov.i_ret].on_quote))
-	{
-		if (ret[cov.i_ret + 1].str != NULL)
+		if (ret[i_ret].str[0] == '|' && ret[i_ret].on_quote == false)
 		{
-			tmp = ft_strjoin(ret[cov.i_ret].str, ret[cov.i_ret
-					+ 1].str);
-			cov.cmds[cov.i_cmds].redir[cov.i_redir++] = tmp;
-			cov.i_ret++;
+			cur->args[i_args] = NULL;
+			cur->redir[i_redir] = NULL;
+			cur->next = calloc(sizeof(t_cmd_linked), 1);
+			cur = cur->next;
+			i_args = 0;
+			i_redir = 0;
+			cur->args = calloc(sizeof(char *), 2);
+			cur->redir = calloc(sizeof(char *), 2);
 		}
-		return ;
+		else if (is_redir(ret[i_ret].str) && ret[i_ret].on_quote == false)
+		{
+			cur->redir = realloc(cur->redir, sizeof(char *)
+					* (i_redir + 2));
+			tmp = ret[i_ret].str;
+			tmp = ft_strjoin(tmp, ret[i_ret + 1].str);
+			cur->redir[i_redir] = tmp;
+			i_redir++;
+			i_ret++;
+		}
+		else
+		{
+			if (i_args == 0)
+				cur->cmd = strdup(ret[i_ret].str);
+			cur->args = realloc(cur->args, sizeof(char *) * (i_args
+						+ 2));
+			cur->args[i_args] = strdup(ret[i_ret].str);
+			i_args++;
+		}
+		i_ret++;
 	}
-	if (ret[cov.i_ret].str != NULL)
-	{
-		if (cov.i_args == 0)
-			cov.cmds[cov.i_cmds].cmd = ret[cov.i_ret].str;
-		cov.cmds[cov.i_cmds].args[cov.i_args++] = ret[cov.i_ret].str;
-	}
+	cur->args[i_args] = NULL;
+	cur->redir[i_redir] = NULL;
+	cur->next = NULL;
 }
 
-t_cmd	*convert_cmd(t_return *ret, int size)
+t_cmd_linked	*convert_cmd(t_return *ret, int size)
 {
-	t_convert	cov;
-	char		*tmp;
+	t_cmd_linked	*cmd;
 
-	tmp = NULL;
-	cov = (t_convert){malloc(sizeof(t_cmd) * (count_pipes(ret) + 2)),
-		-1, 0, 0, 0, count_pipes(ret)};
-	while (++cov.i_ret < size)
-		convert_utils(ret, cov, tmp);
-	return (cov.cmds);
+	cmd = calloc(sizeof(t_cmd_linked), 1);
+	parse_return(ret, size, &cmd);
+	return (cmd);
 }

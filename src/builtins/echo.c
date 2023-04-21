@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:04:34 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/19 03:52:07 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:27:52 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ft_echo(int argc, char **argv)
 {
 	bool	no_newline;
 	int		start_arg;
-	int		i;
 
 	no_newline = false;
 	start_arg = 1;
@@ -36,13 +35,12 @@ void	ft_echo(int argc, char **argv)
 		no_newline = true;
 		start_arg = 2;
 	}
-	i = 0;
-	while (i < argc)
+	while (start_arg < argc)
 	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
+		printf("%s", argv[start_arg]);
+		if (start_arg < argc - 1)
 			printf(" ");
-		i++;
+		start_arg++;
 	}
 	if (!no_newline)
 		printf("\n");

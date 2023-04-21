@@ -6,11 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 22:31:44 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/09 22:32:04 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:33:28 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
 static bool	is_delim(char c, const char *delim)
 {

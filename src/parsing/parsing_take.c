@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:02:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/19 03:39:29 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 01:24:31 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static char	*get_var_word_name(t_var *var)
 	t_var_word	var_word;
 
 	var_word = (t_var_word){NULL, NULL, 0};
-	while (var->str[var->i] != '\0' && !isalnum(var->str[var->i])
+	while (var->str[var->i] != '\0' && !ft_isalnum(var->str[var->i])
 		&& var->str[var->i] != '_')
 		var->i++;
-	var_word.name = calloc(sizeof(char), size_name(var->str + var->i) + 1);
+	var_word.name = ft_calloc(sizeof(char), size_name(var->str + var->i) + 1);
 	var_word.i = 0;
-	while (var->str[var->i] != '\0' && (isalnum(var->str[var->i])
+	while (var->str[var->i] != '\0' && (ft_isalnum(var->str[var->i])
 			|| var->str[var->i] == '_'))
 	{
 		var_word.name[var_word.i] = var->str[var->i];
@@ -56,7 +56,7 @@ char	*get_var_word(t_var *var)
 	var_word = (t_var_word){NULL, NULL, 0};
 	if (var->str[var->i] == '$' && var->str[var->i + 1] == '?')
 	{
-		var_word.result = calloc(sizeof(char), 11);
+		var_word.result = ft_calloc(sizeof(char), 11);
 		ft_itoa_custom(0, var_word.result);
 		var->i += 2;
 		return (var_word.result);
@@ -71,7 +71,7 @@ char	*convert_var_word(char *input_str, t_var *var)
 {
 	t_convert	cov;
 
-	cov = (t_convert){calloc(strlen(input_str) + 1, sizeof(char)),
+	cov = (t_convert){ft_calloc(ft_strlen(input_str) + 1, sizeof(char)),
 		NULL, (t_var){NULL, 0, NULL}, 0, 0};
 	while (input_str[cov.input_index] != '\0')
 	{
@@ -82,8 +82,8 @@ char	*convert_var_word(char *input_str, t_var *var)
 			cov.var_value = get_var_word(&cov.tmp_var);
 			if (cov.var_value)
 			{
-				strcpy(cov.result + cov.result_index, cov.var_value);
-				cov.result_index += strlen(cov.var_value);
+				ft_strcpy(cov.result + cov.result_index, cov.var_value);
+				cov.result_index += ft_strlen(cov.var_value);
 				free(cov.var_value);
 			}
 			cov.input_index += cov.tmp_var.i;
@@ -112,8 +112,8 @@ char	*get_str_quotes(t_var *input, char quote_type)
 {
 	t_str_quotes	str_quotes;
 
-	str_quotes = (t_str_quotes){strlen(input->str),
-		calloc(1, strlen(input->str) + 2), 0, false, 0};
+	str_quotes = (t_str_quotes){ft_strlen(input->str),
+		ft_calloc(1, ft_strlen(input->str) + 2), 0, false, 0};
 	while (input->i < str_quotes.length)
 	{
 		if (input->str[input->i] == quote_type)
@@ -123,7 +123,7 @@ char	*get_str_quotes(t_var *input, char quote_type)
 				str_quotes.i = input->i + 1;
 			else
 			{
-				strncpy(str_quotes.result + str_quotes.index,
+				ft_strncpy(str_quotes.result + str_quotes.index,
 					input->str + str_quotes.i, input->i - str_quotes.i);
 				str_quotes.index += input->i - str_quotes.i;
 				if (input->i + 1 < str_quotes.length

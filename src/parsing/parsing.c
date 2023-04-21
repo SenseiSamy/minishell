@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 20:15:08 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/19 03:39:43 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 01:24:32 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ typedef struct s_take_word
 static void	utilse_quote(t_take_word *take_word, t_var *var)
 {
 	take_word->str_quotes = get_str_quotes(var, var->str[var->i]);
-	strcpy(take_word->result + take_word->i, take_word->str_quotes);
-	take_word->i += strlen(take_word->str_quotes);
+	ft_strcpy(take_word->result + take_word->i, take_word->str_quotes);
+	take_word->i += ft_strlen(take_word->str_quotes);
 	free(take_word->str_quotes);
 }
 
@@ -36,8 +36,8 @@ static bool	utils_take_word(t_var *var, t_take_word *take_word, t_return *ret)
 		tmp = get_var_word(var);
 		if (tmp != NULL)
 		{
-			strcpy(take_word->result + take_word->i, tmp);
-			take_word->i += strlen(tmp);
+			ft_strcpy(take_word->result + take_word->i, tmp);
+			take_word->i += ft_strlen(tmp);
 			free(tmp);
 		}
 	}
@@ -58,7 +58,7 @@ static bool	utils_take_word(t_var *var, t_take_word *take_word, t_return *ret)
 
 static void	init_take_word(t_take_word *take_word, t_return *ret, t_var *var)
 {
-	take_word->result = calloc(1, strlen(var->str) + 1);
+	take_word->result = ft_calloc(1, ft_strlen(var->str) + 1);
 	take_word->str_quotes = NULL;
 	take_word->i = 0;
 	ret->str = NULL;
@@ -79,7 +79,7 @@ t_return	take_word(t_var *var)
 		ret.str = get_redirect_word(take_word.result, var, take_word.i);
 		return (ret);
 	}
-	while (var->i < (int)strlen(var->str) && !isspace(var->str[var->i]))
+	while (var->i < (int)ft_strlen(var->str) && !isspace(var->str[var->i]))
 	{
 		if (var->str[var->i] == '|')
 		{

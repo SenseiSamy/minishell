@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/19 03:48:14 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:36:29 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 
 # include "minishell.h"
 
-typedef struct s_cmd
-{
-	char			*cmd;
-	char			**args;
-	char			**redir;
-}					t_cmd;
-
 typedef struct s_var
 {
 	char			*str;
 	int				i;
 	char			**envp;
 }					t_var;
+
+typedef struct s_cmd_linked
+{
+	char				*cmd;
+	char				**args;
+	char				**redir;
+	struct s_cmd_linked	*next;
+}					t_cmd_linked;
 
 typedef struct s_take
 {
@@ -76,6 +77,6 @@ bool				check_parsing(t_return *ret, int size);
 
 int					count_pipe(t_return *ret);
 t_return			take_word(t_var *var);
-t_cmd				*convert_cmd(t_return *ret, int size);
+t_cmd_linked		*convert_cmd(t_return *ret, int size);
 
 #endif

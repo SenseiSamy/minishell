@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 16:18:16 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/16 16:18:20 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:33:30 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_strrev(char *str)
 	char	temp;
 
 	i = 0;
-	j = strlen(str) - 1;
+	j = ft_strlen(str) - 1;
 	while (i < j)
 	{
 		temp = str[i];

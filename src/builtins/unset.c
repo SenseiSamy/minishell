@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 03:29:02 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/16 03:43:18 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 01:22:11 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_unset(const char *name)
 		return (ft_putstr_fd("unset: No variable name provided\n", 2), 1);
 	value = getenv(name);
 	if (value == NULL)
-		return (error("Variable is not set"), 1);
+		return (perror("getenv"), 1);
 	length = ft_strlen(name);
 	env_entry = malloc(length + 2);
 	if (env_entry == NULL)

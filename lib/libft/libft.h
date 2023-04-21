@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/19 03:49:02 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:31:26 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,18 @@ char				*ft_strcat(char *dest, const char *src);
  * @return char* 
  */
 char				*ft_strchr(const char *s, int c);
+
+/**
+ * @brief These functions copy the string pointed to by src, into a string at
+ * the buffer pointed to by dst. The programmer is responsible for allocating a
+ * destination buffer large enough, that is, strlen(src) + 1. For the difference
+ * between the two functions, see RETURN VALUE.
+ * 
+ * @param dst 
+ * @param src 
+ * @return char* 
+ */
+char				*ft_strcpy(char *dst, const char *src);
 
 /**
  * @brief The ft_strcmp() function compares the two strings s1 and s2. The

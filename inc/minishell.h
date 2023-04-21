@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/19 03:48:05 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:25:29 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,6 @@
 # define CTRLSLASH 131
 
 /* ************************************************************************** */
-
-# define OTHER "other"
-# define ECHO "echo"
-# define CD "cd"
-# define PWD "pwd"
-# define EXPORT "export"
-# define UNSET "unset"
-# define ENV "env"
-# define EXIT "exit"
 
 # define REDIRECT_IN "<"
 # define REDIRECT_OUT ">"
