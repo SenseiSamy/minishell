@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/22 20:16:27 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/22 22:32:44 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,7 @@ NAME	= libft.a
 # **************************************************************************** #
 
 CC		= cc
-FLAGS	= -Wall -Wextra -Werror -I./
-
-ifeq ($(MAKECMDGOALS), debug)
-	FLAGS = -Wall -Wextra -Werror -ggdb3 -I./
-endif
+FLAGS	= -Wall -Wextra -Werror -g3 -I./
 
 # **************************************************************************** #
 
@@ -141,9 +137,7 @@ fclean: clean
 
 re: fclean all
 
-debug: re
-
 norme:
 	@norminette $(CFILES) $(CBFILES) $(HFILES)
 
-.PHONY: all bonus clean fclean re debug norme
+.PHONY: all bonus clean fclean re norme

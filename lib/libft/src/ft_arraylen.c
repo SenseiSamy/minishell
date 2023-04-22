@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 20:14:23 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 20:16:30 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/23 00:12:32 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ size_t	ft_arraylen(char **array)
 
 	i = 0;
 	while (array[i])
-		++i;
+		i++;
 	return (i);
 }

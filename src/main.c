@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 20:43:31 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 22:40:04 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		signal_prompt();
-		line = readline("minishell> ");
+		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
 		signal_exec();

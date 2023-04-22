@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:59:38 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 20:44:52 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 22:33:50 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ bool	check_parsing(t_return *ret, int size)
 				return (print_error("newline"));
 		}
 	}
-	return (true);
+	return (false);
 }

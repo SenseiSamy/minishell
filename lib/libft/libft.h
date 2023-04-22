@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 20:16:11 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/23 00:32:10 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -653,22 +653,22 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putstr_fd(char *s, int fd);
 
 /**
- * @brief The ft_realloc()  function  changes the size of the memory block pointed
- * to by ptr to size bytes.  The contents of the memory will be unchanged in the
- * range from the start of the region up to the minimum of the old and new
- * sizes. If the new size is larger than the old size, the added memory will not
- * be initialized. If ptr is NULL, then the call is equivalent to malloc(size),
- * for all values of size. If size is equal to zero, and ptr is not NULL, then
- * the call is equivalent to free(ptr) (but see "Nonportable behavior" for
- * portability issues). Unless ptr is NULL, it must have been returned by an
- * earlier call to malloc or related functions. If the area pointed to was
- * moved, a free(ptr) is done.
+ * @brief The ft_realloc() function changes the size of the memory block pointed
+ * to by ptr to size bytes. The contents will be unchanged in the range from the
+ * start of the region up to the minimum of the old and new sizes. If the new
+ * size is larger than the old size, the added memory will not be initialized.
+ * If ptr is NULL, the call is equivalent to malloc(size), for all values of
+ * size; if size is equal to zero, and ptr is not NULL, the call is equivalent
+ * to free(ptr). Unless ptr is NULL, it must have been returned by an earlier
+ * call to malloc(), calloc() or realloc(). If the area pointed to was moved,
+ * a free(ptr) is done.
  * 
  * @param ptr 
+ * @param old_size 
  * @param size 
  * @return void* 
  */
-void				*ft_realloc(void *ptr, size_t size);
+//void				*ft_realloc(void *ptr, size_t old_size, size_t size);
 
 /**
  * @brief The ft_putstr() function writes the string 's' to the standard output.

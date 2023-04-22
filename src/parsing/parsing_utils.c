@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 19:49:10 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 20:25:03 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/23 00:31:50 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@ char	*ft_getenv(char *name, t_var *var)
 		get_env.i++;
 	}
 	return (NULL);
+}
+
+char	**ft_realloc(char **str, size_t size)
+{
+	char	**tmp;
+	size_t	i;
+
+	i = 0;
+	tmp = ft_calloc(sizeof(char *), size + 1);
+	while (str[i])
+	{
+		tmp[i] = ft_strdup(str[i]);
+		free(str[i]);
+		i++;
+	}
+	free(str);
+	return (tmp);
 }
 
 void	ft_itoa_custom(int num, char *str)

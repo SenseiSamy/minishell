@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 19:44:17 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 20:44:33 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/23 00:36:55 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_var	*init_var(char *input_str)
 	return (var);
 }
 
+/*
 void	clean_array(char **array)
 {
 	int	i;
@@ -35,7 +36,6 @@ void	clean_array(char **array)
 	}
 	free(array);
 }
-
 void	cleanup(t_return *result, t_cmd *cmd, t_var *var)
 {
 	int	i;
@@ -60,6 +60,7 @@ void	cleanup(t_return *result, t_cmd *cmd, t_var *var)
 	free(result);
 	free(var);
 }
+*/
 
 int	count_elements(t_cmd_linked *head)
 {
@@ -76,10 +77,10 @@ int	count_elements(t_cmd_linked *head)
 
 t_cmd	*linked_to_array(t_cmd_linked *head)
 {
-	int		i;
-	int		size;
+	int				i;
+	int				size;
 	t_cmd_linked	*tmp;
-	t_cmd	*array;
+	t_cmd			*array;
 
 	i = 0;
 	size = count_elements(head);
@@ -101,6 +102,26 @@ t_cmd	*linked_to_array(t_cmd_linked *head)
 	return (array);
 }
 
+static t_return	*ft_realloc_ret(t_return *result, int size)
+{
+	t_return	*new;
+	int			i;
+
+	i = 0;
+	new = (t_return *)ft_calloc(sizeof(t_return), size);
+	if (!new)
+		return (NULL);
+	while (result[i].str != NULL)
+	{
+		new[i].str = result[i].str;
+		new[i].i = result[i].i;
+		new[i].on_quote = result[i].on_quote;
+		i++;
+	}
+	free(result);
+	return (new);
+}
+
 t_cmd	*ft_parsing(char *str)
 {
 	t_return		*result;
@@ -114,7 +135,7 @@ t_cmd	*ft_parsing(char *str)
 	while (var->i < (int)ft_strlen(str))
 	{
 		result[i] = take_word(var);
-		result = ft_realloc(result, sizeof(t_return) * (i + 2));
+		result = ft_realloc_ret(result, sizeof(t_return) * (i + 2));
 		i++;
 	}
 	result[i].str = NULL;

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:14:25 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/23 00:32:02 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_get_env
 
 // parsing_utils
 char				*ft_getenv(char *name, t_var *var);
+char				**ft_realloc(char **str, size_t size);
 int					size_name(char *str);
 void				ft_itoa_custom(int num, char *str);
 char				*get_redirect_word(char *result, t_var *var, int i);
