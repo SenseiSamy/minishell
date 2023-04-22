@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 19:49:10 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:15:28 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:29:13 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,28 +91,3 @@ char	*get_redirect_word(char *result, t_var *var, int i)
 	free(result);
 	return (tmp);
 }
-
-	next_token = (*token)->next;
-	if (next_token && next_token->type == WORD)
-	{
-		new_str = malloc(ft_strlen((*token)->str)
-				+ ft_strlen(next_token->str) + 2);
-		ft_strcpy(new_str, (*token)->str);
-		ft_strcat(new_str, " ");
-		ft_strcat(new_str, next_token->str);
-		redirect_type = (*token)->type;
-		redirect_count = 0;
-		if ((*current_cmd)->redirect)
-			while ((*current_cmd)->redirect[redirect_count])
-				redirect_count++;
-		(*current_cmd)->redirect = (char **)ft_realloc((*current_cmd)->redirect,
-				(redirect_count + 2) * sizeof(char *));
-		(*current_cmd)->redirect[redirect_count] = new_str;
-		(*current_cmd)->redirect[redirect_count + 1] = NULL;
-		to_remove = next_token;
-		(*token)->next = next_token->next;
-		free(to_remove->str);
-		free(to_remove);
-	}
-}
-// TODO: erreur de norm et utiliser libft pour une fois

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:12:41 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:00:16 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 19:40:27 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
 
 static char	*concatenate_env_var(t_env *env)
 {
@@ -45,7 +45,7 @@ char	**pass_env_to_cmd(void)
 	{
 		new_env[i] = concatenate_env_var(env);
 		if (new_env[i] == NULL)
-			return (free_array_of_str(new_env), NULL);
+			return (ft_free_split(new_env), NULL);
 		env = env->next;
 		++i;
 	}

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 20:15:08 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:15:44 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:28:39 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,3 @@ t_return	take_word(t_var *var)
 	ret.str = take_word.result;
 	return (ret);
 }
-// TODO: erreur de norm et utiliser libft pour une fois

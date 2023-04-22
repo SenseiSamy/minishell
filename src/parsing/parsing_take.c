@@ -6,11 +6,12 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:02:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/21 01:24:31 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:28:55 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
 
 typedef struct s_var_word
 {

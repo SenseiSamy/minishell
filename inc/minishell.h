@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:21:52 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 19:38:39 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /* ************************************************************************** */
 
-# include "../lib/libft/libft.h"
+# include "libft.h"
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
@@ -29,37 +29,36 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-# include "exec.h"
+# include <errno.h>
 
 /* ************************************************************************** */
 
-# define ctrlc 130
-# define ctrlslash 131
-
-typedef struct s_minishell	t_minishell;
-
-struct s_minishell
+typedef struct s_cmd
 {
-	t_env	*env;
-	char	*line;
-	char	**cmd_line;
+	char	*cmd;
+	char	**args;
+	char	**redirect;
+	int		fd_in;
+	int		fd_out;
+	pid_t	pid;
+}			t_cmd;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}		t_env;
+
+typedef struct s_data
+{
+	t_env	**env_var;
 	t_cmd	**cmd;
-	int		nb_cmd;
-	int		nb_redir;
-	int		status;
-	int		exit;
-};
+	char	**envp;
+}			t_data;
 
-enum	e_token
-{
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	APPEND_OUT,
-	APPEND_ERR,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
-};
+# define EMEM 132
+# define MALLOC_ERROR "A memory allocation failed"
 
 /* ************************************************************************** */
 
@@ -82,31 +81,11 @@ t_env	*env_get_var(char *key);
 void	env_delone(char *key);
 void	env_free(void);
 
-typedef struct s_cmd
-{
-	char	*cmd;
-	char	**args;
-	char	**redirect;
-	int		fd_in;
-	int		fd_out;
-	pid_t	pid;
-}			t_cmd;
 
-typedef struct s_env
-{
-	char	*name;
-	char	*value;
-}			t_env;
-
-typedef struct s_data
-{
-	t_env	**env_var;
-	t_cmd	**cmd;
-	char	**envp;
-}			t_data;
 /* ************************************************************************** */
 
 void	signal_prompt(void);
 void	signal_exec(void);
+void	perror2(char *str);
 
 #endif

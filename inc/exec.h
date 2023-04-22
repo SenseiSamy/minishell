@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 18:27:09 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 19:38:37 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /* ************************************************************************** */
 /*                                  INCLUDES                                  */
-
+/*
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -27,12 +27,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
-
+*/
+#include "minishell.h"
 /* ************************************************************************** */
 /*                                  DEFINES                                   */
 
 # define SYS_ERROR "An error occured with a system call"
-# define MALLOC_ERROR "A memory allocation failed"
 # define CMD_ERROR "command not found"
 # define EXEC_CMD "An error occured while executing a command"
 # define EMEM 132
@@ -40,26 +40,7 @@
 /* ************************************************************************** */
 /*                          STRUCTURES AND TYPEDEFS                           */
 
-typedef struct s_cmd	t_cmd;
 typedef struct s_exec	t_exec;
-typedef struct s_env	t_env;
-
-struct s_env
-{
-	char	*key;
-	char	*value;
-	t_env	*next;
-};
-
-struct s_cmd
-{
-	char	*cmd;
-	char	**args;
-	char	**redirect;
-	int		fd_in;
-	int		fd_out;
-	pid_t	pid;
-};
 
 struct s_exec
 {
@@ -91,7 +72,6 @@ char	*get_path(char *prog_name);
 int		is_a_builtin(t_cmd *cmd);
 int		builtin(t_exec *exec, int i);
 int		exec_one_builtin(t_exec *exec);
-void	perror2(char *str);
 int		choose_exit_status(char *error);
 int		exec(int n_cmd, t_cmd *cmds);
 

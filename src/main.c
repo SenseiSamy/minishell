@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:21:04 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 19:42:07 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
+#include "parsing.h"
 #include "minishell.h"
 
+/*
 void	cleanup(t_return *result, t_var *var, char *input_str, t_cmd *cmd)
 {
 	t_cmd	*cmds;
@@ -80,46 +83,20 @@ t_cmd	*linked_to_array(t_cmd_linked *head)
 	}
 	return (array);
 }
-
-int	main(void)
+*/
+int	main(int argc, char **argv, char **envp)
 {
-	t_var			*var;
-	t_cmd_linked	*cmd;
-	t_cmd			*tab;
-	char			*input_str;
-	int				size;
-	int				i;
+	t_cmd	*cmds;
+	char	*line;
+	int		status;
 
-	t_return (*result);
-	input_str = ft_strdup("echo \"test\" << ahah >> bba | cat -e | wc -l | > test.txt");
-	var = init_var(input_str);
-	result = ft_calloc(1, sizeof(t_return));
-	var->envp = (char **)ft_calloc(2, sizeof(char *));
-	var->envp[0] = "test=42";
-	var->envp[1] = NULL;
-	i = 0;
-	while (var->i < (int)ft_strlen(input_str))
-	{
-		result[i] = take_word(var);
-		display_result(result[i]);
-		result = ft_realloc(result, sizeof(t_return) * (i + 2));
-		i++;
-	}
-	result[i].str = NULL;
-	size = i;
-	cmd = convert_cmd(result, size);
-	printf("--------------------\n");
-	i = 0;
-	tab =  linked_to_array(cmd);
-	while (tab[i].cmd != NULL || tab[i].args != NULL || tab[i].redirect != NULL)
 	(void)argc;
 	(void)argv;
+	cmds = NULL;
 	if (init_env(envp) == EXIT_FAILURE)
 		perror2("minishell");
 	while (1)
 	{
-		display_cmd(&tab[i]);
-		i++;
 		signal_prompt();
 		line = readline("minishell> ");
 		if (line == NULL)
@@ -129,8 +106,6 @@ int	main(void)
 		cmds = parsing(line);
 		exec(3, cmds);
 	}
-	cleanup(result, var, input_str, tab);
-	return (0);
 	rl_clear_history();
 	status = ft_atoi(env_get_var("?")->value);
 	env_free();

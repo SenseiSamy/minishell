@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: snaji <snaji@student.42.fr>                +#+  +:+       +#+         #
+#    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/22 19:22:02 by snaji            ###   ########.fr        #
+#    Updated: 2023/04/22 19:41:47 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,15 +38,27 @@ CNAME	=	parsing/parsing_take.c \
 			parsing/convert_to_cmd.c \
 			parsing/check_syntax.c \
 			main.c \
+			environment_utils.c \
+			environment.c \
+			signal.c \
 			builtins/export.c \
 			builtins/pwd.c \
 			builtins/env.c \
 			builtins/echo.c \
 			builtins/cd.c \
 			builtins/unset.c \
-			builtins/exit.c
+			builtins/exit.c \
+			exec/utils2.c \
+			exec/exec.c \
+			exec/builtins.c \
+			exec/pipe.c \
+			exec/here_doc.c \
+			exec/redirections.c \
+			exec/path.c \
+			exec/utils.c
+
 ONAME	= $(CNAME:.c=.o)
-HNAME	= minishell.h
+HNAME	= minishell.h exec.h parsing.h
 
 # **************************************************************************** #
 
