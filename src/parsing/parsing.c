@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 20:15:08 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/21 01:24:32 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 04:13:10 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ t_return	take_word(t_var *var)
 	t_return	ret;
 
 	init_take_word(&take_word, &ret, var);
-	while (isspace(var->str[var->i]))
+	while (ft_isspace(var->str[var->i]))
 		var->i++;
 	if (var->str[var->i] == '>' || var->str[var->i] == '<')
 	{
 		ret.str = get_redirect_word(take_word.result, var, take_word.i);
 		return (ret);
 	}
-	while (var->i < (int)ft_strlen(var->str) && !isspace(var->str[var->i]))
+	while (var->i < (int)ft_strlen(var->str) && !ft_isspace(var->str[var->i]))
 	{
 		if (var->str[var->i] == '|')
 		{

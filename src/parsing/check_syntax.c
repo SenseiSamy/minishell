@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:59:38 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/21 01:19:22 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 04:09:44 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static bool	is_redir(char *str)
 {
-	return (ft_strcmp(str, ">") == 0 || ft_strcmp(str, "<") == 0 ||
-		ft_strcmp(str, ">>") == 0 || ft_strcmp(str, "<<") == 0);
+	return (ft_strcmp(str, ">") == 0 || ft_strcmp(str, "<") == 0
+		|| ft_strcmp(str, ">>") == 0 || ft_strcmp(str, "<<") == 0);
 }
 
 static bool	is_sep(char *str)

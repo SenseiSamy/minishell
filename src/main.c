@@ -6,13 +6,12 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/21 16:35:53 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 04:10:47 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
-
 
 t_var	*init_var(char *input_str)
 {
@@ -54,6 +53,19 @@ void	display_cmd(t_cmd *cmd)
 	}
 }
 
+void	clean_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i] != NULL)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 void	cleanup(t_return *result, t_var *var, char *input_str, t_cmd *cmd)
 {
 	int	i;
@@ -64,15 +76,16 @@ void	cleanup(t_return *result, t_var *var, char *input_str, t_cmd *cmd)
 		free(result[i].str);
 		i++;
 	}
-	//free_cmd_linked(cmd);
 	i = 0;
 	while (cmd[i].cmd != NULL)
 	{
 		free(cmd[i].cmd);
-		free(cmd[i].args);
-		free(cmd[i].redir);
+		clean_array(cmd[i].args);
+		clean_array(cmd[i].redir);
 		i++;
 	}
+	clean_array(cmd[i].args);
+	clean_array(cmd[i].redir);
 	free(cmd);
 	free(var->envp);
 	free(result);
@@ -80,37 +93,48 @@ void	cleanup(t_return *result, t_var *var, char *input_str, t_cmd *cmd)
 	free(input_str);
 }
 
-// convert an linked list of t_cmd to an array of t_cmd
-t_cmd	*tinked_to_tab(t_cmd_linked *cmd)
+int	count_elements(t_cmd_linked *head)
 {
-	t_cmd	*tab;
+	int	count;
+
+	count = 0;
+	while (head)
+	{
+		count++;
+		head = head->next;
+	}
+	return (count);
+}
+
+t_cmd	*linked_to_array(t_cmd_linked *head)
+{
 	int		i;
+	int		size;
+	t_cmd_linked	*tmp;
+	t_cmd	*array;
 
 	i = 0;
-	while (cmd->next != NULL)
+	size = count_elements(head);
+	array = (t_cmd *)ft_calloc(size + 1, sizeof(t_cmd));
+	if (!array)
 	{
-		cmd = cmd->next;
+		return (NULL);
+	}
+	while (head)
+	{
+		array[i].cmd = head->cmd;
+		array[i].args = head->args;
+		array[i].redir = head->redir;
+		tmp = head;
+		head = head->next;
+		free(tmp);
 		i++;
 	}
-	tab = (t_cmd *)malloc(sizeof(t_cmd) * (i + 1));
-	i = 0;
-	while (cmd->next != NULL)
-	{
-		tab[i].cmd = cmd->cmd;
-		tab[i].args = cmd->args;
-		tab[i].redir = cmd->redir;
-		cmd = cmd->next;
-		i++;
-	}
-	tab[i].cmd = NULL;
-	tab[i].args = NULL;
-	tab[i].redir = NULL;
-	return (tab);
+	return (array);
 }
 
 int	main(void)
 {
-	t_return		*result;
 	t_var			*var;
 	t_cmd_linked	*cmd;
 	t_cmd			*tab;
@@ -118,18 +142,19 @@ int	main(void)
 	int				size;
 	int				i;
 
-	input_str = strdup("echo \"test\" << ahah >> bba | cat -e | wc -l | > test.txt");
+	t_return (*result);
+	input_str = ft_strdup("echo \"test\" << ahah >> bba | cat -e | wc -l | > test.txt");
 	var = init_var(input_str);
-	result = calloc(1, sizeof(t_return));
-	var->envp = (char **)calloc(2, sizeof(char *));
+	result = ft_calloc(1, sizeof(t_return));
+	var->envp = (char **)ft_calloc(2, sizeof(char *));
 	var->envp[0] = "test=42";
 	var->envp[1] = NULL;
 	i = 0;
-	while (var->i < (int)strlen(input_str))
+	while (var->i < (int)ft_strlen(input_str))
 	{
 		result[i] = take_word(var);
 		display_result(result[i]);
-		result = realloc(result, sizeof(t_return) * (i + 2));
+		result = ft_realloc(result, sizeof(t_return) * (i + 2));
 		i++;
 	}
 	result[i].str = NULL;
@@ -137,8 +162,8 @@ int	main(void)
 	cmd = convert_cmd(result, size);
 	printf("--------------------\n");
 	i = 0;
-	tab = tinked_to_tab(cmd);
-	while (tab[i].cmd != NULL)
+	tab =  linked_to_array(cmd);
+	while (tab[i].cmd != NULL || tab[i].args != NULL || tab[i].redir != NULL)
 	{
 		display_cmd(&tab[i]);
 		i++;

@@ -6,99 +6,90 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 03:51:51 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/21 16:36:06 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 04:11:13 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-bool	is_redir(char *str)
-{
-	return (str[0] == '<' || str[0] == '>');
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*str;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	str = malloc(sizeof(char) * (strlen(s1) + strlen(s2) + 1));
-	while (s1[i] != '\0')
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (s2[i] != '\0')
-	{
-		str[i + j] = s2[i];
-		i++;
-	}
-	str[i + j] = '\0';
-	return (str);
-}
-
-void	parse_return(t_return *ret, int size, t_cmd_linked **cmd)
+typedef struct t_parse
 {
 	int				i_ret;
 	int				i_redir;
 	int				i_args;
 	t_cmd_linked	*cur;
 	char			*tmp;
+}					t_parse;
 
-	i_ret = 0;
-	i_redir = 0;
-	i_args = 0;
-	cur = *cmd;
-	cur->args = calloc(sizeof(char *), 2);
-	cur->redir = calloc(sizeof(char *), 2);
-	while (i_ret < size)
+static bool	is_redir(char *str)
+{
+	return (str[0] == '<' || str[0] == '>');
+}
+
+static void	new_pipe(t_parse *parse)
+{
+	parse->cur->args[parse->i_args] = NULL;
+	parse->cur->redir[parse->i_redir] = NULL;
+	parse->cur->next = ft_calloc(sizeof(t_cmd_linked), 1);
+	parse->cur = parse->cur->next;
+	parse->i_args = 0;
+	parse->i_redir = 0;
+	parse->cur->args = ft_calloc(sizeof(char *), 2);
+	if (!parse->cur->args)
+		exit(1);
+	parse->cur->redir = ft_calloc(sizeof(char *), 2);
+	if (!parse->cur->redir)
+		exit(1);
+}
+
+static void	new_redir(t_parse *parse, t_return *ret)
+{
+	parse->cur->redir = ft_realloc(parse->cur->redir, sizeof(char *)
+			* (parse->i_redir + 2));
+	parse->tmp = ft_calloc(sizeof(char), ft_strlen(ret[parse->i_ret].str)
+			+ ft_strlen(ret[parse->i_ret + 1].str) + 2);
+	ft_strcpy(parse->tmp, ret[parse->i_ret].str);
+	ft_strcat(parse->tmp, " ");
+	ft_strcat(parse->tmp, ret[parse->i_ret + 1].str);
+	parse->cur->redir[parse->i_redir] = parse->tmp;
+	parse->i_redir++;
+	parse->i_ret++;
+}
+
+void	parse_return(t_return *ret, int size, t_cmd_linked **cmd)
+{
+	t_parse	parse;
+
+	parse = (t_parse){0, 0, 0, *cmd, NULL};
+	parse.cur->args = ft_calloc(sizeof(char *), 2);
+	parse.cur->redir = ft_calloc(sizeof(char *), 2);
+	while (parse.i_ret < size)
 	{
-		if (ret[i_ret].str[0] == '|' && ret[i_ret].on_quote == false)
-		{
-			cur->args[i_args] = NULL;
-			cur->redir[i_redir] = NULL;
-			cur->next = calloc(sizeof(t_cmd_linked), 1);
-			cur = cur->next;
-			i_args = 0;
-			i_redir = 0;
-			cur->args = calloc(sizeof(char *), 2);
-			cur->redir = calloc(sizeof(char *), 2);
-		}
-		else if (is_redir(ret[i_ret].str) && ret[i_ret].on_quote == false)
-		{
-			cur->redir = realloc(cur->redir, sizeof(char *)
-					* (i_redir + 2));
-			tmp = ret[i_ret].str;
-			tmp = ft_strjoin(tmp, ret[i_ret + 1].str);
-			cur->redir[i_redir] = tmp;
-			i_redir++;
-			i_ret++;
-		}
+		if (ret[parse.i_ret].str[0] == '|' && !ret[parse.i_ret].on_quote)
+			new_pipe(&parse);
+		else if (is_redir(ret[parse.i_ret].str) && !ret[parse.i_ret].on_quote)
+			new_redir(&parse, ret);
 		else
 		{
-			if (i_args == 0)
-				cur->cmd = strdup(ret[i_ret].str);
-			cur->args = realloc(cur->args, sizeof(char *) * (i_args
-						+ 2));
-			cur->args[i_args] = strdup(ret[i_ret].str);
-			i_args++;
+			if (parse.i_args == 0)
+				parse.cur->cmd = ft_strdup(ret[parse.i_ret].str);
+			parse.cur->args = ft_realloc(parse.cur->args, sizeof(char *)
+					* (parse.i_args + 2));
+			parse.cur->args[parse.i_args] = ft_strdup(ret[parse.i_ret].str);
+			parse.i_args++;
 		}
-		i_ret++;
+		parse.i_ret++;
 	}
-	cur->args[i_args] = NULL;
-	cur->redir[i_redir] = NULL;
-	cur->next = NULL;
+	parse.cur->args[parse.i_args] = NULL;
+	parse.cur->redir[parse.i_redir] = NULL;
+	parse.cur->next = NULL;
 }
 
 t_cmd_linked	*convert_cmd(t_return *ret, int size)
 {
 	t_cmd_linked	*cmd;
 
-	cmd = calloc(sizeof(t_cmd_linked), 1);
+	cmd = ft_calloc(sizeof(t_cmd_linked), 1);
 	parse_return(ret, size, &cmd);
 	return (cmd);
 }
