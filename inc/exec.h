@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/17 23:10:55 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 18:27:09 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ struct s_cmd
 
 struct s_exec
 {
-	t_env	*env;
 	int		n_pipes;
 	int		**pipes;
 	int		n_cmd;
@@ -87,13 +86,13 @@ void	process_exit(t_exec *exec, char *command, char *error);
 int		close_all_fds(t_exec *exec);
 int		close2(int *fd);
 void	free_array_of_str(char **arr);
-char	**pass_env_to_cmd(t_env *env);
-char	*get_path(char *prog_name, t_env *env);
+char	**pass_env_to_cmd(void);
+char	*get_path(char *prog_name);
 int		is_a_builtin(t_cmd *cmd);
 int		builtin(t_exec *exec, int i);
 int		exec_one_builtin(t_exec *exec);
 void	perror2(char *str);
 int		choose_exit_status(char *error);
-int		exec(t_env *env, int n_cmd, t_cmd *cmds);
+int		exec(int n_cmd, t_cmd *cmds);
 
 #endif

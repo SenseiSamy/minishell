@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/17 23:11:02 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 18:44:23 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,22 @@ enum	e_token
 
 /* BUILTINS*/
 
-int		env(t_env *env);
-int		export(t_env **env, char **args);
-int		unset(t_env **env, char **args);
+int		env(void);
+int		export(char **args);
+int		unset(char **args);
 
 /* ENVIRONMENT */
 
-t_env	*init_env(char **old_env);
-t_env	*env_copy(char **old_env);
-int		exit_status_to_env(t_exec *exec, int status);
+t_env	*env_singleton(t_env *new_env, int get_or_set);
+t_env	*env_get(void);
+int		init_env(char **old_env);
+int		env_copy(char **old_env);
+int		exit_status_to_env(int status);
 t_env	*env_new(char *key, char *value);
-int		env_add(t_env **env, char *key, char *value);
-t_env	*env_get(t_env *env, char *key);
-void	env_delone(t_env **env, char *key);
-void	env_free(t_env *env);
+int		env_add(char *key, char *value);
+t_env	*env_get_var(char *key);
+void	env_delone(char *key);
+void	env_free(void);
 
 /* ************************************************************************** */
 

@@ -6,13 +6,13 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 21:31:16 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 14:52:08 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 18:33:34 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	export_one(t_env **env, char *arg)
+static int	export_one(char *arg)
 {
 	int		j;
 	char	*value;
@@ -33,21 +33,21 @@ static int	export_one(t_env **env, char *arg)
 	}
 	if (key == NULL)
 		return (free(value), EXIT_FAILURE);
-	if (strcmp(key, "_") == 0)
+	if (strcmp(key, "?") == 0)
 		return (free(key), free(value), EXIT_SUCCESS);
-	if (env_add(env, key, value) == EXIT_FAILURE)
+	if (env_add(key, value) == EXIT_FAILURE)
 		return (free(key), free(value), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-int	export(t_env **env, char **args)
+int	export(char **args)
 {
 	int		i;
 
 	i = 1;
 	while (args[i])
 	{
-		if (export_one(env, args[i]) == EXIT_FAILURE)
+		if (export_one(args[i]) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		++i;
 	}

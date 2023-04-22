@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:38:33 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/17 23:21:21 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 18:58:24 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static void	handle_sigint(int sig)
 {
 	(void)sig;
-	//mettre valeur $? a 130
+	exit_status_to_env(130);
 	write(1, "\n", 1);
 	rl_replace_line("", 1);
 	rl_on_new_line();

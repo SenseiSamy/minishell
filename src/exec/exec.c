@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/17 23:22:59 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 18:45:15 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static void	exec_command(t_exec *exec, int i)
 		exit(builtin(exec, i));
 	if (exec->cmds[i].cmd)
 	{
-		path = get_path(exec->cmds[i].cmd, exec->env);
+		path = get_path(exec->cmds[i].cmd);
 		if (!path)
 			process_exit(exec, exec->cmds[i].args[0], CMD_ERROR);
-		env = pass_env_to_cmd(exec->env);
+		env = pass_env_to_cmd();
 		if (!env)
 			process_exit(exec, exec->cmds[i].args[0], MALLOC_ERROR);
 		execve(path, exec->cmds[i].args, env);
@@ -65,14 +65,13 @@ static int	exec_commands(t_exec *exec)
 	i = 0;
 	while (i < exec->n_cmd)
 		waitpid(exec->cmds[i++].pid, &status, 0);
-	return (env_add(&exec->env, ft_strdup("?"), ft_itoa(status)));
+	return (exit_status_to_env(status));
 }
 
-int	exec(t_env *env, int n_cmd, t_cmd *cmds)
+int	exec(int n_cmd, t_cmd *cmds)
 {
 	t_exec	exec;
 
-	exec.env = env;
 	exec.n_cmd = n_cmd;
 	exec.cmds = cmds;
 	exec.n_pipes = exec.n_cmd - 1;

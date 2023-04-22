@@ -6,13 +6,13 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:46:45 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 14:52:30 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 18:58:30 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unset(t_env **env, char **args)
+int	unset(char **args)
 {
 	t_env	*var;
 	int		i;
@@ -20,11 +20,11 @@ int	unset(t_env **env, char **args)
 	i = 0;
 	while (args[++i])
 	{
-		if (ft_strcmp(args[i], "_") == 0)
+		if (ft_strcmp(args[i], "?") == 0)
 			continue ;
-		var = env_get(*env, args[i]);
+		var = env_get_var(args[i]);
 		if (var != NULL)
-			env_delone(env, var->value);
+			env_delone(var->value);
 	}
 	return (0);
 }

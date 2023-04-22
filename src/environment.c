@@ -6,11 +6,20 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:04:23 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 17:58:31 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 18:58:16 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+t_env	*env_singleton(t_env *new_env, int get_or_set)
+{
+	static t_env	*env = NULL;
+
+	if (get_or_set == 1)
+		env = new_env;
+	return (env);
+}
 
 t_env	*env_new(char *key, char *value)
 {
@@ -22,36 +31,41 @@ t_env	*env_new(char *key, char *value)
 	new->key = key;
 	new->value = value;
 	new->next = NULL;
-	return (new);	
+	return (new);
 }
 
-int	env_add(t_env **env, char *key, char *value)
+int	env_add(char *key, char *value)
 {
-	t_env	*i;
+	t_env	*env;
+	t_env	*previous;
 
-	if (key == NULL)
-		return (EXIT_FAILURE);
-	i = env_get(*env, key);
-	if (i != NULL)
-		env_delone(env, key);
-	if (*env == NULL)
+	env = env_get();
+	if (env == NULL)
 	{
-		*env = env_new(key, value);
-		if (*env == NULL)
+		env_singleton(env_new(key, value), 1);
+		if (env_get() == NULL)
 			return (EXIT_FAILURE);
 		return (EXIT_SUCCESS);
 	}
-	i = *env;
-	while (i->next != NULL)
-		i = i->next;
-	i->next = env_new(key, value);
-	if (i->next == NULL)
+	while (env != NULL)
+	{
+		if (ft_strcmp(env->key, key) == 0)
+			return (free(env->value), free(key), env->value = value,
+				EXIT_SUCCESS);
+		previous = env;
+		env = env->next;
+	}
+	previous->next = env_new(key, value);
+	if (previous->next == NULL)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-t_env	*env_get(t_env *env, char *key)
+t_env	*env_get_var(char *key)
 {
+	t_env	*env;
+
+	env = env_get();
 	while (env)
 	{
 		if (strcmp(env->key, key) == 0)
@@ -61,27 +75,18 @@ t_env	*env_get(t_env *env, char *key)
 	return (NULL);
 }
 
-void	env_delone(t_env **env, char *key)
+void	env_delone(char *key)
 {
 	t_env	*to_remove;
-	t_env	*tmp;
-	t_env	*ptr;
+	t_env	*env;
 
-	ptr = *env;
-	to_remove = env_get(*env, key);
+	env = env_get();
+	to_remove = env_get_var(key);
 	if (to_remove == NULL)
 		return ;
-	if (ptr == to_remove)
-	{
-		tmp = ptr->next;
-		free(ptr->key);
-		free(ptr->value);
-		free(ptr);
-		*env = tmp;
-	}
-	while (ptr->next != to_remove)
-		ptr = ptr->next;
-	ptr->next = to_remove->next;
+	while (env->next != to_remove)
+		env = env->next;
+	env->next = to_remove->next;
 	free(to_remove->key);
 	free(to_remove->value);
 	free(to_remove);

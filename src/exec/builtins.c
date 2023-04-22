@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 17:41:39 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 18:32:18 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	builtin(t_exec *exec, int i)
 
 	exit_status = EXIT_SUCCESS;
 	if (ft_strcmp(exec->cmds[i].cmd, "env") == 0)
-		exit_status = env(exec->env);
+		exit_status = env();
 	else if (ft_strcmp(exec->cmds[i].cmd, "export") == 0)
-		exit_status = export(&exec->env, exec->cmds[i].args);
+		exit_status = export(exec->cmds[i].args);
 	else if (ft_strcmp(exec->cmds[i].cmd, "unset") == 0)
-		exit_status = unset(&exec->env, exec->cmds[i].args);
+		exit_status = unset(exec->cmds[i].args);
 	return (exit_status);
 }
 
@@ -47,5 +47,5 @@ int	exec_one_builtin(t_exec *exec)
 		return (EXIT_FAILURE);
 	close_all_fds(exec);
 	status = builtin(exec, 0);
-	return (exit_status_to_env(exec, status));
+	return (exit_status_to_env(status));
 }

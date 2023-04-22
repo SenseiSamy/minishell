@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:12:41 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/16 18:09:58 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 19:00:16 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,21 @@ static char	*concatenate_env_var(t_env *env)
 	return (free(tmp), env_var);
 }
 
-char	**pass_env_to_cmd(t_env *env)
+char	**pass_env_to_cmd(void)
 {
 	char	**new_env;
-	t_env	*ptr;
+	t_env	*env;
 	int		i;
 
 	i = 0;
-	ptr = env;
-	while (ptr && ++i)
-		ptr = ptr->next;
+	env = env_get();
+	while (env && ++i)
+		env = env->next;
 	new_env = ft_calloc(i + 1, sizeof (char *));
 	if (!new_env)
 		return (errno = EMEM, NULL);
 	i = 0;
+	env = env_get();
 	while (env)
 	{
 		new_env[i] = concatenate_env_var(env);

@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/17 23:29:22 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 19:03:30 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,27 @@ t_cmd	*parsing(char *line)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*env;
 	t_cmd	*cmds;
 	char	*line;
+	int		status;
 
 	(void)argc;
 	(void)argv;
-	env = init_env(envp);
-	if (env == NULL)
-		return (EXIT_FAILURE);
-	signal_prompt();
+	if (init_env(envp) == EXIT_FAILURE)
+		perror2("minishell");
 	while (1)
 	{
+		signal_prompt();
 		line = readline("minishell> ");
 		if (line == NULL)
 			break;
 		signal_exec();
+		add_history(line);
 		cmds = parsing(line);
-		exec(env, 3, cmds);
+		exec(3, cmds);
 	}
 	rl_clear_history();
-	return (EXIT_SUCCESS); // return avec $?
+	status = ft_atoi(env_get_var("?")->value);
+	env_free();
+	return (status);
 }
