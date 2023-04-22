@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/21 00:31:26 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:11:49 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -653,7 +653,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putstr_fd(char *s, int fd);
 
 /**
- * @brief The  realloc()  function  changes the size of the memory block pointed
+ * @brief The ft_realloc()  function  changes the size of the memory block pointed
  * to by ptr to size bytes.  The contents of the memory will be unchanged in the
  * range from the start of the region up to the minimum of the old and new
  * sizes. If the new size is larger than the old size, the added memory will not
@@ -668,7 +668,7 @@ void				ft_putstr_fd(char *s, int fd);
  * @param size 
  * @return void* 
  */
-void				*realloc(void *ptr, size_t size);
+void				*ft_realloc(void *ptr, size_t size);
 
 /**
  * @brief The ft_putstr() function writes the string 's' to the standard output.

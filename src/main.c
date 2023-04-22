@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 04:10:47 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:12:15 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	display_cmd(t_cmd *cmd)
 	}
 	i = 0;
 	printf("Redirections:\n");
-	while (cmd->redir[i] != NULL)
+	while (cmd->redirect[i] != NULL)
 	{
-		printf("  %s$\n", cmd->redir[i]);
+		printf("  %s$\n", cmd->redirect[i]);
 		i++;
 	}
 }
@@ -81,11 +81,11 @@ void	cleanup(t_return *result, t_var *var, char *input_str, t_cmd *cmd)
 	{
 		free(cmd[i].cmd);
 		clean_array(cmd[i].args);
-		clean_array(cmd[i].redir);
+		clean_array(cmd[i].redirect);
 		i++;
 	}
 	clean_array(cmd[i].args);
-	clean_array(cmd[i].redir);
+	clean_array(cmd[i].redirect);
 	free(cmd);
 	free(var->envp);
 	free(result);
@@ -124,7 +124,7 @@ t_cmd	*linked_to_array(t_cmd_linked *head)
 	{
 		array[i].cmd = head->cmd;
 		array[i].args = head->args;
-		array[i].redir = head->redir;
+		array[i].redirect = head->redir;
 		tmp = head;
 		head = head->next;
 		free(tmp);
@@ -163,7 +163,7 @@ int	main(void)
 	printf("--------------------\n");
 	i = 0;
 	tab =  linked_to_array(cmd);
-	while (tab[i].cmd != NULL || tab[i].args != NULL || tab[i].redir != NULL)
+	while (tab[i].cmd != NULL || tab[i].args != NULL || tab[i].redirect != NULL)
 	{
 		display_cmd(&tab[i]);
 		i++;
