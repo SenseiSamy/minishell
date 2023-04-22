@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:38:39 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:12:22 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,13 @@ typedef struct s_data
 
 /* BUILTINS*/
 
-int		env(void);
-int		export(char **args);
-int		unset(char **args);
+int		ft_env(void);
+int		ft_export(char **args);
+int		ft_unset(char **args);
+int		ft_echo(int argc, char **args);
+int		ft_cd(const char *path);
+int		ft_pwd(void);
+//int		ft_exit(t_exec *exec, char **args);
 
 /* ENVIRONMENT */
 
@@ -87,5 +91,9 @@ void	env_free(void);
 void	signal_prompt(void);
 void	signal_exec(void);
 void	perror2(char *str);
+
+/* ************************************************************************** */
+
+t_cmd	*ft_parsing(char *str);
 
 #endif

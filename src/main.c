@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:42:07 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:43:31 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,19 @@ int	main(int argc, char **argv, char **envp)
 	cmds = NULL;
 	if (init_env(envp) == EXIT_FAILURE)
 		perror2("minishell");
+	printf("Bienvenue dans minihell uwu\n");
 	while (1)
 	{
 		signal_prompt();
 		line = readline("minishell> ");
 		if (line == NULL)
-			break;
+			break ;
 		signal_exec();
 		add_history(line);
-		cmds = parsing(line);
-		exec(3, cmds);
+		cmds = ft_parsing(line);
+		if (cmds == NULL)
+			continue ;
+		exec(cmds);
 	}
 	rl_clear_history();
 	status = ft_atoi(env_get_var("?")->value);

@@ -6,13 +6,13 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:18:48 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:36:11 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:05:21 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	builtin_exit(t_exec *exec, char **args)
+void	ft_exit(t_exec *exec, char **args)
 {
 	int	status;
 

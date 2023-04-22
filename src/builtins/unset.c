@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:46:45 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:21:27 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 20:08:05 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unset(char **args)
+int	ft_unset(char **args)
 {
 	t_env	*var;
 	int		i;

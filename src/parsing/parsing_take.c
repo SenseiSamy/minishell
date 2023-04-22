@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:02:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:28:55 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:28:13 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static char	*get_var_word_name(t_var *var)
 char	*get_var_word(t_var *var)
 {
 	t_var_word	var_word;
+	t_env		*tmp;
 
 	var_word = (t_var_word){NULL, NULL, 0};
 	if (var->str[var->i] == '$' && var->str[var->i + 1] == '?')
@@ -63,7 +64,13 @@ char	*get_var_word(t_var *var)
 		return (var_word.result);
 	}
 	var_word.name = get_var_word_name(var);
-	var_word.result = ft_getenv(var_word.name, var);
+	tmp = env_get_var(var_word.name);
+	if (tmp == NULL)
+	{
+		free(var_word.name);
+		return (NULL);
+	}
+	var_word.result = env_get_var(var_word.name)->value;
 	free(var_word.name);
 	return (var_word.result);
 }

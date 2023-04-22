@@ -6,13 +6,13 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:06:09 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:36:16 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:05:12 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	env(void)
+int	ft_env(void)
 {
 	t_env	*env;
 

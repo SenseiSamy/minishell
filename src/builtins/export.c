@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 21:31:16 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 18:33:34 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/22 20:05:32 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	export_one(char *arg)
 	return (EXIT_SUCCESS);
 }
 
-int	export(char **args)
+int	ft_export(char **args)
 {
 	int		i;
 

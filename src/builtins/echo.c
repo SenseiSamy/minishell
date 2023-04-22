@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:04:34 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/21 00:27:52 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:18:48 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ static bool	no_newline_args(char **args)
 {
 	int	i;
 
-	i = 0;
+	if (args[1][0] != '-')
+		return (false);
+	i = 1;
 	while (args[1][i])
 		if (args[1][i++] != 'n')
 			return (false);
 	return (true);
 }
 
-void	ft_echo(int argc, char **argv)
+int	ft_echo(int argc, char **argv)
 {
 	bool	no_newline;
 	int		start_arg;
@@ -44,4 +46,5 @@ void	ft_echo(int argc, char **argv)
 	}
 	if (!no_newline)
 		printf("\n");
+	return (0);
 }

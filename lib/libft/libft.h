@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:15:05 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:16:11 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -768,5 +768,13 @@ void				ft_free_split(char **split);
  * @param b 
  */
 void				ft_swap(int *a, int *b);
+
+/**
+ * @brief Count the number of elements in an array of strings.
+ * 
+ * @param array 
+ * @return size_t 
+ */
+size_t				ft_arraylen(char **array);
 
 #endif

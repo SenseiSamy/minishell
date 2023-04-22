@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:52:49 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:15:22 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:59:06 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_cd(const char *path)
 {
 	if (path == NULL)
 	{
-		path = getenv("HOME");
+		path = env_get_var("HOME")->value;
 		if (path == NULL)
 		{
 			ft_putstr_fd("cd: No path provided and HOME environment ", 2);

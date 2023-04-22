@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:40:15 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:15:36 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,18 @@ int	builtin(t_exec *exec, int i)
 
 	exit_status = EXIT_SUCCESS;
 	if (ft_strcmp(exec->cmds[i].cmd, "env") == 0)
-		exit_status = env();
+		exit_status = ft_env();
 	else if (ft_strcmp(exec->cmds[i].cmd, "export") == 0)
-		exit_status = export(exec->cmds[i].args);
+		exit_status = ft_export(exec->cmds[i].args);
 	else if (ft_strcmp(exec->cmds[i].cmd, "unset") == 0)
-		exit_status = unset(exec->cmds[i].args);
+		exit_status = ft_unset(exec->cmds[i].args);
+	else if (ft_strcmp(exec->cmds[i].cmd, "cd") == 0)
+		exit_status = ft_cd(exec->cmds[i].args[1]);
+	else if (ft_strcmp(exec->cmds[i].cmd, "echo") == 0)
+		exit_status = ft_echo(ft_arraylen(exec->cmds[i].args),
+				exec->cmds[i].args);
+	else if (ft_strcmp(exec->cmds[i].cmd, "pwd") == 0)
+		exit_status = ft_pwd();
 	return (exit_status);
 }
 
