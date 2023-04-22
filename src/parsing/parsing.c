@@ -5,94 +5,93 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 02:20:54 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/12 18:31:24 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/04/18 20:15:08 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/04/22 19:15:44 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_cmd	*create_command(char *cmd_str)
+typedef struct s_take_word
 {
-	t_cmd	*new_cmd;
+	char	*result;
+	char	*str_quotes;
+	int		i;
+}			t_take_word;
 
-	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	new_cmd->cmd = ft_strdup(cmd_str);
-	new_cmd->args = NULL;
-	new_cmd->redirect = NULL;
-	new_cmd->fd_in = 0;
-	new_cmd->fd_out = 1;
-	new_cmd->pid = 0;
-	return (new_cmd);
+static void	utilse_quote(t_take_word *take_word, t_var *var)
+{
+	take_word->str_quotes = get_str_quotes(var, var->str[var->i]);
+	ft_strcpy(take_word->result + take_word->i, take_word->str_quotes);
+	take_word->i += ft_strlen(take_word->str_quotes);
+	free(take_word->str_quotes);
 }
 
-t_cmd	*add_command(t_cmd **commands, char *cmd_str)
+static bool	utils_take_word(t_var *var, t_take_word *take_word, t_return *ret)
 {
-	t_cmd	*new_cmd;
-	t_cmd	*current;
+	char	*tmp;
 
-	new_cmd = create_command(cmd_str);
-	if (*commands == NULL)
-		*commands = new_cmd;
+	if (var->str[var->i] == '$')
+	{
+		tmp = get_var_word(var);
+		if (tmp != NULL)
+		{
+			ft_strcpy(take_word->result + take_word->i, tmp);
+			take_word->i += ft_strlen(tmp);
+			free(tmp);
+		}
+	}
+	else if (var->str[var->i] == '\'' || var->str[var->i] == '"')
+	{
+		utilse_quote(take_word, var);
+		ret->on_quote = true;
+	}
 	else
 	{
-		current = *commands;
-		while (current->pid != 0)
-			current = (t_cmd *)((intptr_t)current->pid);
-		current->pid = (intptr_t)new_cmd;
+		if (var->str[var->i] == '>' || var->str[var->i] == '<')
+			return (false);
+		take_word->result[take_word->i++] = var->str[var->i];
 	}
-	return (new_cmd);
+	var->i++;
+	return (true);
 }
 
-void	add_arg_to_command(t_cmd *current_cmd, char *arg_str)
+static void	init_take_word(t_take_word *take_word, t_return *ret, t_var *var)
 {
-	int	argc;
-
-	argc = 0;
-	if (current_cmd->args)
-		while (current_cmd->args[argc])
-			argc++;
-	current_cmd->args = (char **)ft_realloc(current_cmd->args, (argc + 2)
-			* sizeof(char *));
-	current_cmd->args[argc] = ft_strdup(arg_str);
-	current_cmd->args[argc + 1] = NULL;
+	take_word->result = ft_calloc(1, ft_strlen(var->str) + 1);
+	take_word->str_quotes = NULL;
+	take_word->i = 0;
+	ret->str = NULL;
+	ret->i = var->i;
+	ret->on_quote = false;
 }
 
-t_cmd	*process_tokens(t_token *tokens, char **envp)
+t_return	take_word(t_var *var)
 {
-	t_cmd	*commands;
-	t_cmd	*current_cmd;
-	bool	new_command;
+	t_take_word	take_word;
+	t_return	ret;
 
-	commands = NULL;
-	current_cmd = NULL;
-	new_command = true;
-	while (tokens && tokens->type != END)
+	init_take_word(&take_word, &ret, var);
+	while (ft_isspace(var->str[var->i]))
+		var->i++;
+	if (var->str[var->i] == '>' || var->str[var->i] == '<')
 	{
-		if (tokens->type == WORD && new_command)
-		{
-			current_cmd = add_command(&commands, tokens->str);
-			new_command = false;
-		}
-		else if (tokens->type == WORD && !new_command)
-			add_arg_to_command(current_cmd, tokens->str);
-		else if (tokens->type == DOLLAR)
-		{
-			handle_dollar_token(&tokens, envp);
-			if (tokens->type == WORD && new_command)
-			{
-				current_cmd = add_command(&commands, tokens->str);
-				new_command = false;
-			}
-			else if (tokens->type == WORD && !new_command)
-				add_arg_to_command(current_cmd, tokens->str);
-		}
-		else if (tokens->type >= REDI_IN && tokens->type <= REDI_IN_APPEND)
-			handle_redirect_token(&tokens, &current_cmd);
-		else if (tokens->type == PIPE)
-			new_command = true;
-		tokens = tokens->next;
+		ret.str = get_redirect_word(take_word.result, var, take_word.i);
+		return (ret);
 	}
-	return (commands);
+	while (var->i < (int)ft_strlen(var->str) && !ft_isspace(var->str[var->i]))
+	{
+		if (var->str[var->i] == '|')
+		{
+			take_word.result[take_word.i++] = var->str[var->i++];
+			break ;
+		}
+		if (utils_take_word(var, &take_word, &ret) == false)
+			break ;
+	}
+	take_word.result[take_word.i] = '\0';
+	ret.i = var->i;
+	ret.str = take_word.result;
+	return (ret);
 }
 // TODO: erreur de norm et utiliser libft pour une fois

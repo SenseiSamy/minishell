@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/12 03:23:36 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:14:25 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,60 +15,68 @@
 
 # include "minishell.h"
 
-typedef enum e_token_type
-{
-	WORD,
-	DOLLAR,
-	REDI_IN,
-	REDI_OUT,
-	REDI_OUT_APPEND,
-	REDI_IN_APPEND,
-	PIPE,
-	END
-}					t_token_type;
-
-typedef struct s_token
-{
-	char			*str;
-	t_token_type	type;
-	struct s_token	*next;
-}					t_token;
-
 typedef struct s_var
 {
-	t_token			*tokens;
+	char			*str;
 	int				i;
-	int				start;
-	bool			in_quotes;
-	char			quote_char;
+	char			**envp;
 }					t_var;
 
-char				**parse_args(char *line);
-char				*find_cmd_path(char *cmd, char **envp);
-bool				check_syntax(const char *line);
+typedef struct s_cmd_linked
+{
+	char				*cmd;
+	char				**args;
+	char				**redir;
+	struct s_cmd_linked	*next;
+}					t_cmd_linked;
 
-// pre_parsing.c
-t_token				*create_token(char *str, t_token_type type);
-t_token				*add_token(t_token *list, char *str, t_token_type type);
-t_token_type		get_token_type(char *str);
-char				*copy_substring(char *str, int start, int end);
-t_token				*pre_parsing(char *line, char **envp);
+typedef struct s_take
+{
+	char			*word;
+	int				i;
+	bool			on_quote;
+	struct s_take	*next;
+}					t_take;
 
-// pre_parsing_utils.c
-void				handle_dollar(t_var *var, char *line);
-void				handle_quotes(t_var *var, char *line);
-void				handle_space(t_var *var, char *line);
-void				handle_end_of_line(t_var *var, char *line);
+typedef struct s_return
+{
+	char			*str;
+	int				i;
+	bool			on_quote;
+}					t_return;
 
-// parsing.c
-t_cmd				*create_command(char *cmd_str);
-t_cmd				*add_command(t_cmd **commands, char *cmd_str);
-void				add_arg_to_command(t_cmd *current_cmd, char *arg_str);
-t_cmd				*process_tokens(t_token *tokens, char **envp);
+typedef struct s_str_quotes
+{
+	int				length;
+	char			*result;
+	int				index;
+	bool			quote_open;
+	int				i;
+}					t_str_quotes;
 
-// parsing_utils.c
-char				*get_env_var_value(char *var_name, char **envp);
-void				handle_dollar_token(t_token **token, char **envp);
-void				handle_redirect_token(t_token **token, t_cmd **current_cmd);
+typedef struct s_get_env
+{
+	int				i;
+	int				j;
+	int				k;
+	int				len;
+}					t_get_env;
+
+// parsing_utils
+char				*ft_getenv(char *name, t_var *var);
+int					size_name(char *str);
+void				ft_itoa_custom(int num, char *str);
+char				*get_redirect_word(char *result, t_var *var, int i);
+
+// parsing_take
+char				*get_var_word(t_var *var);
+char				*get_str_quotes(t_var *input, char quote_type);
+
+// check_syntax
+bool				check_parsing(t_return *ret, int size);
+
+int					count_pipe(t_return *ret);
+t_return			take_word(t_var *var);
+t_cmd_linked		*convert_cmd(t_return *ret, int size);
 
 #endif

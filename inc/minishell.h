@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/12 02:25:49 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:14:47 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,10 @@
 
 /* ************************************************************************** */
 
-# define ctrlc 130
-# define ctrlslash 131
+# define CTRLC 130
+# define CTRLSLASH 131
 
 /* ************************************************************************** */
-
-typedef enum e_builtin
-{
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT
-}	t_builtin;
 
 # define REDIRECT_IN "<"
 # define REDIRECT_OUT ">"
@@ -54,15 +43,7 @@ typedef enum e_builtin
 # define REDIRECT_IN_APPEND "<<"
 
 /* ************************************************************************** */
-/*
--chemin de l'executable (ex: /usr/bin/python)
--arguments de la commande, comme argv (ex: {"/usr/bin", "-l", "NULL"})
--nom du fichier d'une commande tel que "< Makefile cat", vaut NULL sinon
--nom du fichier d'une commande tel que "cat lol > Makefile" ou "cat lol >> 
-Makefile", vaut NULL sinon
--vaut 1 si le redirect out est un >, vaut 2 si c'est un >>, vaut 0 sinon
--vaut 1 si il y a une here_doc (<<), vaut 0 sinon;
-*/
+
 typedef struct s_cmd
 {
 	char	*cmd;
@@ -71,22 +52,30 @@ typedef struct s_cmd
 	int		fd_in;
 	int		fd_out;
 	pid_t	pid;
-}	t_cmd;
+}			t_cmd;
 
 typedef struct s_env
 {
 	char	*name;
 	char	*value;
-}	t_env;
+}			t_env;
 
 typedef struct s_data
 {
 	t_env	**env_var;
 	t_cmd	**cmd;
 	char	**envp;
-}	t_data;
+}			t_data;
 
 /* ************************************************************************** */
-t_cmd	complet_cmd(char *line, char **envp);
+t_cmd		complet_cmd(char *line, char **envp);
+
+/* ************************************************************************** */
+int			ft_cd(const char *path);
+void		ft_env(void);
+int			ft_pwd(void);
+int			ft_unset(const char *name);
+void		ft_exit(int status);
+void		ft_echo(int argc, char **argv);
 
 #endif

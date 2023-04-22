@@ -5,62 +5,92 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 03:22:03 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/12 18:31:47 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/04/18 19:49:10 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/04/22 19:15:28 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-char	*get_env_var_value(char *var_name, char **envp)
+char	*ft_getenv(char *name, t_var *var)
 {
-	int		i;
-	size_t	name_len;
+	t_get_env	get_env;
 
-	i = 0;
-	name_len = ft_strlen(var_name);
-	while (envp[i])
+	get_env = (t_get_env){0, 0, 0, ft_strlen(name)};
+	while (var->envp[get_env.i] != NULL)
 	{
-		if (ft_strncmp(envp[i], var_name, name_len) == 0
-			&& envp[i][name_len] == '=')
-			return (&envp[i][name_len + 1]);
-		i++;
+		get_env.j = 0;
+		while (var->envp[get_env.i][get_env.j] == name[get_env.j]
+				&& name[get_env.j] != '\0')
+			get_env.j++;
+		if (get_env.j == get_env.len && var->envp[get_env.i][get_env.j] == '=')
+		{
+			get_env.k = get_env.j + 1;
+			while (var->envp[get_env.i][get_env.k] != '\0')
+				get_env.k++;
+			return (ft_strndup(var->envp[get_env.i] + get_env.j + 1,
+					get_env.k - get_env.j - 1));
+		}
+		get_env.i++;
 	}
 	return (NULL);
 }
 
-void	handle_dollar_token(t_token **token, char **envp)
+void	ft_itoa_custom(int num, char *str)
 {
-	t_token	*next_token;
-	char	*value;
-	t_token	*to_remove;
+	int		i;
+	int		j;
+	char	tmp;
 
-	next_token = (*token)->next;
-	if (next_token && next_token->type == WORD)
+	i = 0;
+	if (num == 0)
+		str[i++] = '0';
+	while (num != 0)
 	{
-		value = get_env_var_value(next_token->str, envp);
-		if (value)
-		{
-			free((*token)->str);
-			(*token)->str = ft_strdup(value);
-			(*token)->type = WORD;
-			to_remove = next_token;
-			(*token)->next = next_token->next;
-			free(to_remove->str);
-			free(to_remove);
-		}
+		str[i++] = (num % 10) + '0';
+		num /= 10;
 	}
-	else
-		(*token)->type = WORD;
+	str[i] = '\0';
+	j = 0;
+	i--;
+	while (j < i)
+	{
+		tmp = str[j];
+		str[j] = str[i];
+		str[i] = tmp;
+		j++;
+		i--;
+	}
 }
 
-void	handle_redirect_token(t_token **token, t_cmd **current_cmd)
+int	size_name(char *str)
 {
-	t_token	*next_token;
-	char	*new_str;
-	int		redirect_type;
-	int		redirect_count;
-	t_token	*to_remove;
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && (ft_isalnum(str[i]) || str[i] == '_'))
+		i++;
+	return (i);
+}
+
+char	*get_redirect_word(char *result, t_var *var, int i)
+{
+	char	*tmp;
+
+	result[i] = var->str[var->i];
+	i++;
+	var->i++;
+	if (var->str[var->i] == var->str[var->i - 1])
+	{
+		result[i] = var->str[var->i];
+		i++;
+		var->i++;
+	}
+	result[i] = '\0';
+	tmp = ft_strdup(result);
+	free(result);
+	return (tmp);
+}
 
 	next_token = (*token)->next;
 	if (next_token && next_token->type == WORD)

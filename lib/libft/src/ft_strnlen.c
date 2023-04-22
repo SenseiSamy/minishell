@@ -6,11 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 17:27:38 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/03/11 21:47:58 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:33:28 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
 size_t	ft_strnlen(const char *s, size_t maxlen)
 {

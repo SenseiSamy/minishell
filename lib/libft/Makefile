@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/11 22:05:15 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/21 00:36:06 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,10 @@ NAME	= libft.a
 # **************************************************************************** #
 
 CC		= cc
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -I./
 
 ifeq ($(MAKECMDGOALS), debug)
-	FLAGS += -g3 -ggdb3
+	FLAGS = -Wall -Wextra -Werror -ggdb3 -I./
 endif
 
 # **************************************************************************** #
@@ -47,6 +47,7 @@ ft_strtrim.c \
 ft_memmove.c \
 ft_isalnum.c \
 ft_strcmp.c \
+ft_strcpy.c \
 ft_isdigit.c \
 ft_atof.c \
 ft_isxdigit.c \
@@ -71,6 +72,7 @@ ft_substr.c \
 ft_strmapi.c \
 ft_ispunct.c \
 ft_strchr.c \
+ft_strrev.c \
 ft_atoi.c \
 ft_isascii.c \
 ft_itoa.c \

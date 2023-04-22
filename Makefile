@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/11 22:38:53 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/21 01:22:35 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ EXEC	= minishell
 # **************************************************************************** #
 
 CC		= cc
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -g3
 
 ifeq ($(MAKECMDGOALS),leaks)
 	FLAGS += -ggdb3
@@ -30,10 +30,20 @@ HDIR	= ./inc/
 
 # **************************************************************************** #
 
-LNAME	= libft.a
-CNAME	= main.c builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c \
-		builtins/export.c builtins/pwd.c builtins/unset.c
-		parsing/cmd.c parsing/parsing.c parsing/syntax_checker.c
+LNAME	=	libft.a
+CNAME	=	parsing/parsing_take.c \
+			parsing/parsing.c \
+			parsing/parsing_utils.c \
+			parsing/convert_to_cmd.c \
+			parsing/check_syntax.c \
+			main.c \
+			builtins/export.c \
+			builtins/pwd.c \
+			builtins/env.c \
+			builtins/echo.c \
+			builtins/cd.c \
+			builtins/unset.c \
+			builtins/exit.c
 ONAME	= $(CNAME:.c=.o)
 HNAME	= minishell.h
 
