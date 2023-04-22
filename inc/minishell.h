@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:14:47 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:21:52 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,58 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include "exec.h"
 
 /* ************************************************************************** */
 
-# define CTRLC 130
-# define CTRLSLASH 131
+# define ctrlc 130
+# define ctrlslash 131
+
+typedef struct s_minishell	t_minishell;
+
+struct s_minishell
+{
+	t_env	*env;
+	char	*line;
+	char	**cmd_line;
+	t_cmd	**cmd;
+	int		nb_cmd;
+	int		nb_redir;
+	int		status;
+	int		exit;
+};
+
+enum	e_token
+{
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	APPEND_OUT,
+	APPEND_ERR,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+};
 
 /* ************************************************************************** */
 
-# define REDIRECT_IN "<"
-# define REDIRECT_OUT ">"
-# define REDIRECT_OUT_APPEND ">>"
-# define REDIRECT_IN_APPEND "<<"
+/* BUILTINS*/
 
-/* ************************************************************************** */
+int		env(void);
+int		export(char **args);
+int		unset(char **args);
+
+/* ENVIRONMENT */
+
+t_env	*env_singleton(t_env *new_env, int get_or_set);
+t_env	*env_get(void);
+int		init_env(char **old_env);
+int		env_copy(char **old_env);
+int		exit_status_to_env(int status);
+t_env	*env_new(char *key, char *value);
+int		env_add(char *key, char *value);
+t_env	*env_get_var(char *key);
+void	env_delone(char *key);
+void	env_free(void);
 
 typedef struct s_cmd
 {
@@ -66,16 +104,9 @@ typedef struct s_data
 	t_cmd	**cmd;
 	char	**envp;
 }			t_data;
-
 /* ************************************************************************** */
-t_cmd		complet_cmd(char *line, char **envp);
 
-/* ************************************************************************** */
-int			ft_cd(const char *path);
-void		ft_env(void);
-int			ft_pwd(void);
-int			ft_unset(const char *name);
-void		ft_exit(int status);
-void		ft_echo(int argc, char **argv);
+void	signal_prompt(void);
+void	signal_exec(void);
 
 #endif

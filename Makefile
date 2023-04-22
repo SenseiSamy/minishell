@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
+#    By: snaji <snaji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/21 01:22:35 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/22 19:22:02 by snaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ EXEC	= minishell
 # **************************************************************************** #
 
 CC		= cc
+FLAGS	= -Wall -Wextra -Werror -g3
 FLAGS	= -Wall -Wextra -Werror -g3
 
 ifeq ($(MAKECMDGOALS),leaks)
@@ -59,7 +60,7 @@ LFILES	= $(addprefix $(LDIR), $(LNAME))
 all: $(EXEC)
 
 $(EXEC): $(OFILES) $(LFILES)
-	$(CC) $(FLAGS) -o $(EXEC) $(OFILES) -L$(LDIR) -lft
+	$(CC) $(FLAGS) -o $(EXEC) $(OFILES) -L$(LDIR) -lft -lreadline
 
 $(ODIR)%.o: $(CDIR)%.c $(HFILES)
 	@mkdir -p $(@D)

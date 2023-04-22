@@ -3,72 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:12:15 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:21:04 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parsing.h"
-
-t_var	*init_var(char *input_str)
-{
-	t_var	*var;
-
-	var = (t_var *)malloc(sizeof(t_var));
-	var->str = input_str;
-	var->i = 0;
-	return (var);
-}
-
-void	display_result(t_return result)
-{
-	printf("--------------------\n");
-	printf("Résultat: %s$\n", result.str);
-	printf("Index: %d\n", result.i);
-	printf("Quote: %d\n", result.on_quote);
-}
-
-void	display_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	printf("--------------------\n");
-	printf("Commande: %s\n", cmd->cmd);
-	printf("Arguments:\n");
-	while (cmd->args[i] != NULL)
-	{
-		printf("  %s$\n", cmd->args[i]);
-		i++;
-	}
-	i = 0;
-	printf("Redirections:\n");
-	while (cmd->redirect[i] != NULL)
-	{
-		printf("  %s$\n", cmd->redirect[i]);
-		i++;
-	}
-}
-
-void	clean_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i] != NULL)
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 void	cleanup(t_return *result, t_var *var, char *input_str, t_cmd *cmd)
 {
-	int	i;
+	t_cmd	*cmds;
+	char	*line;
+	int		status;
 
 	i = 0;
 	while (result[i].str != NULL)
@@ -164,10 +112,27 @@ int	main(void)
 	i = 0;
 	tab =  linked_to_array(cmd);
 	while (tab[i].cmd != NULL || tab[i].args != NULL || tab[i].redirect != NULL)
+	(void)argc;
+	(void)argv;
+	if (init_env(envp) == EXIT_FAILURE)
+		perror2("minishell");
+	while (1)
 	{
 		display_cmd(&tab[i]);
 		i++;
+		signal_prompt();
+		line = readline("minishell> ");
+		if (line == NULL)
+			break;
+		signal_exec();
+		add_history(line);
+		cmds = parsing(line);
+		exec(3, cmds);
 	}
 	cleanup(result, var, input_str, tab);
 	return (0);
+	rl_clear_history();
+	status = ft_atoi(env_get_var("?")->value);
+	env_free();
+	return (status);
 }

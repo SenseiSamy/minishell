@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 03:41:13 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/16 03:43:13 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/04/05 18:06:09 by snaji             #+#    #+#             */
+/*   Updated: 2023/04/22 19:21:37 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// j'ai pas trouver d'autre solution que ça faut voir ça @samy
-extern char	**environ;
-
-void	ft_env(void)
+int	env()
 {
-	int	i;
+	t_env	*env;
 
-	i = 0;
-	while (environ[i] != NULL)
+	env = env_get();
+	while (env != NULL)
 	{
-		ft_putstr_fd(environ[i], 1);
-		ft_putchar_fd('\n', 1);
-		i++;
+		if (ft_strcmp(env->key, "?") != 0)
+			printf("%s=%s\n", env->key, env->value);
+		env = env->next;
 	}
+	return (0);
 }

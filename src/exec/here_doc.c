@@ -6,11 +6,11 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 22:20:26 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/02 02:12:30 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/15 19:06:50 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/exec.h"
+#include "minishell.h"
 
 static int	single_here_doc(t_exec *exec, int cmd_n, char *limiter)
 {
@@ -59,13 +59,13 @@ int	create_hdocs(t_exec *exec)
 
 	exec->hdocs = ft_calloc(exec->n_cmd, sizeof (int *));
 	if (exec->hdocs == NULL)
-		return (EXIT_FAILURE);
+		return (errno = EMEM, EXIT_FAILURE);
 	i = 0;
 	while (i < exec->n_cmd)
 	{
 		exec->hdocs[i] = ft_calloc(2, sizeof (int));
 		if (exec->hdocs == NULL)
-			return (free_hdocs(exec), EXIT_FAILURE);
+			return (errno = EMEM, free_hdocs(exec), EXIT_FAILURE);
 		++i;
 	}
 	return (EXIT_SUCCESS);
