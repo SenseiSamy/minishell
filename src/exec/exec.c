@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:40:17 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:50:24 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+static int	count_cmds(t_cmd *cmds)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i].args != NULL && cmds[i].cmd != NULL
+		&& cmds[i].redirect != NULL)
+		++i;
+	return (i);
+}
 
 static void	exec_command(t_exec *exec, int i)
 {
@@ -68,11 +79,11 @@ static int	exec_commands(t_exec *exec)
 	return (exit_status_to_env(status));
 }
 
-int	exec(int n_cmd, t_cmd *cmds)
+int	exec(t_cmd *cmds)
 {
 	t_exec	exec;
 
-	exec.n_cmd = n_cmd;
+	exec.n_cmd = count_cmds(cmds);
 	exec.cmds = cmds;
 	exec.n_pipes = exec.n_cmd - 1;
 	exec.pipes = NULL;

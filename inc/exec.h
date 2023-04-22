@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:38:37 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:50:15 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ int		is_a_builtin(t_cmd *cmd);
 int		builtin(t_exec *exec, int i);
 int		exec_one_builtin(t_exec *exec);
 int		choose_exit_status(char *error);
-int		exec(int n_cmd, t_cmd *cmds);
+int		exec(t_cmd *cmds);
 
 #endif
