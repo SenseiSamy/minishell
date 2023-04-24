@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 19:51:11 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:09:26 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,32 @@ static char	*get_prompt(void)
 	return (tmp);
 }
 
+void	print_cmd(t_cmd *cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (cmd[i].cmd && cmd[i].args && cmd[i].redirect)
+	{
+		j = 0;
+		printf("cmd[%i]->cmd = %s\n", i, cmd->cmd);
+		while (cmd[i].args[j])
+		{
+			printf("	cmd[%i]->args[%i] = %s\n", i, j, cmd[i].args[j]);
+			j++;
+		}
+		j = 0;
+		while (cmd[i].redirect[j])
+		{
+			printf("	cmd[%i]->redirect[%i] = %s\n", i, j, cmd[i].redirect[j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
+
 static int	ft_prompt(t_cmd *cmds)
 {
 	char	*line;
@@ -50,6 +76,7 @@ static int	ft_prompt(t_cmd *cmds)
 	signal_exec();
 	add_history(line);
 	cmds = ft_parsing(line);
+	print_cmd(cmds);
 	free(line);
 	if (cmds == NULL)
 		return (1);

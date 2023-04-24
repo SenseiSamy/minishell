@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 19:32:54 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:57:50 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,6 @@
 
 /* ************************************************************************** */
 /*                                  INCLUDES                                  */
-/*
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <string.h>
-# include <fcntl.h>
-# include <errno.h>
-# include <sys/wait.h>
-# include <sys/stat.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft.h"
-*/
 
 # include "minishell.h"
 

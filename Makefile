@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/24 19:51:52 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/24 19:58:26 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,7 @@ EXEC	= minishell
 # **************************************************************************** #
 
 CC		= cc
-FLAGS	= -Wall -Wextra -Werror -g3
-FLAGS	= -Wall -Wextra -Werror -g3
-
-ifeq ($(MAKECMDGOALS),leaks)
-	FLAGS += -ggdb3
-endif
+FLAGS	= -Wall -Wextra -Werror -ggdb3
 
 # **************************************************************************** #
 

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:46:45 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 18:12:02 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:03:38 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_unset(char **args)
 			continue ;
 		var = env_get_var(args[i]);
 		if (var != NULL)
-			env_delone(var->value); 
+			env_delone(var->value);
 	}
 	return (0);
 }
