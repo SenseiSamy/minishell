@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 01:53:29 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:32:54 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ int		builtin(t_exec *exec, int i);
 int		exec_one_builtin(t_exec *exec);
 int		choose_exit_status(char *error);
 int		exec(t_cmd *cmds);
+
+void	cleanup(t_cmd *cmd);
 
 #endif

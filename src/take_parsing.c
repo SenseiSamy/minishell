@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 19:44:17 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 02:12:28 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:52:30 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ t_cmd	*ft_parsing(char *str)
 	size = 1;
 	var = init_var(str);
 	result = ft_calloc(1, sizeof(t_return));
-	if (!result)
-		return (errno = EMEM, NULL);
+	if (!result || !str)
+		return (errno = EMEM, free(result), free(var), NULL);
 	while (var->i < (int)ft_strlen(str))
 	{
 		result[i] = take_word(var);

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:38:14 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:40:20 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:47:26 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_path(char *prog_name)
 	t_env	*tmp;
 	char	*paths;
 
-	if (!prog_name)
+	if (!prog_name || ft_strlen(prog_name) == 0)
 		return (NULL);
 	if (prog_name[0] == '/' || prog_name[0] == '.')
 	{

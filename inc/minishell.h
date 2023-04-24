@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/23 01:15:56 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:51:44 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,9 @@ void	perror2(char *str);
 /* ************************************************************************** */
 
 t_cmd	*ft_parsing(char *str);
+
+void	print_mininishell(void);
+void	clean_array(char **array);
+void	cleanup(t_cmd *cmd);
 
 #endif
