@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:59:44 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:40:24 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/23 01:15:40 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ static void	open_redirect_out(t_exec *exec, int n, int i, char **lfo)
 	if (exec->cmds[n].redirect[i][1] == '>')
 	{
 		exec->cmds[n].fd_out = open(&exec->cmds[n].redirect[i][3],
-			O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
+				O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
 		*lfo = &exec->cmds[n].redirect[i][3];
 	}
 	else
 	{
 		exec->cmds[n].fd_out = open(&exec->cmds[n].redirect[i][2],
-			O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
+				O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
 		*lfo = &exec->cmds[n].redirect[i][2];
 	}
 }
@@ -38,7 +38,7 @@ static void	open_redirect_in(t_exec *exec, int n, int i, char **lfo)
 	else
 	{
 		exec->cmds[n].fd_in = open(&exec->cmds[n].redirect[i][2],
-			O_RDONLY);
+				O_RDONLY);
 		*lfo = &exec->cmds[n].redirect[i][2];
 	}
 }

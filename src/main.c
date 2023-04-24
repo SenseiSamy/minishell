@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 22:40:04 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 01:52:41 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,100 +14,71 @@
 #include "parsing.h"
 #include "minishell.h"
 
-/*
-void	cleanup(t_return *result, t_var *var, char *input_str, t_cmd *cmd)
+void	clean_array(char **array)
 {
-	t_cmd	*cmds;
-	char	*line;
-	int		status;
+	int	i;
 
 	i = 0;
-	while (result[i].str != NULL)
+	while (array[i])
 	{
-		free(result[i].str);
+		free(array[i]);
 		i++;
 	}
+	free(array);
+}
+
+void	cleanup(t_cmd *cmd)
+{
+	int	i;
+
 	i = 0;
-	while (cmd[i].cmd != NULL)
+	while (cmd[i].cmd)
 	{
 		free(cmd[i].cmd);
 		clean_array(cmd[i].args);
 		clean_array(cmd[i].redirect);
 		i++;
 	}
-	clean_array(cmd[i].args);
-	clean_array(cmd[i].redirect);
 	free(cmd);
-	free(var->envp);
-	free(result);
-	free(var);
-	free(input_str);
 }
 
-int	count_elements(t_cmd_linked *head)
+static int	ft_prompt(t_cmd *cmds)
 {
-	int	count;
+	char	*line;
 
-	count = 0;
-	while (head)
-	{
-		count++;
-		head = head->next;
-	}
-	return (count);
-}
+	signal_prompt();
+	line = readline("\033[1;32mminishell\033[0m$ ");
+	if (line == NULL)
+		return (free(line), 1);
+	signal_exec();
+	add_history(line);
+	cmds = ft_parsing(line);
+	free(line);
+	if (cmds == NULL)
+		return (2);
+	exec(cmds);
+	cleanup(cmds);
+	return (0);
+}	
 
-t_cmd	*linked_to_array(t_cmd_linked *head)
-{
-	int		i;
-	int		size;
-	t_cmd_linked	*tmp;
-	t_cmd	*array;
-
-	i = 0;
-	size = count_elements(head);
-	array = (t_cmd *)ft_calloc(size + 1, sizeof(t_cmd));
-	if (!array)
-	{
-		return (NULL);
-	}
-	while (head)
-	{
-		array[i].cmd = head->cmd;
-		array[i].args = head->args;
-		array[i].redirect = head->redir;
-		tmp = head;
-		head = head->next;
-		free(tmp);
-		i++;
-	}
-	return (array);
-}
-*/
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd	*cmds;
-	char	*line;
 	int		status;
+	int		ret;
 
 	(void)argc;
 	(void)argv;
 	cmds = NULL;
 	if (init_env(envp) == EXIT_FAILURE)
 		perror2("minishell");
-	printf("Bienvenue dans minihell uwu\n");
 	while (1)
 	{
-		signal_prompt();
-		line = readline("minishell$ ");
-		if (line == NULL)
+		ret = ft_prompt(cmds);
+		if (ret == 1)
 			break ;
-		signal_exec();
-		add_history(line);
-		cmds = ft_parsing(line);
-		if (cmds == NULL)
+		else if (ret == 2)
 			continue ;
-		exec(cmds);
 	}
 	rl_clear_history();
 	status = ft_atoi(env_get_var("?")->value);

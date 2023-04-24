@@ -6,12 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:02:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 20:28:13 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 03:14:16 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
 
 typedef struct s_var_word
 {
@@ -58,18 +57,14 @@ char	*get_var_word(t_var *var)
 	var_word = (t_var_word){NULL, NULL, 0};
 	if (var->str[var->i] == '$' && var->str[var->i + 1] == '?')
 	{
-		var_word.result = ft_calloc(sizeof(char), 11);
-		ft_itoa_custom(0, var_word.result);
+		var_word.result = env_get_var("?")->value;
 		var->i += 2;
 		return (var_word.result);
 	}
 	var_word.name = get_var_word_name(var);
 	tmp = env_get_var(var_word.name);
 	if (tmp == NULL)
-	{
-		free(var_word.name);
-		return (NULL);
-	}
+		return (free(var_word.name), NULL);
 	var_word.result = env_get_var(var_word.name)->value;
 	free(var_word.name);
 	return (var_word.result);
@@ -81,6 +76,8 @@ char	*convert_var_word(char *input_str, t_var *var)
 
 	cov = (t_convert){ft_calloc(ft_strlen(input_str) + 1, sizeof(char)),
 		NULL, (t_var){NULL, 0, NULL}, 0, 0};
+	if (is_crash(cov.result))
+		return (NULL);
 	while (input_str[cov.input_index] != '\0')
 	{
 		if (input_str[cov.input_index] == '$')
@@ -92,15 +89,13 @@ char	*convert_var_word(char *input_str, t_var *var)
 			{
 				ft_strcpy(cov.result + cov.result_index, cov.var_value);
 				cov.result_index += ft_strlen(cov.var_value);
-				free(cov.var_value);
 			}
 			cov.input_index += cov.tmp_var.i;
 		}
 		else
 			cov.result[cov.result_index++] = input_str[cov.input_index++];
 	}
-	cov.result[cov.result_index] = '\0';
-	return (cov.result);
+	return (cov.result[cov.result_index] = '\0', cov.result);
 }
 
 char	*norm_return(t_str_quotes str_quotes, t_var *input, char quote_type)
@@ -109,11 +104,12 @@ char	*norm_return(t_str_quotes str_quotes, t_var *input, char quote_type)
 
 	str_quotes.result[str_quotes.index] = '\0';
 	if (quote_type == '"')
+	{
 		result = convert_var_word(str_quotes.result, input);
-	else
-		result = str_quotes.result;
-	free(str_quotes.result);
-	return (result);
+		free(str_quotes.result);
+		return (result);
+	}
+	return (str_quotes.result);
 }
 
 char	*get_str_quotes(t_var *input, char quote_type)
@@ -122,24 +118,10 @@ char	*get_str_quotes(t_var *input, char quote_type)
 
 	str_quotes = (t_str_quotes){ft_strlen(input->str),
 		ft_calloc(1, ft_strlen(input->str) + 2), 0, false, 0};
+	if (is_crash(str_quotes.result))
+		return (NULL);
 	while (input->i < str_quotes.length)
-	{
-		if (input->str[input->i] == quote_type)
-		{
-			str_quotes.quote_open = !str_quotes.quote_open;
-			if (str_quotes.quote_open)
-				str_quotes.i = input->i + 1;
-			else
-			{
-				ft_strncpy(str_quotes.result + str_quotes.index,
-					input->str + str_quotes.i, input->i - str_quotes.i);
-				str_quotes.index += input->i - str_quotes.i;
-				if (input->i + 1 < str_quotes.length
-					&& input->str[input->i + 1] != quote_type)
-					break ;
-			}
-		}
-		input->i++;
-	}
+		if (utils_get_str(&str_quotes, input, quote_type))
+			break ;
 	return (norm_return(str_quotes, input, quote_type));
 }

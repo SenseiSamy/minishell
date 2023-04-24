@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 20:32:36 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 01:54:05 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	process_exit(t_exec *exec, char *command, char *error)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(command, 2);
-		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(" : ", 2);
 		ft_putendl_fd(error, 2);
 	}
 	free_exec(exec);

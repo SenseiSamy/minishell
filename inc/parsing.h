@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/23 00:32:02 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 03:05:09 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,18 @@ char				*get_var_word(t_var *var);
 char				*get_str_quotes(t_var *input, char quote_type);
 
 // check_syntax
+int					is_crash(void *ptr);
 bool				check_parsing(t_return *ret, int size);
 
+// convert_to_cmd
 int					count_pipe(t_return *ret);
 t_return			take_word(t_var *var);
 t_cmd_linked		*convert_cmd(t_return *ret, int size);
+
+// utils_take
+int					count_elements(t_cmd_linked *head);
+t_cmd				*linked_to_array(t_cmd_linked *head);
+int					utils_get_str(t_str_quotes *str_quotes,
+						t_var *input, char quote_type);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/22 19:53:51 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/24 03:05:34 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ CNAME	=	parsing/parsing_take.c \
 			parsing/parsing_utils.c \
 			parsing/convert_to_cmd.c \
 			parsing/check_syntax.c \
+			parsing/utils.c \
 			main.c \
 			environment_utils.c \
 			environment.c \

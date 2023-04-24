@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 19:49:10 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/23 00:31:50 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 03:07:20 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,13 @@ char	**ft_realloc(char **str, size_t size)
 
 	i = 0;
 	tmp = ft_calloc(sizeof(char *), size + 1);
+	if (is_crash(tmp))
+		return (NULL);
 	while (str[i])
 	{
 		tmp[i] = ft_strdup(str[i]);
+		if (is_crash(tmp[i]))
+			return (NULL);
 		free(str[i]);
 		i++;
 	}
@@ -105,6 +109,8 @@ char	*get_redirect_word(char *result, t_var *var, int i)
 	}
 	result[i] = '\0';
 	tmp = ft_strdup(result);
+	if (is_crash(tmp))
+		return (NULL);
 	free(result);
 	return (tmp);
 }

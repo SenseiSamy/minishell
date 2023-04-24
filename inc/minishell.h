@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 20:12:22 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/23 01:15:56 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # include <termios.h>
 # include <unistd.h>
 # include <errno.h>
+
+# define EMEM 132
+# define MALLOC_ERROR "A memory allocation failed"
 
 /* ************************************************************************** */
 
@@ -57,9 +60,6 @@ typedef struct s_data
 	char	**envp;
 }			t_data;
 
-# define EMEM 132
-# define MALLOC_ERROR "A memory allocation failed"
-
 /* ************************************************************************** */
 
 /* BUILTINS*/
@@ -84,7 +84,6 @@ int		env_add(char *key, char *value);
 t_env	*env_get_var(char *key);
 void	env_delone(char *key);
 void	env_free(void);
-
 
 /* ************************************************************************** */
 

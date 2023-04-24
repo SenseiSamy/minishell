@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/22 22:32:44 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/23 01:03:27 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,6 @@ ft_strncat.c \
 ft_ldabs.c \
 ft_iscntrl.c \
 ft_putstr.c \
-ft_realloc.c \
 ft_abs.c \
 ft_isprint.c \
 ft_tolower.c \

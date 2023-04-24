@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 19:44:17 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/23 00:36:55 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 02:12:28 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,100 +18,23 @@ t_var	*init_var(char *input_str)
 	t_var	*var;
 
 	var = (t_var *)malloc(sizeof(t_var));
+	if (!var)
+		return (errno = EMEM, NULL);
 	var->str = input_str;
 	var->i = 0;
 	return (var);
 }
 
-/*
-void	clean_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i] != NULL)
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
-void	cleanup(t_return *result, t_cmd *cmd, t_var *var)
-{
-	int	i;
-
-	i = 0;
-	while (result[i].str != NULL)
-	{
-		free(result[i].str);
-		i++;
-	}
-	i = 0;
-	while (cmd[i].cmd != NULL)
-	{
-		free(cmd[i].cmd);
-		clean_array(cmd[i].args);
-		clean_array(cmd[i].redirect);
-		i++;
-	}
-	clean_array(cmd[i].args);
-	clean_array(cmd[i].redirect);
-	free(cmd);
-	free(result);
-	free(var);
-}
-*/
-
-int	count_elements(t_cmd_linked *head)
-{
-	int	count;
-
-	count = 0;
-	while (head)
-	{
-		count++;
-		head = head->next;
-	}
-	return (count);
-}
-
-t_cmd	*linked_to_array(t_cmd_linked *head)
-{
-	int				i;
-	int				size;
-	t_cmd_linked	*tmp;
-	t_cmd			*array;
-
-	i = 0;
-	size = count_elements(head);
-	array = (t_cmd *)ft_calloc(size + 1, sizeof(t_cmd));
-	if (!array)
-	{
-		return (NULL);
-	}
-	while (head)
-	{
-		array[i].cmd = head->cmd;
-		array[i].args = head->args;
-		array[i].redirect = head->redir;
-		tmp = head;
-		head = head->next;
-		free(tmp);
-		i++;
-	}
-	return (array);
-}
-
-static t_return	*ft_realloc_ret(t_return *result, int size)
+static t_return	*ft_realloc_ret(t_return *result, int curr_size, int new_size)
 {
 	t_return	*new;
 	int			i;
 
 	i = 0;
-	new = (t_return *)ft_calloc(sizeof(t_return), size);
+	new = (t_return *)ft_calloc(new_size, sizeof(t_return));
 	if (!new)
-		return (NULL);
-	while (result[i].str != NULL)
+		return (errno = EMEM, NULL);
+	while (i < curr_size)
 	{
 		new[i].str = result[i].str;
 		new[i].i = result[i].i;
@@ -122,28 +45,45 @@ static t_return	*ft_realloc_ret(t_return *result, int size)
 	return (new);
 }
 
+static void	ft_clean(t_return *ret, t_var *var)
+{
+	int	i;
+
+	i = 0;
+	while (ret[i].str != NULL)
+	{
+		free(ret[i].str);
+		i++;
+	}
+	free(ret);
+	free(var);
+}
+
 t_cmd	*ft_parsing(char *str)
 {
 	t_return		*result;
-	t_cmd_linked	*cmd;
+	t_cmd			*cmds;
 	t_var			*var;
 	int				i;
+	int				size;
 
+	i = 0;
+	size = 1;
 	var = init_var(str);
 	result = ft_calloc(1, sizeof(t_return));
-	i = 0;
+	if (!result)
+		return (errno = EMEM, NULL);
 	while (var->i < (int)ft_strlen(str))
 	{
 		result[i] = take_word(var);
-		result = ft_realloc_ret(result, sizeof(t_return) * (i + 2));
+		size++;
+		result = ft_realloc_ret(result, size - 1, size);
 		i++;
 	}
 	result[i].str = NULL;
 	if (check_parsing(result, i) == 1)
-	{
-		printf("Error: parsing\n");
 		return (NULL);
-	}
-	cmd = convert_cmd(result, i);
-	return (linked_to_array(cmd));
+	cmds = linked_to_array(convert_cmd(result, i));
+	ft_clean(result, var);
+	return (cmds);
 }

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 20:15:08 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:28:39 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 03:10:19 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static bool	utils_take_word(t_var *var, t_take_word *take_word, t_return *ret)
 		{
 			ft_strcpy(take_word->result + take_word->i, tmp);
 			take_word->i += ft_strlen(tmp);
-			free(tmp);
 		}
 	}
 	else if (var->str[var->i] == '\'' || var->str[var->i] == '"')

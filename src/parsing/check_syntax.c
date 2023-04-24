@@ -6,11 +6,18 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:59:38 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 22:33:50 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 02:33:47 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	is_crash(void *ptr)
+{
+	if (!ptr)
+		return (errno = EMEM, 1);
+	return (0);
+}
 
 static bool	is_redir(char *str)
 {
@@ -25,9 +32,9 @@ static bool	is_sep(char *str)
 
 static int	print_error(char *str)
 {
-	write(2, "minishell: syntax error near unexpected token `", 46);
-	write(2, str, ft_strlen(str));
-	write(2, "'\n", 2);
+	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("'\n", 2);
 	return (1);
 }
 
