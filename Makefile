@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
+#    By: snaji <snaji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/24 19:58:26 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/24 22:13:42 by snaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ CNAME	=	parsing/parsing_take.c \
 			parsing/utils.c \
 			main.c \
 			utils.c \
+			environment_utils2.c \
 			environment_utils.c \
 			environment.c \
 			signal.c \

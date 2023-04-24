@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:38:14 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 19:47:26 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 22:59:24 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*find_path(char *prog_name, char *paths)
 		path = ft_strjoin(split_paths[i], prog_name);
 		if (!path)
 			return (ft_free_split(split_paths), free(prog_name), NULL);
-		if (access(path, X_OK) == 0)
+		if (access(path, F_OK) == 0)
 			return (ft_free_split(split_paths), free(prog_name), path);
 		free(path);
 		++i;
@@ -42,9 +42,10 @@ char	*get_path(char *prog_name)
 
 	if (!prog_name || ft_strlen(prog_name) == 0)
 		return (NULL);
-	if (prog_name[0] == '/' || prog_name[0] == '.')
+	if (prog_name[0] == '/' || (prog_name[0] == '.' && prog_name[1] == '/')
+		|| (prog_name[0] == '.' && prog_name[1] == '.' && prog_name[2] == '/'))
 	{
-		if (access(prog_name, X_OK) == 0)
+		if (access(prog_name, F_OK) == 0)
 			return (ft_strdup(prog_name));
 		return (NULL);
 	}

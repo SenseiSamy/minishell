@@ -6,11 +6,11 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:04:23 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 18:58:16 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/24 22:04:53 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 t_env	*env_singleton(t_env *new_env, int get_or_set)
 {

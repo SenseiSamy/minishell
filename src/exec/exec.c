@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 19:45:45 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 22:55:45 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,31 @@ static int	count_cmds(t_cmd *cmds)
 		&& cmds[i].redirect != NULL)
 		++i;
 	return (i);
+}
+
+static int	wait_cmds(t_exec *exec)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	status = 0;
+	while (i < exec->n_cmd)
+	{
+		waitpid(exec->cmds[i].pid, &status, 0);
+		if (WIFEXITED(status))
+		{
+			if (exit_status_to_env(WEXITSTATUS(status)) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		else if (WIFSIGNALED(status))
+		{
+			if (exit_status_to_env(129 + WTERMSIG(status)) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		++i;
+	}
+	return (EXIT_SUCCESS);
 }
 
 static void	exec_command(t_exec *exec, int i)
@@ -41,6 +66,8 @@ static void	exec_command(t_exec *exec, int i)
 		path = get_path(exec->cmds[i].cmd);
 		if (!path)
 			process_exit(exec, exec->cmds[i].args[0], CMD_ERROR);
+		if (access(path, X_OK) == -1)
+			process_exit(exec, path, strerror(errno));
 		env = pass_env_to_cmd();
 		if (!env)
 			process_exit(exec, exec->cmds[i].args[0], MALLOC_ERROR);
@@ -55,9 +82,7 @@ static void	exec_command(t_exec *exec, int i)
 static int	exec_commands(t_exec *exec)
 {
 	int	i;
-	int	status;
 
-	status = 0;
 	if (exec->n_cmd == 1 && is_a_builtin(&exec->cmds[0]))
 		return (exec_one_builtin(exec));
 	i = 0;
@@ -67,16 +92,16 @@ static int	exec_commands(t_exec *exec)
 		if (exec->cmds[i].pid == -1)
 			return (EXIT_FAILURE);
 		if (exec->cmds[i].pid == 0)
+		{
+			signal_child_process();
 			exec_command(exec, i);
+		}
 		if (close2(&exec->cmds[i].fd_in) == EXIT_FAILURE
 			|| close2(&exec->cmds[i].fd_out) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		++i;
 	}
-	i = 0;
-	while (i < exec->n_cmd)
-		waitpid(exec->cmds[i++].pid, &status, 0);
-	return (exit_status_to_env(status));
+	return (wait_cmds(exec));
 }
 
 int	exec(t_cmd *cmds)

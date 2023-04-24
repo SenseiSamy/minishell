@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 19:51:44 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 22:07:49 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int		ft_pwd(void);
 t_env	*env_singleton(t_env *new_env, int get_or_set);
 t_env	*env_get(void);
 int		init_env(char **old_env);
+int		env_shlvl_init(void);
 int		env_copy(char **old_env);
 int		exit_status_to_env(int status);
 t_env	*env_new(char *key, char *value);
@@ -89,6 +90,7 @@ void	env_free(void);
 
 void	signal_prompt(void);
 void	signal_exec(void);
+void	signal_child_process(void);
 void	perror2(char *str);
 
 /* ************************************************************************** */

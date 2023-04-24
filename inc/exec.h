@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 19:57:50 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 23:14:34 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		**create_pipes(int n);
 void	assign_pipes(t_exec *exec);
 void	free_pipes(int n, int **pipes);
 void	open_redirections(t_exec *exec, int n);
+int		open_redirections_one_builtin(t_exec *exec, int n);
 int		create_hdocs(t_exec *exec);
 void	free_hdocs(t_exec *exec);
 int		here_docs(t_exec *exec);

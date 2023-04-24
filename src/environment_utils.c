@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:34:35 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:01:21 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/24 22:10:56 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	init_env(char **old_env)
 	if (old_env && *old_env)
 		if (env_copy(old_env) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
+	if (env_shlvl_init() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 

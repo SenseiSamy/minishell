@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 20:09:26 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:53:19 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parsing.h"
 #include "minishell.h"
 
-static char	*get_prompt(void)
+char	*get_prompt(void)
 {
 	char	*prompt;
 	char	*tmp;
@@ -71,12 +71,14 @@ static int	ft_prompt(t_cmd *cmds)
 		return (1);
 	line = readline(prompt);
 	free(prompt);
+	if (line == NULL)
+		return (1);
 	if (line && line[0] == '\0')
 		return (free(line), 0);
 	signal_exec();
 	add_history(line);
 	cmds = ft_parsing(line);
-	print_cmd(cmds);
+	//print_cmd(cmds);
 	free(line);
 	if (cmds == NULL)
 		return (1);

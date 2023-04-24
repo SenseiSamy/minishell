@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 19:34:13 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 23:02:12 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,15 @@ void	process_exit(t_exec *exec, char *command, char *error)
 	cleanup(exec->cmds);
 	env_free();
 	if (error)
-		exit(1);
-	exit(EXIT_SUCCESS);
+	{
+		if (strcmp(error, CMD_ERROR) == 0)
+			exit(127);
+		if (command && (command[0] == '/' || command[0] == '.') && errno == 13)
+			exit(126);
+		else
+			exit(1);
+	}
+	exit(0);
 }
 
 void	free_exec(t_exec *exec)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 20:15:36 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 23:23:06 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,22 @@ int	builtin(t_exec *exec, int i)
 int	exec_one_builtin(t_exec *exec)
 {
 	int	status;
+	int	stdin_fd;
+	int	stdout_fd;
 
-	open_redirections(exec, 0);
+	if (open_redirections_one_builtin(exec, 0) == EXIT_FAILURE)
+		return (EXIT_SUCCESS);
+	stdin_fd = dup(0);
+	stdout_fd = dup(1);
 	if (dup2(exec->cmds[0].fd_in, 0) == -1)
 		return (EXIT_FAILURE);
 	if (dup2(exec->cmds[0].fd_out, 1) == -1)
 		return (EXIT_FAILURE);
 	close_all_fds(exec);
 	status = builtin(exec, 0);
+	if (dup2(stdin_fd, 0) == -1)
+		return (EXIT_FAILURE);
+	if (dup2(stdout_fd, 1) == -1)
+		return (EXIT_FAILURE);
 	return (exit_status_to_env(status));
 }

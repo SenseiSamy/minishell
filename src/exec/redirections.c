@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:59:44 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/23 01:15:40 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/24 23:13:23 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,32 @@ static void	open_redirect_in(t_exec *exec, int n, int i, char **lfo)
 				O_RDONLY);
 		*lfo = &exec->cmds[n].redirect[i][2];
 	}
+}
+
+int	open_redirections_one_builtin(t_exec *exec, int n)
+{
+	int		i;
+	char	*lfo;
+
+	lfo = NULL;
+	i = 0;
+	while (exec->cmds[n].redirect[i])
+	{
+		if (exec->cmds[n].redirect[i][0] == '>')
+			open_redirect_out(exec, n, i, &lfo);
+		else if (exec->cmds[n].redirect[i][0] == '<')
+			open_redirect_in(exec, n, i, &lfo);
+		if (exec->cmds[n].fd_in == -1 || exec->cmds[n].fd_out == -1)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(lfo, 2);
+			ft_putstr_fd(" : ", 2);
+			ft_putendl_fd(strerror(errno), 2);
+			return (EXIT_FAILURE);
+		}
+		++i;
+	}
+	return (EXIT_SUCCESS);
 }
 
 void	open_redirections(t_exec *exec, int n)
