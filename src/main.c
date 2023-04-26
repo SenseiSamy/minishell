@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 20:53:19 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/26 20:16:11 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 		if (ft_prompt(cmds))
 			break ;
+	write(2, "exit\n", 5);
 	rl_clear_history();
 	status = ft_atoi(env_get_var("?")->value);
 	env_free();

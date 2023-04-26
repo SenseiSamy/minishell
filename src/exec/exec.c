@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/26 17:18:28 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/26 20:37:43 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static int	count_cmds(t_cmd *cmds)
 	int	i;
 
 	i = 0;
-	while (cmds[i].args != NULL && cmds[i].cmd != NULL
-		&& cmds[i].redirect != NULL)
+	while (cmds[i].args || cmds[i].cmd || cmds[i].redirect)
 		++i;
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:18:48 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/26 17:43:19 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/26 20:16:19 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	ft_exit(t_exec *exec, char **args)
 	}
 	else
 		status = ft_atoi(args[1]);
+	write(2, "exit\n", 5);
 	cleanup(exec->cmds);
 	free_exec(exec);
 	env_free();
