@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 22:55:45 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/26 17:18:28 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ static int	wait_cmds(t_exec *exec)
 	{
 		waitpid(exec->cmds[i].pid, &status, 0);
 		if (WIFEXITED(status))
-		{
 			if (exit_status_to_env(WEXITSTATUS(status)) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-		}
-		else if (WIFSIGNALED(status))
+		if (WIFSIGNALED(status))
 		{
-			if (exit_status_to_env(129 + WTERMSIG(status)) == EXIT_FAILURE)
+			if (exit_status_to_env(128 + WTERMSIG(status)) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
+			if (WTERMSIG(status) == 3)
+				write(1, "Quit (core dumped)", 18);
+			write(1, "\n", 1);
 		}
 		++i;
 	}

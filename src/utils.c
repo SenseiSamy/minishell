@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:51:00 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 19:51:39 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/26 17:40:54 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,12 @@ void	cleanup(t_cmd *cmd)
 		i++;
 	}
 	free(cmd);
+}
+
+void	error_message(char *str1, char *str2)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(str1, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(str2, 2);
 }

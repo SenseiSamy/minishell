@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 23:14:34 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/26 17:43:39 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ char	*get_path(char *prog_name);
 int		is_a_builtin(t_cmd *cmd);
 int		builtin(t_exec *exec, int i);
 int		exec_one_builtin(t_exec *exec);
-int		choose_exit_status(char *error);
+int		ft_exit(t_exec *exec, char **args);
 int		exec(t_cmd *cmds);
-
-void	cleanup(t_cmd *cmd);
 
 #endif

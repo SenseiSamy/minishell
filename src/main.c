@@ -14,7 +14,7 @@
 #include "parsing.h"
 #include "minishell.h"
 
-char	*get_prompt(void)
+static char	*get_prompt(void)
 {
 	char	*prompt;
 	char	*tmp;

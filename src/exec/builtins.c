@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 23:23:06 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/26 17:45:41 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	builtin(t_exec *exec, int i)
 				exec->cmds[i].args);
 	else if (ft_strcmp(exec->cmds[i].cmd, "pwd") == 0)
 		exit_status = ft_pwd();
+	else if (ft_strcmp(exec->cmds[i].cmd, "exit") == 0)
+		exit_status = ft_exit(exec, exec->cmds[i].args);
 	return (exit_status);
 }
 
