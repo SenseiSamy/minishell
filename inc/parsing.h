@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 03:05:09 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 02:43:24 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,77 +15,13 @@
 
 # include "minishell.h"
 
-typedef struct s_var
-{
-	char			*str;
-	int				i;
-	char			**envp;
-}					t_var;
+// utils
+char	*take_redir(const char *str, char *word, size_t *i);
+char	*take_pipe(const char *str, char *word, size_t *i);
+char	*conv_var(const char *str, size_t *i);
+char	*ft_lstrjoin(char const *s1, char const *s2, size_t len);
 
-typedef struct s_cmd_linked
-{
-	char				*cmd;
-	char				**args;
-	char				**redir;
-	struct s_cmd_linked	*next;
-}					t_cmd_linked;
-
-typedef struct s_take
-{
-	char			*word;
-	int				i;
-	bool			on_quote;
-	struct s_take	*next;
-}					t_take;
-
-typedef struct s_return
-{
-	char			*str;
-	int				i;
-	bool			on_quote;
-}					t_return;
-
-typedef struct s_str_quotes
-{
-	int				length;
-	char			*result;
-	int				index;
-	bool			quote_open;
-	int				i;
-}					t_str_quotes;
-
-typedef struct s_get_env
-{
-	int				i;
-	int				j;
-	int				k;
-	int				len;
-}					t_get_env;
-
-// parsing_utils
-char				*ft_getenv(char *name, t_var *var);
-char				**ft_realloc(char **str, size_t size);
-int					size_name(char *str);
-void				ft_itoa_custom(int num, char *str);
-char				*get_redirect_word(char *result, t_var *var, int i);
-
-// parsing_take
-char				*get_var_word(t_var *var);
-char				*get_str_quotes(t_var *input, char quote_type);
-
-// check_syntax
-int					is_crash(void *ptr);
-bool				check_parsing(t_return *ret, int size);
-
-// convert_to_cmd
-int					count_pipe(t_return *ret);
-t_return			take_word(t_var *var);
-t_cmd_linked		*convert_cmd(t_return *ret, int size);
-
-// utils_take
-int					count_elements(t_cmd_linked *head);
-t_cmd				*linked_to_array(t_cmd_linked *head);
-int					utils_get_str(t_str_quotes *str_quotes,
-						t_var *input, char quote_type);
+// parsing
+char	**ft_lsplit(const char *str);
 
 #endif

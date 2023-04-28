@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 19:51:44 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 02:47:11 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	perror2(char *str);
 
 /* ************************************************************************** */
 
-t_cmd	*ft_parsing(char *str);
+t_cmd	*ft_parsing(const char *str);
 
 void	print_mininishell(void);
 void	clean_array(char **array);

@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/24 19:58:08 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/28 02:45:55 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME	= libft.a
 # **************************************************************************** #
 
 CC		= cc
-FLAGS	= -Wall -Wextra -Werror -ggdb3 -I./
+FLAGS	= -Wall -Wextra -Werror -g3 -I./
 
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ ft_putchar_fd.c \
 ft_strjoin.c \
 ft_split.c \
 ft_isspace.c \
-ft_free_split.c \
+ft_free_array.c \
 ft_strlcat.c \
 ft_putnbr_fd.c \
 ft_isgraph.c \

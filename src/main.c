@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 20:09:26 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 02:51:34 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,20 @@ void	print_cmd(t_cmd *cmd)
 	int	j;
 
 	i = 0;
-	while (cmd[i].cmd && cmd[i].args && cmd[i].redirect)
+	if (cmd == NULL)
 	{
-		j = 0;
-		printf("cmd[%i]->cmd = %s\n", i, cmd->cmd);
-		while (cmd[i].args[j])
-		{
-			printf("	cmd[%i]->args[%i] = %s\n", i, j, cmd[i].args[j]);
-			j++;
-		}
-		j = 0;
-		while (cmd[i].redirect[j])
-		{
-			printf("	cmd[%i]->redirect[%i] = %s\n", i, j, cmd[i].redirect[j]);
-			j++;
-		}
+		printf("cmd = NULL\n");
+		return ;
+	}
+	while (cmd[i].cmd != NULL && cmd[i].args != NULL && cmd[i].redirect != NULL)
+	{
+		j = -1;
+		printf("cmd[%i]->cmd = {%s}\n", i, cmd->cmd);
+		while (cmd[i].args[++j])
+			printf("  cmd[%i]->args[%i] = {%s}\n", i, j, cmd[i].args[j]);
+		j = -1;
+		while (cmd[i].redirect[++j])
+			printf("  cmd[%i]->redirect[%i] = {%s}\n", i, j, cmd[i].redirect[j]);
 		printf("\n");
 		i++;
 	}
@@ -73,13 +72,12 @@ static int	ft_prompt(t_cmd *cmds)
 	free(prompt);
 	if (line && line[0] == '\0')
 		return (free(line), 0);
+	if (line == NULL)
+		return (1);
 	signal_exec();
 	add_history(line);
 	cmds = ft_parsing(line);
 	print_cmd(cmds);
-	free(line);
-	if (cmds == NULL)
-		return (1);
 	exec(cmds);
 	cleanup(cmds);
 	return (0);

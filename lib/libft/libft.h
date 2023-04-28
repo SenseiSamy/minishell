@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/23 00:32:10 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 02:45:29 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -754,12 +754,11 @@ char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 
 /**
- * @brief The ft_free_split() function frees the memory allocated for the
- * array of strings.
+ * @brief The ft_free_array() function frees the memory allocated for the array.
  * 
  * @param split 
  */
-void				ft_free_split(char **split);
+void				ft_free_array(void **array);
 
 /**
  * @brief The ft_swap() function swaps the values of the two integers a and b.
