@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 02:45:29 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:48:10 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -758,7 +758,7 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
  * 
  * @param split 
  */
-void				ft_free_array(void **array);
+void				ft_free_array(char **array);
 
 /**
  * @brief The ft_swap() function swaps the values of the two integers a and b.

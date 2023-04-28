@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/28 02:48:17 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/04/28 20:14:53 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,12 +29,14 @@ HDIR	= ./inc/
 LNAME	=	libft.a
 CNAME	=	parsing/parsing.c \
 			parsing/utils.c \
+			parsing/syntax.c \
+			parsing/conv_cmd.c \
+			parsing/utils_conv.c \
 			main.c \
 			utils.c \
 			environment_utils.c \
 			environment.c \
 			signal.c \
-			take_parsing.c \
 			builtins/export.c \
 			builtins/pwd.c \
 			builtins/env.c \

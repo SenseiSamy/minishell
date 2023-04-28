@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 02:07:33 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 17:08:51 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:14:33 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*take_pipe(const char *str, char *word, size_t *i)
 	return (word);
 }
 
-char	*conv_var(const char *str, size_t *i)
+static char	*conv_var(const char *str, size_t *i)
 {
 	char	*word;
 	char	*key;
@@ -58,7 +58,7 @@ char	*conv_var(const char *str, size_t *i)
 	return (word);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2, size_t len)
+static char	*ft_strljoin(char const *s1, char const *s2, size_t len)
 {
 	char	*str;
 	size_t	i;
@@ -90,7 +90,7 @@ void	ft_var(const char *str, size_t *i, char **word, size_t *j)
 	if (*tmp)
 	{
 		old_word = *word;
-		*word = ft_strjoin(*word, tmp, strlen(str));
+		*word = ft_strljoin(*word, tmp, strlen(str));
 		free(old_word);
 	}
 	free(tmp);

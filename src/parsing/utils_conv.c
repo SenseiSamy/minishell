@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   utils_conv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 18:54:19 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 19:07:06 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/04/28 20:13:06 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/04/28 20:13:38 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "parsing.h"
 
-void	ft_free_array(char **array)
+size_t	count_pipe(const char *str)
 {
 	size_t	i;
+	size_t	count;
+	char	quote;
 
 	i = 0;
-	if (!array)
-		return ;
-	while (array[i])
-		if (array[i])
-			free(array[i++]);
-	if (array)
-		free(array);
+	count = 1;
+	quote = '\0';
+	while (str[i])
+	{
+		if (!quote && (str[i] == '\'' || str[i] == '\"'))
+			quote = str[i];
+		else if (quote && str[i] == quote)
+			quote = '\0';
+		else if (!quote && str[i] == '|')
+			count++;
+		i++;
+	}
+	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 04:07:11 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 17:08:44 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:18:10 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,85 +17,80 @@ typedef struct s_var
 	size_t	i_cmd;
 	size_t	i_args;
 	size_t	i_redir;
-	size_t	i;
+	size_t	i_str;
 }			t_var;
 
-size_t	count_pipe(const char *str)
+static bool	on_quote(const char *str, size_t i_str)
 {
 	size_t	i;
-	size_t	count;
 	char	quote;
 
 	i = 0;
-	count = 1;
 	quote = '\0';
-	while (str[i])
+	while (str[i] && i < i_str)
 	{
 		if (!quote && (str[i] == '\'' || str[i] == '\"'))
 			quote = str[i];
 		else if (quote && str[i] == quote)
 			quote = '\0';
-		else if (!quote && str[i] == '|')
-			count++;
 		i++;
 	}
-	return (count);
+	if (quote)
+		return (true);
+	return (false);
 }
 
-/*
-Regarde si le mot à l'index i est dans des quote ou non et si c'est un >> << > <
-*/
-int	is_redir(const char *str, char *word, size_t end, bool pipe)
+static void	alloc_redir(const char *str, char *word, t_cmd *cmd, t_var *var)
+{
+	char	*result;
+	char	*next;
+	char	*tmp;
+
+	next = next_word(str, &var->i_str);
+	tmp = ft_strjoin(word, " ");
+	result = ft_strjoin(tmp, next);
+	free(next);
+	free(tmp);
+	cmd[var->i_cmd].redirect[var->i_redir] = result;
+	var->i_redir++;
+	var->i_str++;
+}
+
+static void	alloc_args(char *word, t_cmd *cmd, t_var *var)
+{
+	char	*tmp;
+
+	tmp = ft_strdup(word);
+	if (!tmp)
+		return ;
+	cmd[var->i_cmd].args[var->i_args] = tmp;
+	if (var->i_args == 0)
+		cmd[var->i_cmd].cmd = tmp;
+	var->i_args++;
+}
+
+
+t_cmd	*init_cmd(const char *str)
 {
 	size_t	i;
-	char	quote;
+	t_cmd	*cmd;
 
+	cmd = calloc(sizeof(t_cmd), (count_pipe(str) + 2));
+	if (is_crash(cmd))
+		return (NULL);
 	i = 0;
-	quote = '\0';
-	while (str[i] && i < end)
+	while (i <= count_pipe(str))
 	{
-		if (!quote && (str[i] == '\'' || str[i] == '"'))
-			quote = str[i];
-		else if (quote && quote == str[i])
-			quote = '\0';
+		cmd[i].cmd = NULL;
+		cmd[i].args = calloc(sizeof(char *), (ft_strlen(str) + 1));
+		if (is_crash(cmd[i].args))
+			return (NULL);
+		cmd[i].redirect = calloc(sizeof(char *), (ft_strlen(str) + 1));
+		if (is_crash(cmd[i].redirect))
+			return (NULL);
 		i++;
 	}
-	if ((!pipe && !quote && (!strcmp(word, ">>")
-				|| !strcmp(word, "<<") || !strcmp(word, ">")
-				|| !strcmp(word, "<")))
-		|| (pipe && !quote && !strcmp(word, "|")))
-		return (1);
 	return (0);
-}
-
-void	init_new_index(const char *str, t_cmd *cmd)
-{
-	cmd->args = calloc(sizeof(char *), (strlen(str) + 1));
-	if (!cmd->args)
-		return ;
-	cmd->redir = calloc(sizeof(char *), (strlen(str) + 1));
-	if (!cmd->redir)
-		return ;
-}
-
-t_cmd	*init_cmds(const char *str)
-{
-	t_cmd	*cmd;
-	size_t	len;
-	size_t	j;
-
-	j = 0;
-	len = count_pipe(str);
-	printf("len = %zu\n", len);
-	cmd = calloc(sizeof(t_cmd), (len + 2));
-	if (!cmd)
-		return (NULL);
-	while (j < len + 1)
-	{
-		init_new_index(str, &cmd[j]);
-		j++;
-	}
-	return (cmd);
 }
 
 t_cmd	*conv_cmd(const char *str)
@@ -104,23 +99,25 @@ t_cmd	*conv_cmd(const char *str)
 	t_var	var;
 	char	*word;
 
-	cmd = init_cmds(str);
-	if (!cmd)
-		return (NULL);
 	var = (t_var){0, 0, 0, 0};
-	word = next_word(str, &var.i);
-	//printf("word = %s\n", word);
+	cmd = init_cmd(str);
+	word = next_word(str, &var.i_str);
+	if (!word)
+		return (NULL);
 	while (word)
 	{
-		//printf("word = %s\n", word);
-		if (is_redir(str, word, var.i, true))
-			var = (t_var){var.i_cmd + 1, 0, 0, var.i};
-		if (is_redir(str, word, var.i, false))
-			cmd[var.i_cmd].redir[var.i_redir++] = strdup(word);
+		if (!strcmp(word, "|") && !on_quote(str, var.i_str))
+			var = (t_var){var.i_cmd + 1, 0, 0, var.i_str};
+		else if ((!strcmp(word, "<") || !strcmp(word, ">")
+				|| !strcmp(word, ">>") || !strcmp(word, "<<"))
+			&& !on_quote(str, var.i_str))
+			alloc_redir(str, word, cmd, &var);
 		else
-			cmd[var.i_cmd].args[var.i_args++] = strdup(word);
+			alloc_args(word, cmd, &var);
+		if (var.i_str >= ft_strlen(str))
+			break ;
 		free(word);
-		word = next_word(str, &var.i);
+		word = next_word(str, &var.i_str);
 	}
 	free(word);
 	return (cmd);
