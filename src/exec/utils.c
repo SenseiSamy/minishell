@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/28 16:54:04 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/28 21:23:10 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	free_exec(t_exec *exec)
 
 int	close_all_fds(t_exec *exec)
 {
-	int	i;
+	int		i;
+	t_hdoc	*hdoc;
 
 	i = 0;
 	while (i < exec->n_cmd - 1)
@@ -52,12 +53,13 @@ int	close_all_fds(t_exec *exec)
 			close2(&exec->pipes[i][0]);
 			close2(&exec->pipes[i][1]);
 		}
-		if (exec->hdocs)
-		{
-			close2(&exec->hdocs[i][0]);
-			close2(&exec->hdocs[i][1]);
-		}
 		++i;
+	}
+	hdoc = exec->hdocs;
+	while (hdoc)
+	{
+		close2(&hdoc->fd);
+		hdoc = hdoc->next;
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,84 +6,80 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 13:45:39 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/28 16:53:49 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/28 22:57:34 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static void	single_here_doc(t_exec *exec, int cmd_n, char *limiter, int fd)
+int	*interruption_hdoc()
 {
-	char	*line;
+	static int	interrupted = 0;
 
-	line = readline("> ");
-	while (line && ft_strncmp(line, limiter, ft_strlen(limiter) + 1) != 0)
-	{
-		ft_putendl_fd(line, exec->hdocs[cmd_n][1]);
-		free(line);
-		line = readline("> ");
-	}
-	if (line == NULL)
-	{
-		ft_putstr_fd("minishell: warning: here-document at line 32 delimited"
-			" by end-of-file (wanted `", 2);
-		ft_putstr_fd(limiter, 2);
-		ft_putendl_fd("`)", 2);
-	}
-	else
-		free(line);
-	close2(&exec->hdocs[cmd_n][1]);
+	return (&interrupted);
 }
 
-static int	fork_here_doc(t_exec *exec, int cmd_n, char *limiter)
+char	*create_file_path_hdoc()
 {
-	int	pid;
-	int	status;
-	int	fd;
+	const char	base_name[] = "/tmp/minishell_tmp_";
+	size_t		i;
+	char		*name;
+	char		*tmp;
 
-	close2(&exec->hdocs[cmd_n][0]);
-	if (pipe(exec->hdocs[cmd_n]) == -1)
-		return (EXIT_FAILURE);
-	fd = exec->hdocs[cmd_n][1];
-	pid = fork();
-	if (pid == -1)
-		return (EXIT_FAILURE);
-	if (pid == 0)
+	i = 0;
+	while (i < SIZE_MAX)
 	{
-		signal(SIGINT, SIG_DFL);
-		cleanup(exec->cmds);
-		free_exec(exec);
-		env_free();
-		single_here_doc(exec, cmd_n, fd);
-		
+		tmp = ft_itoa(i);
+		if (tmp == NULL)
+			return (errno = EMEM, NULL);
+		name = ft_strjoin(base_name, tmp);
+		free(tmp);
+		if (name == NULL)
+			return (errno = EMEM, NULL);
+		if (access(name, F_OK) == -1)
+			return (name);
+		free(name);
+		++i;
 	}
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
-		return (3);
-	return (EXIT_SUCCESS);
+	return (errno = EMEM, NULL);
 }
 
-int	here_docs(t_exec *exec)
+char	*get_hdoc_path(t_hdoc *hdoc, int cmd_n, int hdoc_n)
 {
-	int	n;
-	int	i;
-	int	exit;
-
-	n = 0;
-	while (n < exec->n_cmd)
+	while (hdoc)
 	{
-		i = 0;
-		while (exec->cmds[n].redirect[i])
-		{
-			if (exec->cmds[n].redirect[i][1] == '<')
-			{
-				exit = fork_here_doc(exec, n, &exec->cmds[n].redirect[i][3]);
-				if (exit == EXIT_FAILURE || exit == 3)
-					return (3);
-			}
-			++i;
-		}
-		++n;
+		if (hdoc->cmd_n == cmd_n && hdoc->hd_n == hdoc_n)
+			return (hdoc->path);
+		hdoc = hdoc->next;
 	}
-	return (EXIT_SUCCESS);
+	return (NULL);
+}
+
+void	free_hdocs(t_exec *exec)
+{
+	t_hdoc	*hdocs;
+	t_hdoc	*tmp;
+
+	hdocs = exec->hdocs;
+	tmp = NULL;
+	while (hdocs)
+	{
+		close2(&hdocs->fd);
+		free(hdocs->path);
+		tmp = hdocs->next;
+		free(hdocs);
+		hdocs = tmp;
+	}
+}
+
+void	delete_tmp_files(t_exec *exec)
+{
+	t_hdoc	*hdocs;
+
+	hdocs = exec->hdocs;
+	while (hdocs)
+	{
+		unlink(hdocs->path);
+		hdocs = hdocs->next;
+	}
 }

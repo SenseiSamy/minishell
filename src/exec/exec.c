@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/26 20:37:43 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/28 22:59:15 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,12 @@ int	exec(t_cmd *cmds)
 	if (pipe_setup(&exec) == EXIT_FAILURE)
 		return (perror2("minishell"), EXIT_FAILURE);
 	assign_pipes(&exec);
-	if (create_hdocs(&exec) == EXIT_FAILURE)
-		return (free_exec(&exec), perror2("minishell"), EXIT_FAILURE);
-	exit = here_docs(&exec);
+	exit = here_documents(&exec);
 	if (exit == EXIT_FAILURE)
 		return (free_exec(&exec), perror2("minishell"), EXIT_FAILURE);
 	else if (exit == 3)
 		return (free_exec(&exec), EXIT_FAILURE);
 	if (exec_commands(&exec) == EXIT_FAILURE)
 		return (free_exec(&exec), perror2("minishell"), EXIT_FAILURE);
-	return (free_exec(&exec), EXIT_SUCCESS);
+	return (delete_tmp_files(&exec), free_exec(&exec), EXIT_SUCCESS);
 }
