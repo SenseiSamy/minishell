@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 02:07:33 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 18:14:33 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 21:05:09 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*conv_var(const char *str, size_t *i)
 		return (NULL);
 	while (str[*i] && (isalnum(str[*i]) || str[*i] == '_'))
 		word[j++] = str[(*i)++];
-	key = getenv(word);
+	key = env_get_var(word)->value;
 	if (!key)
 		key = "";
 	free(word);

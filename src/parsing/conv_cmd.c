@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 04:07:11 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 20:18:10 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 21:17:10 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ static void	alloc_redir(const char *str, char *word, t_cmd *cmd, t_var *var)
 	var->i_str++;
 }
 
-static void	alloc_args(char *word, t_cmd *cmd, t_var *var)
+static void	alloc_args(const char *str, char *word, t_cmd *cmd, t_var *var)
 {
 	char	*tmp;
+	size_t	i;
 
 	tmp = ft_strdup(word);
 	if (!tmp)
 		return ;
-	cmd[var->i_cmd].args[var->i_args] = tmp;
+	cmd[var->i_cmd].args[var->i_args] = strdup(tmp);
 	if (var->i_args == 0)
-		cmd[var->i_cmd].cmd = tmp;
+		cmd[var->i_cmd].cmd = strdup(tmp);
 	var->i_args++;
 }
-
 
 t_cmd	*init_cmd(const char *str)
 {
@@ -90,7 +90,7 @@ t_cmd	*init_cmd(const char *str)
 			return (NULL);
 		i++;
 	}
-	return (0);
+	return (cmd);
 }
 
 t_cmd	*conv_cmd(const char *str)
@@ -106,6 +106,7 @@ t_cmd	*conv_cmd(const char *str)
 		return (NULL);
 	while (word)
 	{
+		printf("word = %s\n", word);
 		if (!strcmp(word, "|") && !on_quote(str, var.i_str))
 			var = (t_var){var.i_cmd + 1, 0, 0, var.i_str};
 		else if ((!strcmp(word, "<") || !strcmp(word, ">")
