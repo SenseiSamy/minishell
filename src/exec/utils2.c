@@ -12,6 +12,16 @@
 
 #include "exec.h"
 
+int	count_cmds(t_cmd *cmds)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i].args || cmds[i].cmd || cmds[i].redirect)
+		++i;
+	return (i);
+}
+
 static char	*concatenate_env_var(t_env *env)
 {
 	char	*env_var;

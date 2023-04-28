@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/26 17:43:39 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/28 14:16:48 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ int		open_redirections_one_builtin(t_exec *exec, int n);
 int		create_hdocs(t_exec *exec);
 void	free_hdocs(t_exec *exec);
 int		here_docs(t_exec *exec);
+int		singleton_interrupted(int value, int get_or_set);
 void	free_exec(t_exec *exec);
 void	process_exit(t_exec *exec, char *command, char *error);
 int		close_all_fds(t_exec *exec);
 int		close2(int *fd);
+int		count_cmds(t_cmd *cmds);
 void	free_array_of_str(char **arr);
 char	**pass_env_to_cmd(void);
 char	*get_path(char *prog_name);

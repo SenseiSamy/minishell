@@ -6,7 +6,7 @@
 #    By: snaji <snaji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/24 22:13:42 by snaji            ###   ########.fr        #
+#    Updated: 2023/04/28 14:13:37 by snaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ CNAME	=	parsing/parsing_take.c \
 			exec/builtins.c \
 			exec/pipe.c \
 			exec/here_doc.c \
+			exec/here_doc2.c \
 			exec/redirections.c \
 			exec/path.c \
 			exec/utils.c

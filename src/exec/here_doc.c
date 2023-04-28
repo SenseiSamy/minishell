@@ -3,55 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 22:20:26 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 19:40:18 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:13:22 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-static int	single_here_doc(t_exec *exec, int cmd_n, char *limiter)
-{
-	char	*line;
-
-	close2(&exec->hdocs[cmd_n][0]);
-	if (pipe(exec->hdocs[cmd_n]) == -1)
-		return (EXIT_FAILURE);
-	line = readline("> ");
-	while (ft_strncmp(line, limiter, ft_strlen(limiter) + 1) != 0)
-	{
-		ft_putendl_fd(line, exec->hdocs[cmd_n][1]);
-		free(line);
-		line = readline("> ");
-	}
-	free(line);
-	close2(&exec->hdocs[cmd_n][1]);
-	return (EXIT_SUCCESS);
-}
-
-int	here_docs(t_exec *exec)
-{
-	int	n;
-	int	i;
-
-	n = 0;
-	while (n < exec->n_cmd)
-	{
-		i = 0;
-		while (exec->cmds[n].redirect[i])
-		{
-			if (exec->cmds[n].redirect[i][1] == '<')
-				if (single_here_doc(exec, n, &exec->cmds[n].redirect[i][3])
-					== EXIT_FAILURE)
-					return (EXIT_FAILURE);
-			++i;
-		}
-		++n;
-	}
-	return (EXIT_SUCCESS);
-}
 
 int	create_hdocs(t_exec *exec)
 {
