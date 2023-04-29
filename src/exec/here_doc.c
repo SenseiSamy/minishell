@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 22:20:26 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/28 22:55:22 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/29 19:25:40 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	here_doc_fork(t_exec *exec, int n, int i, char *limiter)
 		return (free(hdoc), EXIT_FAILURE);
 	hdoc->fd = open(hdoc->path, O_RDWR | O_CREAT, S_IRWXU);
 	if (hdoc->fd == -1)
-		return (free(hdoc), free(hdoc->path), EXIT_FAILURE);
+		return (free(hdoc->path), free(hdoc), EXIT_FAILURE);
 	add_hdoc(&exec->hdocs, hdoc);
 	pid = fork();
 	if (pid == -1)

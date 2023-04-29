@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 04:07:11 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/29 18:58:54 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:06:24 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	alloc_args(char *word, t_cmd *cmd, t_var *var)
 	if (var->i_args == 0)
 		cmd[var->i_cmd].cmd = strdup(tmp);
 	var->i_args++;
+	free(tmp);
 }
 
 t_cmd	*init_cmd(const char *str)

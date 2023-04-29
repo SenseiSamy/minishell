@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/29 19:03:42 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:05:49 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	ft_prompt(t_cmd *cmds)
 	if (!ft_isampty(line) && !syntax_check(line))
 	{
 		cmds = conv_cmd(line);
-		//print_cmd(cmds);
+		print_cmd(cmds);
 		exec(cmds);
 		cleanup(cmds);
 	}

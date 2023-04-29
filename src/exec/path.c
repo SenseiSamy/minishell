@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:38:14 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/29 19:02:29 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/29 19:25:57 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static char	*find_path(char *prog_name, char *paths)
 	{
 		path = ft_strjoin(split_paths[i], prog_name);
 		if (!path)
-			return (ft_free_split(split_paths), free(prog_name), NULL);
+			return (ft_free_array(split_paths), free(prog_name), NULL);
 		if (access(path, F_OK) == 0)
-			return (ft_free_split(split_paths), free(prog_name), path);
+			return (ft_free_array(split_paths), free(prog_name), path);
 		free(path);
 		++i;
 	}

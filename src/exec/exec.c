@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/28 22:59:15 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/29 19:18:03 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	exec_command(t_exec *exec, int i)
 	if (access(path, X_OK) == -1)
 	{
 		free(path);
-		process_exit(exec, path, strerror(errno));
+		process_exit(exec, exec->cmds[i].cmd, strerror(errno));
 	}
 	exec_command2(exec, i, path);
 }
