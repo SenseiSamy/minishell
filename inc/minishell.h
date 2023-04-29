@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/26 17:41:05 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/29 19:02:19 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,10 @@ void	perror2(char *str);
 
 /* ************************************************************************** */
 
-t_cmd	*ft_parsing(char *str);
+t_cmd	*ft_parsing(const char *str);
 
 void	print_mininishell(void);
+int		is_crash(void *str);
 void	clean_array(char **array);
 void	cleanup(t_cmd *cmd);
 void	error_message(char *str1, char *str2);

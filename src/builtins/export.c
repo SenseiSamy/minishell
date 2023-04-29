@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 21:31:16 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 20:05:32 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:52:53 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static int	export_one(char *arg)
 		if (value == NULL)
 			return (EXIT_FAILURE);
 	}
+	printf("key: %s\n", key);
+	printf("value: %s\n", value);
 	if (key == NULL)
 		return (free(value), EXIT_FAILURE);
 	if (strcmp(key, "?") == 0)

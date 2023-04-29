@@ -5,68 +5,100 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 03:02:51 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/24 03:04:51 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/04/25 02:07:33 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/04/28 21:05:09 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	count_elements(t_cmd_linked *head)
+char	*take_redir(const char *str, char *word, size_t *i)
 {
-	int	count;
+	size_t	j;
 
-	count = 0;
-	while (head)
-	{
-		count++;
-		head = head->next;
-	}
-	return (count);
+	j = 0;
+	if (str[*i] == str[(*i) + 1])
+		word[j++] = str[(*i)++];
+	word[j] = str[(*i)++];
+	return (word);
 }
 
-int	utils_get_str(t_str_quotes *str_quotes, t_var *input, char quote_type)
+char	*take_pipe(const char *str, char *word, size_t *i)
 {
-	if (input->str[input->i] == quote_type)
-	{
-		str_quotes->quote_open = !str_quotes->quote_open;
-		if (str_quotes->quote_open)
-			str_quotes->i = input->i + 1;
-		else
-		{
-			ft_strncpy(str_quotes->result + str_quotes->index,
-				input->str + str_quotes->i, input->i - str_quotes->i);
-			str_quotes->index += input->i - str_quotes->i;
-			if (input->i + 1 < str_quotes->length
-				&& input->str[input->i + 1] != quote_type)
-				return (1);
-		}
-	}
-	input->i++;
-	return (0);
+	size_t	j;
+
+	j = 0;
+	word[j++] = str[(*i)++];
+	return (word);
 }
 
-t_cmd	*linked_to_array(t_cmd_linked *head)
+static char	*conv_var(const char *str, size_t *i)
 {
-	int				i;
-	int				size;
-	t_cmd_linked	*tmp;
-	t_cmd			*array;
+	char	*word;
+	char	*key;
+	size_t	j;
 
+	j = 0;
+	++(*i);
+	if (str[*i] == '?')
+	{
+		++(*i);
+		return (strdup("0"));
+	}
+	word = calloc(sizeof(char), (strlen(str) + 2));
+	if (!word)
+		return (NULL);
+	while (str[*i] && (isalnum(str[*i]) || str[*i] == '_'))
+		word[j++] = str[(*i)++];
+	key = env_get_var(word)->value;
+	if (!key)
+		key = "";
+	free(word);
+	word = strdup(key);
+	return (word);
+}
+
+static char	*ft_strljoin(char const *s1, char const *s2, size_t len)
+{
+	char	*str;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	str = calloc(sizeof(char), (strlen(s1) + strlen(s2) + len + 1));
+	if (!str)
+		return (NULL);
 	i = 0;
-	size = count_elements(head);
-	array = (t_cmd *)ft_calloc(size + 1, sizeof(t_cmd));
-	if (!array)
-		return (errno = EMEM, NULL);
-	while (head)
+	j = 0;
+	while (s1[i])
+		str[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		str[j++] = s2[i++];
+	return (str);
+}
+
+void	ft_var(const char *str, size_t *i, char **word, size_t *j)
+{
+	char	*tmp;
+	char	*old_word;
+
+	tmp = conv_var(str, i);
+	if (!tmp)
+		return ;
+	if (*tmp)
 	{
-		array[i].cmd = head->cmd;
-		array[i].args = head->args;
-		array[i].redirect = head->redir;
-		tmp = head;
-		head = head->next;
-		free(tmp);
-		i++;
+		old_word = *word;
+		*word = ft_strljoin(*word, tmp, strlen(str));
+		free(old_word);
 	}
-	return (array);
+	free(tmp);
+	if (!*word)
+	{
+		*word = calloc(1, sizeof(char));
+		if (!*word)
+			return ;
+	}
+	*j = strlen(*word);
 }

@@ -3,16 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/26 20:16:11 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/29 19:03:42 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "parsing.h"
 #include "minishell.h"
+
+void	print_cmd(t_cmd *cmd)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (cmd[i].cmd && cmd[i].redirect)
+	{
+		if (cmd[i].cmd)
+			printf("cmd[%zu]: %s\n", i, cmd[i].cmd);
+		j = -1;
+		while (cmd[i].args[++j])
+			if (cmd[i].args[j])
+				printf(" args[%zu]: %s\n", j, cmd[i].args[j]);
+		j = -1;
+		while (cmd[i].redirect[++j])
+			if (cmd[i].redirect[j])
+				printf(" redirect[%zu]: %s\n", j, cmd[i].redirect[j]);
+		++i;
+	}
+}
 
 static char	*get_prompt(void)
 {
@@ -34,30 +56,14 @@ static char	*get_prompt(void)
 	return (tmp);
 }
 
-void	print_cmd(t_cmd *cmd)
+static int	ft_isampty(const char *str)
 {
-	int	i;
-	int	j;
+	size_t	i;
 
 	i = 0;
-	while (cmd[i].cmd && cmd[i].args && cmd[i].redirect)
-	{
-		j = 0;
-		printf("cmd[%i]->cmd = %s\n", i, cmd->cmd);
-		while (cmd[i].args[j])
-		{
-			printf("	cmd[%i]->args[%i] = %s\n", i, j, cmd[i].args[j]);
-			j++;
-		}
-		j = 0;
-		while (cmd[i].redirect[j])
-		{
-			printf("	cmd[%i]->redirect[%i] = %s\n", i, j, cmd[i].redirect[j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
+	while (str[i] && isspace(str[i]))
+		++i;
+	return (!str[i]);
 }
 
 static int	ft_prompt(t_cmd *cmds)
@@ -70,20 +76,20 @@ static int	ft_prompt(t_cmd *cmds)
 	if (prompt == NULL)
 		return (1);
 	line = readline(prompt);
+	if (!line)
+		return (free(prompt), 1);
+	if (line[0] == '\0')
+		return (free(prompt), 0);
 	free(prompt);
-	if (line == NULL)
-		return (1);
-	if (line && line[0] == '\0')
-		return (free(line), 0);
 	signal_exec();
 	add_history(line);
-	cmds = ft_parsing(line);
-	//print_cmd(cmds);
-	free(line);
-	if (cmds == NULL)
-		return (1);
-	exec(cmds);
-	cleanup(cmds);
+	if (!ft_isampty(line) && !syntax_check(line))
+	{
+		cmds = conv_cmd(line);
+		//print_cmd(cmds);
+		exec(cmds);
+		cleanup(cmds);
+	}
 	return (0);
 }
 

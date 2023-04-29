@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:51:00 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/26 17:40:54 by snaji            ###   ########.fr       */
+/*   Updated: 2023/04/29 19:03:50 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_crash(void *str)
+{
+	if (!str)
+		return (errno = EMEM, 1);
+	return (0);
+}
 
 void	print_mininishell(void)
 {
@@ -36,29 +43,31 @@ void	print_mininishell(void)
 	printf("            \n");
 }
 
-void	clean_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
-
 void	cleanup(t_cmd *cmd)
 {
-	int	i;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	while (cmd[i].cmd)
+	while (cmd[i].cmd && cmd[i].redirect)
 	{
-		free(cmd[i].cmd);
-		clean_array(cmd[i].args);
-		clean_array(cmd[i].redirect);
+		if (cmd[i].cmd != NULL)
+		{
+			if (cmd[i].args)
+			{
+				j = 0;
+				while (cmd[i].args[j])
+					free(cmd[i].args[j++]);
+				free(cmd[i].args);
+			}
+		}
+		if (cmd[i].redirect)
+		{
+			j = 0;
+			while (cmd[i].redirect[j])
+				free(cmd[i].redirect[j++]);
+			free(cmd[i].redirect);
+		}
 		i++;
 	}
 	free(cmd);
