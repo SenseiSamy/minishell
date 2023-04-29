@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 04:07:11 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 21:17:10 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/29 18:58:54 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,9 @@ static void	alloc_redir(const char *str, char *word, t_cmd *cmd, t_var *var)
 	var->i_str++;
 }
 
-static void	alloc_args(const char *str, char *word, t_cmd *cmd, t_var *var)
+static void	alloc_args(char *word, t_cmd *cmd, t_var *var)
 {
 	char	*tmp;
-	size_t	i;
 
 	tmp = ft_strdup(word);
 	if (!tmp)
