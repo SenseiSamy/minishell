@@ -46,13 +46,10 @@ int	close_all_fds(t_exec *exec)
 	t_hdoc	*hdoc;
 
 	i = 0;
-	while (i < exec->n_cmd - 1)
+	while (i < exec->n_cmd)
 	{
-		if (exec->pipes)
-		{
-			close2(&exec->pipes[i][0]);
-			close2(&exec->pipes[i][1]);
-		}
+		close2(&exec->cmds[i].fd_in);
+		close2(&exec->cmds[i].fd_out);
 		++i;
 	}
 	hdoc = exec->hdocs;
