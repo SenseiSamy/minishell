@@ -120,5 +120,6 @@ t_cmd	*conv_cmd(const char *str)
 		free(word);
 		word = next_word(str, &var.i_str);
 	}
-	return (free(word), ft_bzero(&cmd[var.i_cmd + 1], sizeof (t_cmd)), cmd);
+	free(word);
+	return (cmd);
 }

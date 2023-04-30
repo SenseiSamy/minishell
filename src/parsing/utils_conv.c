@@ -19,7 +19,7 @@ size_t	count_pipe(const char *str)
 	char	quote;
 
 	i = 0;
-	count = 1;
+	count = 0;
 	quote = '\0';
 	while (str[i])
 	{
