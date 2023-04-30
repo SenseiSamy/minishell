@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 04:07:11 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/29 20:06:24 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/30 02:06:22 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,6 @@ typedef struct s_var
 	size_t	i_redir;
 	size_t	i_str;
 }			t_var;
-
-static bool	on_quote(const char *str, size_t i_str)
-{
-	size_t	i;
-	char	quote;
-
-	i = 0;
-	quote = '\0';
-	while (str[i] && i < i_str)
-	{
-		if (!quote && (str[i] == '\'' || str[i] == '\"'))
-			quote = str[i];
-		else if (quote && str[i] == quote)
-			quote = '\0';
-		i++;
-	}
-	if (quote)
-		return (true);
-	return (false);
-}
 
 static void	alloc_redir(const char *str, char *word, t_cmd *cmd, t_var *var)
 {
@@ -63,9 +43,9 @@ static void	alloc_args(char *word, t_cmd *cmd, t_var *var)
 	tmp = ft_strdup(word);
 	if (!tmp)
 		return ;
-	cmd[var->i_cmd].args[var->i_args] = strdup(tmp);
+	cmd[var->i_cmd].args[var->i_args] = ft_strdup(tmp);
 	if (var->i_args == 0)
-		cmd[var->i_cmd].cmd = strdup(tmp);
+		cmd[var->i_cmd].cmd = ft_strdup(tmp);
 	var->i_args++;
 	free(tmp);
 }
@@ -75,17 +55,17 @@ t_cmd	*init_cmd(const char *str)
 	size_t	i;
 	t_cmd	*cmd;
 
-	cmd = calloc(sizeof(t_cmd), (count_pipe(str) + 2));
+	cmd = ft_calloc(sizeof(t_cmd), (count_pipe(str) + 2));
 	if (is_crash(cmd))
 		return (NULL);
 	i = 0;
 	while (i <= count_pipe(str))
 	{
 		cmd[i].cmd = NULL;
-		cmd[i].args = calloc(sizeof(char *), (ft_strlen(str) + 1));
+		cmd[i].args = ft_calloc(sizeof(char *), (ft_strlen(str) + 1));
 		if (is_crash(cmd[i].args))
 			return (NULL);
-		cmd[i].redirect = calloc(sizeof(char *), (ft_strlen(str) + 1));
+		cmd[i].redirect = ft_calloc(sizeof(char *), (ft_strlen(str) + 1));
 		if (is_crash(cmd[i].redirect))
 			return (NULL);
 		i++;
@@ -107,10 +87,10 @@ t_cmd	*conv_cmd(const char *str)
 	while (word)
 	{
 		printf("word = %s\n", word);
-		if (!strcmp(word, "|") && !on_quote(str, var.i_str))
+		if (!ft_strcmp(word, "|") && !on_quote(str, var.i_str))
 			var = (t_var){var.i_cmd + 1, 0, 0, var.i_str};
-		else if ((!strcmp(word, "<") || !strcmp(word, ">")
-				|| !strcmp(word, ">>") || !strcmp(word, "<<"))
+		else if ((!ft_strcmp(word, "<") || !ft_strcmp(word, ">")
+				|| !ft_strcmp(word, ">>") || !ft_strcmp(word, "<<"))
 			&& !on_quote(str, var.i_str))
 			alloc_redir(str, word, cmd, &var);
 		else
@@ -120,6 +100,6 @@ t_cmd	*conv_cmd(const char *str)
 		free(word);
 		word = next_word(str, &var.i_str);
 	}
-	free(word);
-	return (cmd);
+	return (free(word), cmd[var.i_cmd + 1] = (t_cmd){NULL, NULL, NULL, 0, 0, 0},
+		cmd);
 }

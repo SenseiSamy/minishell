@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 21:20:30 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 20:48:34 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/29 22:35:43 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static int	is_error(const char *str, int i)
 {
 	char	*error;
 
-	while (str[i] && isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		++i;
 	if (!str[i])
-		return (syntax_error(strdup("newline")));
-	error = calloc(sizeof(char), 3);
+		return (syntax_error(ft_strdup("newline")));
+	error = ft_calloc(sizeof(char), 3);
 	if (str[i] == '<' || str[i] == '>')
 	{
 		error[0] = str[i];
@@ -61,7 +61,7 @@ static int	syntax_utils(const char *str, size_t *i, char *quote)
 		while (str[*i] && ft_isspace(str[*i]))
 			++(*i);
 		if (!str[*i])
-			return (syntax_error(strdup("newline")));
+			return (syntax_error(ft_strdup("newline")));
 	}
 	return (0);
 }
@@ -73,7 +73,7 @@ int	syntax_check(const char *str)
 
 	i = 0;
 	quote = '\0';
-	while (i < strlen(str))
+	while (i < ft_strlen(str))
 	{
 		if (str[i] == quote)
 		{

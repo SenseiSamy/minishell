@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 20:14:33 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/30 01:09:51 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	print_cmd(t_cmd *cmd);
 int		syntax_check(const char *str);
 
 // utils_conv
+bool	on_quote(const char *str, size_t i_str);
 size_t	count_pipe(const char *str);
 
 // utils

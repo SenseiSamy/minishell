@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 02:07:33 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 21:05:09 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/29 22:35:43 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static char	*conv_var(const char *str, size_t *i)
 	if (str[*i] == '?')
 	{
 		++(*i);
-		return (strdup("0"));
+		return (ft_strdup("0"));
 	}
-	word = calloc(sizeof(char), (strlen(str) + 2));
+	word = ft_calloc(sizeof(char), (ft_strlen(str) + 2));
 	if (!word)
 		return (NULL);
 	while (str[*i] && (isalnum(str[*i]) || str[*i] == '_'))
@@ -54,7 +54,7 @@ static char	*conv_var(const char *str, size_t *i)
 	if (!key)
 		key = "";
 	free(word);
-	word = strdup(key);
+	word = ft_strdup(key);
 	return (word);
 }
 
@@ -66,7 +66,7 @@ static char	*ft_strljoin(char const *s1, char const *s2, size_t len)
 
 	if (!s1 || !s2)
 		return (NULL);
-	str = calloc(sizeof(char), (strlen(s1) + strlen(s2) + len + 1));
+	str = ft_calloc(sizeof(char), (ft_strlen(s1) + ft_strlen(s2) + len + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -90,15 +90,15 @@ void	ft_var(const char *str, size_t *i, char **word, size_t *j)
 	if (*tmp)
 	{
 		old_word = *word;
-		*word = ft_strljoin(*word, tmp, strlen(str));
+		*word = ft_strljoin(*word, tmp, ft_strlen(str));
 		free(old_word);
 	}
 	free(tmp);
 	if (!*word)
 	{
-		*word = calloc(1, sizeof(char));
+		*word = ft_calloc(1, sizeof(char));
 		if (!*word)
 			return ;
 	}
-	*j = strlen(*word);
+	*j = ft_strlen(*word);
 }

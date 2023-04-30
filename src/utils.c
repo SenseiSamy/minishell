@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:51:00 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/29 20:09:19 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/30 02:06:53 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void	cleanup(t_cmd *cmd)
 			ft_free_array(cmd[i].redirect);
 		i++;
 	}
-	ft_free_array(cmd[i].args);
-	ft_free_array(cmd[i].redirect);
+	free(cmd[i].cmd);
+	free(cmd[i].redirect);
+	free(cmd[i].args);
 	free(cmd);
 }
 
