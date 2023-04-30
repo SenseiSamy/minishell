@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:51:00 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/30 02:06:53 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:33:13 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,14 @@ void	cleanup(t_cmd *cmd)
 	size_t	i;
 
 	i = 0;
-	while (cmd[i].cmd && cmd[i].redirect)
+	while (cmd[i].cmd || cmd[i].redirect || cmd[i].args)
 	{
 		if (cmd[i].cmd != NULL)
-		{
 			free(cmd[i].cmd);
-			ft_free_array(cmd[i].args);
-		}
 		if (cmd[i].redirect != NULL)
 			ft_free_array(cmd[i].redirect);
+		if (cmd[i].args != NULL)
+			ft_free_array(cmd[i].args);
 		i++;
 	}
 	free(cmd[i].cmd);
