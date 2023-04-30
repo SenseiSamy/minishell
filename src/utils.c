@@ -48,19 +48,16 @@ void	cleanup(t_cmd *cmd)
 	size_t	i;
 
 	i = 0;
-	while (cmd[i].cmd && cmd[i].redirect)
+	while (cmd[i].cmd || cmd[i].redirect || cmd[i].args)
 	{
 		if (cmd[i].cmd != NULL)
-		{
 			free(cmd[i].cmd);
-			ft_free_array(cmd[i].args);
-		}
 		if (cmd[i].redirect != NULL)
 			ft_free_array(cmd[i].redirect);
+		if (cmd[i].args != NULL)
+			ft_free_array(cmd[i].args);
 		i++;
 	}
-	ft_free_array(cmd[i].args);
-	ft_free_array(cmd[i].redirect);
 	free(cmd);
 }
 

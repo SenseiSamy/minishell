@@ -106,7 +106,7 @@ t_cmd	*conv_cmd(const char *str)
 		return (NULL);
 	while (word)
 	{
-		printf("word = %s\n", word);
+		//printf("word = %s\n", word);
 		if (!strcmp(word, "|") && !on_quote(str, var.i_str))
 			var = (t_var){var.i_cmd + 1, 0, 0, var.i_str};
 		else if ((!strcmp(word, "<") || !strcmp(word, ">")
@@ -120,6 +120,5 @@ t_cmd	*conv_cmd(const char *str)
 		free(word);
 		word = next_word(str, &var.i_str);
 	}
-	free(word);
-	return (cmd);
+	return (free(word), ft_bzero(&cmd[var.i_cmd + 1], sizeof (t_cmd)), cmd);
 }

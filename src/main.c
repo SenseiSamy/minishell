@@ -86,7 +86,7 @@ static int	ft_prompt(t_cmd *cmds)
 	if (!ft_isampty(line) && !syntax_check(line))
 	{
 		cmds = conv_cmd(line);
-		print_cmd(cmds);
+		//print_cmd(cmds);
 		exec(cmds);
 		cleanup(cmds);
 	}
