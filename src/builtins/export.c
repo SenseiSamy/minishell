@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 21:31:16 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/28 20:52:53 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:39:55 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	export_one(char *arg)
 	printf("value: %s\n", value);
 	if (key == NULL)
 		return (free(value), EXIT_FAILURE);
-	if (strcmp(key, "?") == 0)
+	if (ft_strcmp(key, "?") == 0)
 		return (free(key), free(value), EXIT_SUCCESS);
 	if (env_add(key, value) == EXIT_FAILURE)
 		return (free(key), free(value), EXIT_FAILURE);

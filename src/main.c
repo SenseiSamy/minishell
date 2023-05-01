@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/29 20:05:49 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:41:26 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*get_prompt(void)
 	return (tmp);
 }
 
-static int	ft_isampty(const char *str)
+static int	isampty(const char *str)
 {
 	size_t	i;
 
@@ -83,10 +83,9 @@ static int	ft_prompt(t_cmd *cmds)
 	free(prompt);
 	signal_exec();
 	add_history(line);
-	if (!ft_isampty(line) && !syntax_check(line))
+	if (!isampty(line) && !syntax_check(line))
 	{
 		cmds = conv_cmd(line);
-		//print_cmd(cmds);
 		exec(cmds);
 		cleanup(cmds);
 	}
