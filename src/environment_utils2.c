@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 22:04:42 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 22:10:53 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/01 19:10:09 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	env_shlvl_init(void)
 {
 	char	*key;
-	char 	*value;
+	char	*value;
 
 	if (env_get_var("SHLVL") != NULL)
 	{

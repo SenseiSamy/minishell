@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/01 17:51:45 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/01 19:09:27 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	assign_pipes(t_exec *exec);
 void	free_pipes(int n, int **pipes);
 void	open_redirections(t_exec *exec, int n);
 int		open_redirections_one_builtin(t_exec *exec, int n);
-char	*create_file_path_hdoc();
+char	*create_file_path_hdoc(void);
 void	delete_tmp_files(t_exec *exec);
 void	free_hdocs(t_exec *exec);
 char	*get_hdoc_path(t_hdoc *hdoc, int cmd_n, int hdoc_n);
-int		*interruption_hdoc();
+int		*interruption_hdoc(void);
 int		here_documents(t_exec *exec);
 void	free_exec(t_exec *exec);
 void	process_exit(t_exec *exec, char *command, char *error);

@@ -6,20 +6,20 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 13:45:39 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/28 22:57:34 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/01 19:09:09 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	*interruption_hdoc()
+int	*interruption_hdoc(void)
 {
 	static int	interrupted = 0;
 
 	return (&interrupted);
 }
 
-char	*create_file_path_hdoc()
+char	*create_file_path_hdoc(void)
 {
 	const char	base_name[] = "/tmp/minishell_tmp_";
 	size_t		i;

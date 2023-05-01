@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/01 17:57:24 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/01 18:53:54 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ int	is_a_directory(char *path)
 
 	if (stat(path, &statbuf) == -1)
 		return (0);
-	return S_ISDIR(statbuf.st_mode);
+	return (S_ISDIR(statbuf.st_mode));
 }

@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/01 17:52:53 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/01 18:53:37 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	exec_command(t_exec *exec, int i)
 	char	*path;
 
 	open_redirections(exec, i);
-	if (dup2(exec->cmds[i].fd_in, 0) == -1 
+	if (dup2(exec->cmds[i].fd_in, 0) == -1
 		|| dup2(exec->cmds[i].fd_out, 1) == -1)
 		process_exit(exec, exec->cmds[i].args[0], strerror(errno));
 	close_all_fds(exec);
