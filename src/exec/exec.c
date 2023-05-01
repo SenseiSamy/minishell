@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/29 19:18:03 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:52:53 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,12 @@ static void	exec_command(t_exec *exec, int i)
 	path = get_path(exec->cmds[i].cmd);
 	if (!path)
 		process_exit(exec, exec->cmds[i].args[0], CMD_ERROR);
-	if (access(path, X_OK) == -1)
+	if (access(path, X_OK) == -1 || is_a_directory(path) == 1)
 	{
+		if (is_a_directory(path) == 1)
+			errno = EISDIR;
 		free(path);
-		process_exit(exec, exec->cmds[i].cmd, strerror(errno));
+		process_exit(exec, exec->cmds[i].args[0], strerror(errno));
 	}
 	exec_command2(exec, i, path);
 }

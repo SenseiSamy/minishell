@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/30 19:39:55 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:57:24 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 void	process_exit(t_exec *exec, char *command, char *error)
 {
+	int	exit_status;
+
+	exit_status = 0;
 	if (error)
+	{
 		error_message(command, error);
+		if (ft_strcmp(error, CMD_ERROR) == 0)
+			exit_status = 127;
+		if (command && (command[0] == '/' || command[0] == '.') && errno == 13)
+			exit_status = 126;
+		else
+			exit_status = 1;
+	}
 	free_exec(exec);
 	cleanup(exec->cmds);
 	env_free();
-	if (error)
-	{
-		if (ft_strcmp(error, CMD_ERROR) == 0)
-			exit(127);
-		if (command && (command[0] == '/' || command[0] == '.') && errno == 13)
-			exit(126);
-		else
-			exit(1);
-	}
-	exit(0);
+	exit(exit_status);
 }
 
 void	free_exec(t_exec *exec)
@@ -72,12 +74,11 @@ int	close2(int *fd)
 	return (EXIT_SUCCESS);
 }
 
-void	free_array_of_str(char **arr)
+int	is_a_directory(char *path)
 {
-	int	i;
+	struct stat	statbuf;
 
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
+	if (stat(path, &statbuf) == -1)
+		return (0);
+	return S_ISDIR(statbuf.st_mode);
 }

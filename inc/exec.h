@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/29 19:02:07 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:51:45 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	free_exec(t_exec *exec);
 void	process_exit(t_exec *exec, char *command, char *error);
 int		close_all_fds(t_exec *exec);
 int		close2(int *fd);
+int		is_a_directory(char *path);
 int		count_cmds(t_cmd *cmds);
-void	free_array_of_str(char **arr);
 char	**pass_env_to_cmd(void);
 char	*get_path(char *prog_name);
 int		is_a_builtin(t_cmd *cmd);

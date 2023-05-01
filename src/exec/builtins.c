@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/29 19:19:35 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:44:32 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ int	exec_one_builtin(t_exec *exec)
 		return (EXIT_FAILURE);
 	if (dup2(stdout_fd, 1) == -1)
 		return (EXIT_FAILURE);
-	return (exit_status_to_env(status));
+	return (close(stdin_fd), close(stdout_fd), exit_status_to_env(status));
 }
