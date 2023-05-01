@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/28 18:48:10 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:40:40 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ char				*ft_strchr(const char *s, int c);
 /**
  * @brief These functions copy the string pointed to by src, into a string at
  * the buffer pointed to by dst. The programmer is responsible for allocating a
- * destination buffer large enough, that is, strlen(src) + 1. For the difference
+ * destination buffer large enough, that is, ft_strlen(src) + 1. For the difference
  * between the two functions, see RETURN VALUE.
  * 
  * @param dst 
@@ -269,7 +269,7 @@ int					ft_strcmp(const char *s1, const char *s2);
 
 /**
  * @brief The ft_strlcat() function appends the NUL-terminated string src to the
- * end of dst. It will append at most size - strlen(dst) - 1 bytes,
+ * end of dst. It will append at most size - ft_strlen(dst) - 1 bytes,
  * NUL-terminating the result.
  * 
  * @param dst 

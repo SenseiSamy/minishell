@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/29 19:02:39 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:39:55 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	process_exit(t_exec *exec, char *command, char *error)
 	env_free();
 	if (error)
 	{
-		if (strcmp(error, CMD_ERROR) == 0)
+		if (ft_strcmp(error, CMD_ERROR) == 0)
 			exit(127);
 		if (command && (command[0] == '/' || command[0] == '.') && errno == 13)
 			exit(126);
