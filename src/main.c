@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/30 19:41:26 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:07:03 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	write(2, "exit\n", 5);
 	rl_clear_history();
-	status = ft_atoi(env_get_var("?")->value);
+	status = ft_atoi(env_get_value("?"));
 	env_free();
 	return (status);
 }

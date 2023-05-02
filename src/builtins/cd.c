@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:52:49 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:59:06 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:12:23 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,9 @@ int	ft_cd(const char *path)
 {
 	if (path == NULL)
 	{
-		path = env_get_var("HOME")->value;
+		path = env_get_value("HOME");
 		if (path == NULL)
-		{
-			ft_putstr_fd("cd: No path provided and HOME environment ", 2);
-			ft_putstr_fd(" variable is not set\n", 2);
-			return (1);
-		}
+			return (error_message("cd", "HOME not set"), 1);
 	}
 	if (chdir(path) != 0)
 	{

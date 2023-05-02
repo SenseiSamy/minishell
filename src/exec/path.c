@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:38:14 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/29 19:25:57 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:14:04 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static char	*find_path(char *prog_name, char *paths)
 
 char	*get_path(char *prog_name)
 {
-	t_env	*tmp;
 	char	*paths;
 
 	if (!prog_name || ft_strlen(prog_name) == 0)
@@ -49,10 +48,7 @@ char	*get_path(char *prog_name)
 			return (ft_strdup(prog_name));
 		return (NULL);
 	}
-	tmp = env_get_var("PATH");
-	if (!tmp)
-		return (NULL);
-	paths = tmp->value;
+	paths = env_get_value("PATH");
 	if (!paths)
 		return (NULL);
 	prog_name = ft_strjoin("/", prog_name);

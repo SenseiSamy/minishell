@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_pars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:03:52 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/30 22:38:46 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:16:54 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_var(char *cur, size_t	start)
 	key = get_name(cur, start);
 	if (!key)
 		return (NULL);
-	value = env_get_var(key)->value;
+	value = env_get_value(key);
 	if (!value)
 		value = "";
 	var = ft_strdup(value);

@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 22:04:42 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/01 19:10:09 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/02 16:04:45 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ int	env_shlvl_init(void)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
+}
+
+char	*env_get_value(char *key)
+{
+	t_env	*var;
+
+	var = env_get_var(key);
+	if (var)
+		return (var->value);
+	return (NULL);
 }

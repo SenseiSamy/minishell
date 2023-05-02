@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/29 19:02:19 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:05:06 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		exit_status_to_env(int status);
 t_env	*env_new(char *key, char *value);
 int		env_add(char *key, char *value);
 t_env	*env_get_var(char *key);
+char	*env_get_value(char *key);
 void	env_delone(char *key);
 void	env_free(void);
 
