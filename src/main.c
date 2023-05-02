@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/02 16:07:03 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/02 20:21:01 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,12 @@ static char	*get_prompt(void)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	if (is_crash(pwd))
-		return (NULL);
+	if (pwd == NULL)
+	{
+		pwd = ft_strdup(env_get_value("PWD"));
+		if (pwd == NULL)
+			return (NULL);
+	}
 	prompt = ft_strjoin("\033[1;32mminishell\033[0m:", pwd);
 	if (is_crash(prompt))
 		return (NULL);
@@ -100,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	cmds = NULL;
+	rl_outstream = stderr;
 	print_mininishell();
 	if (init_env(envp) == EXIT_FAILURE)
 		perror2("minishell");

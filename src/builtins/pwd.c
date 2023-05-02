@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 03:28:18 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 20:19:19 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 20:47:46 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	ft_pwd(void)
 {
-	char	cwd[PATH_MAX];
+	char	*cwd;
 
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		return (ft_putstr_fd(cwd, 1), write(1, "\n", 1), 0);
+	cwd = getcwd(NULL, 0);
+	if (cwd != NULL)
+		return (ft_putendl_fd(cwd, 1), free(cwd), 0);
 	return (perror("pwd"), 1);
 }

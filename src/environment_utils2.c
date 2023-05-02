@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 22:04:42 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/02 16:04:45 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/02 20:42:34 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,18 @@ int	env_shlvl_init(void)
 		if (env_add(key, value) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
+	return (EXIT_SUCCESS);
+}
+
+int	env_add_pwd(void)
+{
+	char	*key;
+	char	*value;
+
+	key = ft_strdup("PWD");
+	value = getcwd(NULL, 0);
+	if (key == NULL || value == NULL || env_add(key, value) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
