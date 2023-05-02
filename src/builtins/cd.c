@@ -6,25 +6,24 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:52:49 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/02 16:12:23 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/02 16:53:25 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd(const char *path)
+int	ft_cd(char **args)
 {
-	if (path == NULL)
+	if (args[1] != NULL && args[2] != NULL)
+		return (error_message("cd", "too many arguments", NULL), 1);
+	if (args[1] == NULL)
 	{
-		path = env_get_value("HOME");
-		if (path == NULL)
-			return (error_message("cd", "HOME not set"), 1);
+		args[1] = env_get_value("HOME");
+		if (args[1] == NULL)
+			return (error_message("cd", "HOME not set", NULL), 1);
 	}
-	if (chdir(path) != 0)
-	{
-		perror("cd");
-		return (1);
-	}
+	if (chdir(args[1]) != 0)
+		return (error_message("cd", args[1], strerror(errno)), 1);
 	return (0);
 }
 

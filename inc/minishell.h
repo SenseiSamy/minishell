@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/02 16:05:06 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/02 16:30:09 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		ft_env(void);
 int		ft_export(char **args);
 int		ft_unset(char **args);
 int		ft_echo(int argc, char **args);
-int		ft_cd(const char *path);
+int		ft_cd(char **args);
 int		ft_pwd(void);
 
 /* ENVIRONMENT */
@@ -101,6 +101,6 @@ void	print_mininishell(void);
 int		is_crash(void *str);
 void	clean_array(char **array);
 void	cleanup(t_cmd *cmd);
-void	error_message(char *str1, char *str2);
+void	error_message(char *str1, char *str2, char *str3);
 
 #endif

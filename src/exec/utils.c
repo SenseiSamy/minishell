@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:20:58 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/01 18:53:54 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/02 16:53:29 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	process_exit(t_exec *exec, char *command, char *error)
 	exit_status = 0;
 	if (error)
 	{
-		error_message(command, error);
+		error_message(command, error, NULL);
 		if (ft_strcmp(error, CMD_ERROR) == 0)
 			exit_status = 127;
 		if (command && (command[0] == '/' || command[0] == '.') && errno == 13)

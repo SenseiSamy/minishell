@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/01 17:44:32 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/02 16:31:43 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	builtin(t_exec *exec, int i)
 	else if (ft_strcmp(exec->cmds[i].cmd, "unset") == 0)
 		exit_status = ft_unset(exec->cmds[i].args);
 	else if (ft_strcmp(exec->cmds[i].cmd, "cd") == 0)
-		exit_status = ft_cd(exec->cmds[i].args[1]);
+		exit_status = ft_cd(exec->cmds[i].args);
 	else if (ft_strcmp(exec->cmds[i].cmd, "echo") == 0)
 		exit_status = ft_echo(ft_arraylen(exec->cmds[i].args),
 				exec->cmds[i].args);

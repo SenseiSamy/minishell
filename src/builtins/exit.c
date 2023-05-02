@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:18:48 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/02 16:08:29 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/02 16:29:41 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_exit(t_exec *exec, char **args)
 
 	status = 0;
 	if (args[1] != NULL && args[2] != NULL)
-		return (error_message("exit", "too many arguments"), 1);
+		return (error_message("exit", "too many arguments", NULL), 1);
 	if (args[1] == NULL)
 		ft_atoi(env_get_value("?"));
 	else
