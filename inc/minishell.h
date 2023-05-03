@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/29 19:02:19 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 20:42:49 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		ft_env(void);
 int		ft_export(char **args);
 int		ft_unset(char **args);
 int		ft_echo(int argc, char **args);
-int		ft_cd(const char *path);
+int		ft_cd(char **args);
 int		ft_pwd(void);
 
 /* ENVIRONMENT */
@@ -77,11 +77,13 @@ t_env	*env_singleton(t_env *new_env, int get_or_set);
 t_env	*env_get(void);
 int		init_env(char **old_env);
 int		env_shlvl_init(void);
+int		env_add_pwd(void);
 int		env_copy(char **old_env);
 int		exit_status_to_env(int status);
 t_env	*env_new(char *key, char *value);
 int		env_add(char *key, char *value);
 t_env	*env_get_var(char *key);
+char	*env_get_value(char *key);
 void	env_delone(char *key);
 void	env_free(void);
 
@@ -100,6 +102,6 @@ void	print_mininishell(void);
 int		is_crash(void *str);
 void	clean_array(char **array);
 void	cleanup(t_cmd *cmd);
-void	error_message(char *str1, char *str2);
+void	error_message(char *str1, char *str2, char *str3);
 
 #endif

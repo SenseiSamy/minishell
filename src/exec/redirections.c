@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:59:44 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/28 22:00:43 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/02 16:53:28 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	open_redirections_one_builtin(t_exec *exec, int n)
 			open_redirect_in(exec, n, i, &lfo);
 		if (exec->cmds[n].fd_in == -1 || exec->cmds[n].fd_out == -1)
 		{
-			error_message(lfo, strerror(errno));
+			error_message(lfo, strerror(errno), NULL);
 			return (EXIT_FAILURE);
 		}
 		++i;

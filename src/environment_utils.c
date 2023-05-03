@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:34:35 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/29 19:02:50 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 20:44:59 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	init_env(char **old_env)
 		if (env_copy(old_env) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	if (env_shlvl_init() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (env_add_pwd() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:46:45 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/24 20:03:38 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:00:04 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_unset(char **args)
 {
-	t_env	*var;
 	int		i;
 
 	i = 0;
@@ -22,9 +21,7 @@ int	ft_unset(char **args)
 	{
 		if (ft_strcmp(args[i], "?") == 0)
 			continue ;
-		var = env_get_var(args[i]);
-		if (var != NULL)
-			env_delone(var->value);
+		env_delone(args[i]);
 	}
 	return (0);
 }

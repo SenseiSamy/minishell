@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 22:20:26 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/29 19:25:40 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:08:38 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int	add_hdoc(t_hdoc **hdocs, t_hdoc *new)
 	return (EXIT_SUCCESS);
 }
 
-static void	loop_here_doc(t_exec *exec, t_hdoc *hdoc, char *limiter)
+static int	loop_here_doc(t_exec *exec, t_hdoc *hdoc, char *limiter)
 {
 	char	*line;
-	int		exit_status;
+	int		ex_stat;
 
-	exit_status = 0;
+	ex_stat = 0;
 	line = readline("> ");
 	while (line && ft_strcmp(line, limiter) != 0)
 	{
@@ -52,10 +52,7 @@ static void	loop_here_doc(t_exec *exec, t_hdoc *hdoc, char *limiter)
 		line = readline("> ");
 	}
 	if (*interruption_hdoc() == 1)
-	{
-		exit_status = 1;
-		*interruption_hdoc() = 0;
-	}
+		ex_stat = 1;
 	else if (line == NULL)
 	{
 		ft_putstr_fd("minishell: warning: here-document at line 32 delimited"
@@ -65,11 +62,9 @@ static void	loop_here_doc(t_exec *exec, t_hdoc *hdoc, char *limiter)
 	}
 	else
 		free(line);
+	*interruption_hdoc() = 0;
 	close_all_fds(exec);
-	cleanup(exec->cmds);
-	free_exec(exec);
-	env_free();
-	exit(exit_status);
+	return (cleanup(exec->cmds), free_exec(exec), env_free(), exit(ex_stat), 0);
 }
 
 static int	here_doc_fork(t_exec *exec, int n, int i, char *limiter)

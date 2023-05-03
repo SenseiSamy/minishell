@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/30 19:41:26 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 20:21:01 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,12 @@ static char	*get_prompt(void)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	if (is_crash(pwd))
-		return (NULL);
+	if (pwd == NULL)
+	{
+		pwd = ft_strdup(env_get_value("PWD"));
+		if (pwd == NULL)
+			return (NULL);
+	}
 	prompt = ft_strjoin("\033[1;32mminishell\033[0m:", pwd);
 	if (is_crash(prompt))
 		return (NULL);
@@ -100,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	cmds = NULL;
+	rl_outstream = stderr;
 	print_mininishell();
 	if (init_env(envp) == EXIT_FAILURE)
 		perror2("minishell");
@@ -108,7 +113,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	write(2, "exit\n", 5);
 	rl_clear_history();
-	status = ft_atoi(env_get_var("?")->value);
+	status = ft_atoi(env_get_value("?"));
 	env_free();
 	return (status);
 }

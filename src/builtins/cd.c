@@ -3,32 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:52:49 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/22 19:59:06 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/02 20:44:23 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd(const char *path)
+int	ft_cd(char **args)
 {
-	if (path == NULL)
+	char	*key;
+	char	*value;
+
+	key = ft_strdup("OLDPWD");
+	value = ft_strdup(env_get_value("PWD"));
+	if (key == NULL || value == NULL || env_add(key, value) == EXIT_FAILURE)
+		return (perror2("cd"), 1);
+	if (args[1] != NULL && args[2] != NULL)
+		return (error_message("cd", "too many arguments", NULL), 1);
+	if (args[1] == NULL)
 	{
-		path = env_get_var("HOME")->value;
-		if (path == NULL)
-		{
-			ft_putstr_fd("cd: No path provided and HOME environment ", 2);
-			ft_putstr_fd(" variable is not set\n", 2);
-			return (1);
-		}
+		args[1] = env_get_value("HOME");
+		if (args[1] == NULL)
+			return (error_message("cd", "HOME not set", NULL), 1);
 	}
-	if (chdir(path) != 0)
-	{
-		perror("cd");
-		return (1);
-	}
+	if (chdir(args[1]) != 0)
+		return (error_message("cd", args[1], strerror(errno)), 1);
+	if (env_add_pwd() == EXIT_FAILURE)
+		return (perror2("pwd"), 1);
 	return (0);
 }
 
