@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:18:48 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/02 18:34:55 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/03 16:13:28 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,14 @@ static int	is_valid_arg(char *arg)
 	int	i;
 
 	i = 0;
+	if (ft_strlen(arg) == 1 && arg[0] == '-')
+		return (false);
 	while (arg[i])
-		if (ft_isdigit(arg[i++]) == false)
+	{
+		if (ft_isdigit(arg[i]) == false && !(i == 0 && arg[i] == '-'))
 			return (false);
+		++i;
+	}
 	return (true);
 }
 
