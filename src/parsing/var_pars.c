@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:03:52 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/04 18:27:49 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/04 19:46:18 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*var_conv(const char *str)
 	quote = '\0';
 	while (str[i])
 	{
-		if (!quote && (str[i] == '"'))
+		if (!quote && (str[i] == '"' || str[i] == '\''))
 			quote = str[i];
 		else if (quote && quote == str[i])
 			quote = '\0';
