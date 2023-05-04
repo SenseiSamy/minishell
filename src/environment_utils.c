@@ -30,6 +30,11 @@ int	init_env(char **old_env)
 		return (EXIT_FAILURE);
 	if (env_add_pwd() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	key = ft_strdup("OLDPWD");
+	if (key == NULL)
+		return (errno = EMEM, EXIT_FAILURE);
+	if (env_add(key, NULL) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -44,14 +49,17 @@ int	env_copy(char **old_env)
 	while (old_env[i])
 	{
 		j = 0;
-		while (old_env[i][j] && old_env[i][j] != '=')
-			++j;
-		key = ft_strndup(old_env[i], j);
-		value = ft_strdup(ft_strchr(old_env[i], '=') + 1);
-		if (key == NULL || value == NULL)
-			return (errno = EMEM, EXIT_FAILURE);
-		if (env_add(key, value) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		if (ft_strchr(old_env[i], '=') != NULL)
+		{
+			while (old_env[i][j] != '=')
+				++j;
+			key = ft_strndup(old_env[i], j);
+			value = ft_strdup(ft_strchr(old_env[i], '=') + 1);
+			if (key == NULL || value == NULL)
+				return (errno = EMEM, EXIT_FAILURE);
+			if (env_add(key, value) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
 		++i;
 	}
 	return (EXIT_SUCCESS);

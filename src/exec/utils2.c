@@ -27,6 +27,8 @@ static char	*concatenate_env_var(t_env *env)
 	char	*env_var;
 	char	*tmp;
 
+	if (env->value == NULL)
+		return (ft_strdup(env->key));
 	tmp = ft_strjoin(env->key, "=");
 	if (tmp == NULL)
 		return (errno = EMEM, NULL);
@@ -66,12 +68,7 @@ char	**pass_env_to_cmd(void)
 void	perror2(char *str)
 {
 	if (errno == EMEM)
-	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(MALLOC_ERROR, 2);
-		ft_putstr_fd("\n", 2);
-	}
+		ft_dprintf(2, "%s: %s\n", str, MALLOC_ERROR);
 	else
 		perror(str);
 }

@@ -44,9 +44,9 @@ int	ft_echo(int argc, char **argv)
 		no_newline = true;
 	while (start_arg < argc)
 	{
-		printf("%s", argv[start_arg]);
+		ft_dprintf(1, "%s", argv[start_arg]);
 		if (start_arg < argc - 1)
-			printf(" ");
+			ft_dprintf(1, " ");
 		++start_arg;
 	}
 	if (!no_newline)

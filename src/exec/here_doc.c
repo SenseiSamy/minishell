@@ -54,12 +54,8 @@ static int	loop_here_doc(t_exec *exec, t_hdoc *hdoc, char *limiter)
 	if (*interruption_hdoc() == 1)
 		ex_stat = 1;
 	else if (line == NULL)
-	{
-		ft_putstr_fd("minishell: warning: here-document at line 32 delimited"
-			" by end-of-file (wanted `", 2);
-		ft_putstr_fd(limiter, 2);
-		ft_putendl_fd("`)", 2);
-	}
+		ft_dprintf(2, "minishell: warning: here-document at line 32 delimited"
+			" by end-of-file (wanted `%s')\n", limiter);
 	else
 		free(line);
 	*interruption_hdoc() = 0;
