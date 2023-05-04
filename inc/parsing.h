@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/30 01:09:51 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:17:55 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,11 @@ size_t	count_pipe(const char *str);
 char	*take_redir(const char *str, char *word, size_t *i);
 char	*take_pipe(const char *str, char *word, size_t *i);
 void	ft_var(const char *str, size_t *i, char **word, size_t *j);
+
+// utils_var
+size_t	calcule_res_size(const char *str);
+
+// var_pars
+char	*var_conv(const char *str);
 
 #endif

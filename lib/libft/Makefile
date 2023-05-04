@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/04/28 02:45:55 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/04 00:18:39 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ ft_isblank.c \
 ft_swap.c \
 ft_min.c \
 ft_strndup.c \
+ft_strnjoin.c \
 ft_max.c \
 ft_putchar.c \
 ft_memcpy.c \

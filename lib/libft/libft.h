@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/30 19:40:40 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/04 00:18:20 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,6 +359,19 @@ char				*ft_strncpy(char *dest, const char *src, size_t size);
  * @return char* 
  */
 char				*ft_strndup(const char *src, size_t size);
+
+
+/**
+ * @brief The ft_strnjoin() function appends the NUL-terminated string s2 to the
+ * end of s1. It will append at most len - ft_strlen(s1) - 1 bytes, NUL-
+ * terminating the result.
+ * 
+ * @param s1 
+ * @param s2 
+ * @param len 
+ * @return char* 
+ */
+char				*ft_strnjoin(char const *s1, char const *s2, size_t len);
 
 /**
  * @brief The ft_strnstr() function locates the first occurrence of the

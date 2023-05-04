@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/02 20:21:01 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/04 17:52:23 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,21 @@ static int	isampty(const char *str)
 	return (!str[i]);
 }
 
+static void	utils_prompt(char *str, t_cmd *cmds)
+{
+	char	*line;
+
+	line = var_conv(str);
+	if (!isampty(line) && !syntax_check(line))
+	{
+		cmds = conv_cmd(line);
+		exec(cmds);
+		cleanup(cmds);
+	}
+	free(line);
+	free(str);
+}
+
 static int	ft_prompt(t_cmd *cmds)
 {
 	char	*line;
@@ -87,12 +102,7 @@ static int	ft_prompt(t_cmd *cmds)
 	free(prompt);
 	signal_exec();
 	add_history(line);
-	if (!isampty(line) && !syntax_check(line))
-	{
-		cmds = conv_cmd(line);
-		exec(cmds);
-		cleanup(cmds);
-	}
+	utils_prompt(line, cmds);
 	return (0);
 }
 
