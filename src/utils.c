@@ -22,25 +22,25 @@ int	is_crash(void *str)
 void	print_mininishell(void)
 {
 	ft_putstr_fd(" ███▄ ▄███▓ ██▓ ███▄    █  ██▓  ██████  ██░ ██ ▓█████  ██▓"
-	"     ██▓    \n", 2);
+		"     ██▓    \n", 2);
 	ft_putstr_fd("▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▓██▒▒██    ▒ ▓██░ ██▒▓█   ▀ ▓██▒"
-	"    ▓██▒    \n", 2);
+		"    ▓██▒    \n", 2);
 	ft_putstr_fd("▓██    ▓██░▒██▒▓██  ▀█ ██▒▒██▒░ ▓██▄   ▒██▀▀██░▒███   ▒██░"
-	"    ▒██░    \n", 2);
+		"    ▒██░    \n", 2);
 	ft_putstr_fd("▒██    ▒██ ░██░▓██▒  ▐▌██▒░██░  ▒   ██▒░▓█ ░██ ▒▓█  ▄ ▒██░"
-	"    ▒██░    \n", 2);
+		"    ▒██░    \n", 2);
 	ft_putstr_fd("▒██▒   ░██▒░██░▒██░   ▓██░░██░▒██████▒▒░▓█▒░██▓░▒████▒░███"
-	"███▒░██████▒\n", 2);
+		"███▒░██████▒\n", 2);
 	ft_putstr_fd("░ ▒░   ░  ░░▓  ░ ▒░   ▒ ▒ ░▓  ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒░░ ▒░ ░░ ▒░"
-	"▓  ░░ ▒░▓  ░\n", 2);
+		"▓  ░░ ▒░▓  ░\n", 2);
 	ft_putstr_fd("░  ░      ░ ▒ ░░ ░░   ░ ▒░ ▒ ░░ ░▒  ░ ░ ▒ ░▒░ ░ ░ ░  ░░ ░ "
-	"▒  ░░ ░ ▒  ░\n", 2);
+		"▒  ░░ ░ ▒  ░\n", 2);
 	ft_putstr_fd("░      ░    ▒ ░   ░   ░ ░  ▒ ░░  ░  ░   ░  ░░ ░   ░     ░ "
-	"░     ░ ░   \n", 2);
+		"░     ░ ░   \n", 2);
 	ft_putstr_fd("       ░    ░           ░  ░        ░   ░  ░  ░   ░  ░    "
-	"░  ░    ░  ░\n", 2);
+		"░  ░    ░  ░\n", 2);
 	ft_putstr_fd("                                                          "
-	"            \n", 2);
+		"            \n", 2);
 }
 
 void	cleanup(t_cmd *cmd)
@@ -66,14 +66,8 @@ void	cleanup(t_cmd *cmd)
 
 void	error_message(char *str1, char *str2, char *str3)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(str1, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(str2, 2);
-	if (str3)
-	{
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(str3, 2);
-	}
-	ft_putchar_fd('\n', 2);
+	if (!str3)
+		ft_dprintf(2, "minishell: %s: %s\n", str1, str2);
+	else
+		ft_dprintf(2, "minishell: %s: %s: %s\n", str1, str2, str3);
 }

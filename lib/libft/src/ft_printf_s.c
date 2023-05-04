@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_printf_s.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 18:06:09 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 20:05:12 by cfrancie         ###   ########.fr       */
+/*   Created: 2022/11/13 15:24:39 by snaji             #+#    #+#             */
+/*   Updated: 2022/11/18 01:52:53 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include <unistd.h>
 
-int	ft_env(void)
+int	ft_printf_s(char *s, int fd)
 {
-	t_env	*env;
+	int	len;
 
-	env = env_get();
-	while (env != NULL)
-	{
-		if (ft_strcmp(env->key, "?") != 0 && env->value != NULL)
-			ft_dprintf(1, "%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
-	return (0);
+	if (!s)
+		return (ft_printf_s("(null)", fd));
+	len = 0;
+	while (s[len])
+		++len;
+	write(fd, s, len);
+	return (len);
 }

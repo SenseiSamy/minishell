@@ -776,4 +776,23 @@ void				ft_swap(int *a, int *b);
  */
 size_t				ft_arraylen(char **array);
 
+/**
+ * @brief printf du pauvre
+ * 
+ * @param format
+ * @param ...
+ * @return int
+ */
+int					ft_printf(const char *format, ...);
+
+/**
+ * @brief dprintf du pauvre 
+ * 
+ * @param fd
+ * @param format
+ * @param ...
+ * @return int
+ */
+int					ft_dprintf(int fd, const char *format, ...);
+
 #endif

@@ -86,6 +86,14 @@ ft_striteri.c \
 ft_strdup.c \
 ft_intlen.c \
 ft_strlcpy.c \
+ft_printf_c.c \
+ft_printf_di.c \
+ft_printf_p.c \
+ft_printf_s.c \
+ft_printf_u.c \
+ft_printf_x.c \
+ft_vdprintf.c \
+ft_printf.c \
 
 BNAME	= ft_lstdelone.c \
 ft_lstlast.c \

@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_printf_u.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 18:06:09 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/22 20:05:12 by cfrancie         ###   ########.fr       */
+/*   Created: 2022/11/10 21:14:38 by snaji             #+#    #+#             */
+/*   Updated: 2022/11/18 01:53:42 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+int	ft_printf_c(char c, int fd);
+int	ft_printf_s(char *s, int fd);
 
-int	ft_env(void)
+int	ft_printf_u(unsigned int n, int fd)
 {
-	t_env	*env;
-
-	env = env_get();
-	while (env != NULL)
-	{
-		if (ft_strcmp(env->key, "?") != 0 && env->value != NULL)
-			ft_dprintf(1, "%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
+	if (n < 10)
+		return (ft_printf_c(n + 48, fd));
+	if (n)
+		return (ft_printf_u(n / 10, fd)
+			+ ft_printf_c((n % 10) + 48, fd));
 	return (0);
 }
