@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:34:35 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/02 20:44:59 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/04 19:19:07 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ int	init_env(char **old_env)
 		return (EXIT_FAILURE);
 	if (env_add_pwd() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	key = ft_strdup("OLDPWD");
-	if (key == NULL)
-		return (errno = EMEM, EXIT_FAILURE);
-	if (env_add(key, NULL) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	if (env_get_value("OLDPWD") == NULL)
+	{
+		key = ft_strdup("OLDPWD");
+		if (key == NULL)
+			return (errno = EMEM, EXIT_FAILURE);
+		if (env_add(key, NULL) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
