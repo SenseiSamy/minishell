@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:33:04 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/04 18:17:55 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:19:22 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_var(const char *str, size_t *i, char **word, size_t *j);
 size_t	calcule_res_size(const char *str);
 
 // var_pars
+char	*get_name(const char *str, size_t i);
 char	*var_conv(const char *str);
 
 #endif

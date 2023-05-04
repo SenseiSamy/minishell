@@ -6,11 +6,18 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 18:17:08 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/04 18:17:46 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:19:03 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+typedef struct s_var
+{
+	size_t	res;
+	size_t	i;
+	char	*tmp;
+}			t_var;
 
 static size_t	lenvar(char *key)
 {

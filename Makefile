@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/04 16:40:03 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/04 18:18:30 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ CNAME	=	parsing/parsing.c \
 			parsing/conv_cmd.c \
 			parsing/utils_conv.c \
 			parsing/var_pars.c \
+			parsing/utils_var.c \
 			main.c \
 			utils.c \
 			environment_utils2.c \

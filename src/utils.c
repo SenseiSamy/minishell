@@ -6,11 +6,33 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:51:00 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/04 18:16:37 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:26:34 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_cmd(t_cmd *cmd)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (cmd[i].cmd && cmd[i].redirect)
+	{
+		if (cmd[i].cmd)
+			printf("cmd[%zu]: %s\n", i, cmd[i].cmd);
+		j = -1;
+		while (cmd[i].args[++j])
+			if (cmd[i].args[j])
+				printf(" args[%zu]: %s\n", j, cmd[i].args[j]);
+		j = -1;
+		while (cmd[i].redirect[++j])
+			if (cmd[i].redirect[j])
+				printf(" redirect[%zu]: %s\n", j, cmd[i].redirect[j]);
+		++i;
+	}
+}
 
 int	is_crash(void *str)
 {

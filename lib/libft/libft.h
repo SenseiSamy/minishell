@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/04 00:18:20 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:22:21 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,8 +247,8 @@ char				*ft_strchr(const char *s, int c);
 /**
  * @brief These functions copy the string pointed to by src, into a string at
  * the buffer pointed to by dst. The programmer is responsible for allocating a
- * destination buffer large enough, that is, ft_strlen(src) + 1. For the difference
- * between the two functions, see RETURN VALUE.
+ * destination buffer large enough, that is, ft_strlen(src) + 1. For the
+ * difference between the two functions, see RETURN VALUE.
  * 
  * @param dst 
  * @param src 
@@ -359,7 +359,6 @@ char				*ft_strncpy(char *dest, const char *src, size_t size);
  * @return char* 
  */
 char				*ft_strndup(const char *src, size_t size);
-
 
 /**
  * @brief The ft_strnjoin() function appends the NUL-terminated string s2 to the

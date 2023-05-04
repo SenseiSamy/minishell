@@ -6,35 +6,13 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/04 17:52:23 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:26:36 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "parsing.h"
 #include "minishell.h"
-
-void	print_cmd(t_cmd *cmd)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (cmd[i].cmd && cmd[i].redirect)
-	{
-		if (cmd[i].cmd)
-			printf("cmd[%zu]: %s\n", i, cmd[i].cmd);
-		j = -1;
-		while (cmd[i].args[++j])
-			if (cmd[i].args[j])
-				printf(" args[%zu]: %s\n", j, cmd[i].args[j]);
-		j = -1;
-		while (cmd[i].redirect[++j])
-			if (cmd[i].redirect[j])
-				printf(" redirect[%zu]: %s\n", j, cmd[i].redirect[j]);
-		++i;
-	}
-}
 
 static char	*get_prompt(void)
 {

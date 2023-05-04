@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:03:52 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/04 18:17:20 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:27:49 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 typedef struct s_var
 {
-	size_t	res;
-	size_t	i;
-	char	*tmp;
-}			t_var;
+	size_t	*i;
+	size_t	*j;
+}	t_var;
 
 char	*get_name(const char *str, size_t i)
 {
@@ -57,27 +56,26 @@ void	copy_value(char **res, char *value, size_t *j, char g_quote)
 	}
 }
 
-void	for_var_conv(const char *str, char **res, size_t *i, size_t *j, char quote)
+void	for_var_conv(const char *str, char **res, t_var *var, char quote)
 {
 	char	*name;
 	char	*value;
 
-	(*i)++;
-	name = get_name(str, *i);
+	(*var->i)++;
+	name = get_name(str, *var->i);
 	if (!name[0])
 	{
-		(*res)[(*j)++] = '$';
+		(*res)[(*var->j)++] = '$';
 		free(name);
 		return ;
 	}
 	value = env_get_value(name);
 	if (value)
-		copy_value(res, value, j, quote);
+		copy_value(res, value, var->j, quote);
 	free(name);
-	while (str[*i] && (isalnum(str[*i]) || str[*i] == '_'))
-		(*i)++;
+	while (str[*var->i] && (ft_isalnum(str[*var->i]) || str[*var->i] == '_'))
+		(*var->i)++;
 }
-
 
 char	*var_conv(const char *str)
 {
@@ -100,7 +98,7 @@ char	*var_conv(const char *str)
 			quote = '\0';
 		else if ((!quote || quote == '"') && str[i] == '$')
 		{
-			for_var_conv(str, &res, &i, &j, quote);
+			for_var_conv(str, &res, &(t_var){&i, &j}, quote);
 			continue ;
 		}
 		res[j++] = str[i++];
