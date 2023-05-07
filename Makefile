@@ -6,88 +6,72 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/04 18:18:30 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/07 21:02:05 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-EXEC	= minishell
+NAME = minishell
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+LIBS = -Llibft -lft -lreadline
+INCS = -Iinc -Ilibft
 
-# **************************************************************************** #
+SRCS_BUILTINS = src/builtins/cd.c \
+                src/builtins/echo.c \
+                src/builtins/env.c \
+                src/builtins/exit.c \
+                src/builtins/export.c \
+                src/builtins/pwd.c \
+                src/builtins/unset.c
 
-CC		= cc
-FLAGS	= -Wall -Wextra -Werror -g3
+SRCS_EXEC = src/exec/builtins.c \
+            src/exec/exec.c \
+            src/exec/here_doc2.c \
+            src/exec/here_doc.c \
+            src/exec/path.c \
+            src/exec/pipe.c \
+            src/exec/redirections.c \
+            src/exec/utils2.c \
+            src/exec/utils.c
 
-# **************************************************************************** #
+SRCS_PARSING = src/parsing/conv_cmd.c \
+               src/parsing/parsing.c \
+               src/parsing/syntax.c \
+               src/parsing/utils.c \
+               src/parsing/utils_conv.c \
+               src/parsing/utils_var.c \
+               src/parsing/var_pars.c
 
-LDIR	= ./lib/libft/
-CDIR	= ./src/
-ODIR	= ./bin/
-HDIR	= ./inc/
+SRCS = src/environment.c \
+       src/environment_utils2.c \
+       src/environment_utils.c \
+       src/main.c \
+       src/signal.c \
+       src/utils.c \
+       $(SRCS_BUILTINS) \
+       $(SRCS_EXEC) \
+       $(SRCS_PARSING)
 
-# **************************************************************************** #
+OBJS = $(SRCS:%.c=./bin/%.o)
 
-LNAME	=	libft.a
-CNAME	=	parsing/parsing.c \
-			parsing/utils.c \
-			parsing/syntax.c \
-			parsing/conv_cmd.c \
-			parsing/utils_conv.c \
-			parsing/var_pars.c \
-			parsing/utils_var.c \
-			main.c \
-			utils.c \
-			environment_utils2.c \
-			environment_utils.c \
-			environment.c \
-			signal.c \
-			builtins/export.c \
-			builtins/pwd.c \
-			builtins/env.c \
-			builtins/echo.c \
-			builtins/cd.c \
-			builtins/unset.c \
-			builtins/exit.c \
-			exec/utils2.c \
-			exec/exec.c \
-			exec/builtins.c \
-			exec/pipe.c \
-			exec/here_doc.c \
-			exec/here_doc2.c \
-			exec/redirections.c \
-			exec/path.c \
-			exec/utils.c
 
-ONAME	= $(CNAME:.c=.o)
-HNAME	= minishell.h exec.h parsing.h
+all: libft $(NAME)
 
-# **************************************************************************** #
+$(NAME): $(OBJS)
+	@$(MAKE) -C libft
+	$(CC) $(CFLAGS) $(INCS) -o $@ $^ $(LIBS)
 
-CFILES	= $(addprefix $(CDIR), $(CNAME))
-OFILES	= $(addprefix $(ODIR), $(ONAME))
-HFILES	= $(addprefix $(HDIR), $(HNAME))
-LFILES	= $(addprefix $(LDIR), $(LNAME))
-
-# **************************************************************************** #
-
-all: $(EXEC)
-
-$(EXEC): $(OFILES) $(LFILES)
-	$(CC) $(FLAGS) -o $(EXEC) $(OFILES) -L$(LDIR) -lft -lreadline
-
-$(ODIR)%.o: $(CDIR)%.c $(HFILES)
+./bin/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) $(FLAGS) -I$(HDIR) -I$(LDIR) -c $< -o $@
-
-$(LFILES):
-	$(MAKE) -C $(LDIR)
+	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 clean:
-	$(MAKE) -C $(LDIR) clean
-	rm -rf $(ODIR)
+	@rm -rf ./bin
+	$(MAKE) -C libft clean
 
 fclean: clean
-	$(MAKE) -C $(LDIR) fclean
-	rm -f $(EXEC)
+	@rm -f $(NAME)
+	$(MAKE) -C libft fclean
 
 re: fclean all
 
