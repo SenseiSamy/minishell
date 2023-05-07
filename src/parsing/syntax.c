@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 21:20:30 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/29 22:35:43 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/07 00:10:50 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static int	syntax_error(char *str)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected", STDERR_FILENO);
-	ft_putstr_fd(" token `", STDERR_FILENO);
-	ft_putstr_fd(str, STDERR_FILENO);
-	ft_putstr_fd("'\n", STDERR_FILENO);
+	ft_putstr_fd("minishell: syntax error near unexpected", 2);
+	ft_putstr_fd(" token `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("'\n", 2);
 	free(str);
 	return (1);
 }
