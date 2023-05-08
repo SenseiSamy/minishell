@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/02 16:31:43 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/08 18:30:53 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_a_builtin(t_cmd *cmd)
 	return (0);
 }
 
-int	builtin(t_exec *exec, int i)
+int	builtin(t_exec *exec, int i, int free)
 {
 	int	exit_status;
 
@@ -44,6 +44,12 @@ int	builtin(t_exec *exec, int i)
 		exit_status = ft_pwd();
 	else if (ft_strcmp(exec->cmds[i].cmd, "exit") == 0)
 		exit_status = ft_exit(exec, exec->cmds[i].args);
+	if (free == 1)
+	{
+		free_exec(exec);
+		cleanup(exec->cmds);
+		env_free();
+	}
 	return (exit_status);
 }
 
@@ -62,7 +68,7 @@ int	exec_one_builtin(t_exec *exec)
 	if (dup2(exec->cmds[0].fd_out, 1) == -1)
 		return (EXIT_FAILURE);
 	close_all_fds(exec);
-	status = builtin(exec, 0);
+	status = builtin(exec, 0, 0);
 	if (dup2(stdin_fd, 0) == -1)
 		return (EXIT_FAILURE);
 	if (dup2(stdout_fd, 1) == -1)

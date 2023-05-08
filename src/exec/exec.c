@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/01 18:53:37 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/08 18:26:54 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	exec_command(t_exec *exec, int i)
 		process_exit(exec, exec->cmds[i].args[0], strerror(errno));
 	close_all_fds(exec);
 	if (is_a_builtin(&exec->cmds[i]))
-		exit(builtin(exec, i));
+		exit(builtin(exec, i, 1));
 	if (exec->cmds[i].cmd == NULL)
 		process_exit(exec, NULL, NULL);
 	path = get_path(exec->cmds[i].cmd);

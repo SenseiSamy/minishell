@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/07 20:27:21 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/08 18:13:50 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ SRCS = $(SRCS_FT_DPRINTF) $(SRCS_SRC)
 
 OBJS = $(SRCS:%.c=./bin/%.o)
 
-INCS = -Ift_dprintf/include -I.
+INCS = -I./ft_dprintf/include -I.
 
 .PHONY: all clean fclean re
 
@@ -113,7 +113,7 @@ $(NAME): $(OBJS)
 
 ./bin/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -nostdlib $(INCS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJS)

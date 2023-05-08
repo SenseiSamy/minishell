@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/08 15:47:07 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/08 18:14:06 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
 LIBS = -Llibft -lft -lreadline
-INCS = -Iinc -Ilibft
+INCS = -I./inc -I./libft
 
 SRCS_BUILTINS = src/builtins/cd.c \
                 src/builtins/echo.c \
