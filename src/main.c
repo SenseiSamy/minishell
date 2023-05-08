@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/08 17:10:09 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:18:16 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ static char	*get_prompt(void)
 	char	*tmp;
 	char	*pwd;
 
-	pwd = getcwd(NULL, 0);
+	pwd = ft_strdup(env_get_value("PWD"));
 	if (pwd == NULL)
 	{
-		pwd = ft_strdup(env_get_value("PWD"));
+		pwd = getcwd(NULL, 0);
 		if (pwd == NULL)
 			return (NULL);
 	}
-	prompt = ft_strjoin("\033[1;32mminishell\033[0m:", pwd);
+	prompt = ft_strjoin("\033[1;32mminishell\033[0m:\e[34m\e[1m\e[2m", pwd);
 	if (is_crash(prompt))
 		return (NULL);
-	tmp = ft_strjoin(prompt, "$ ");
+	tmp = ft_strjoin(prompt, "\e[39m\e[0m$ ");
 	if (is_crash(tmp))
 		return (NULL);
 	free(prompt);

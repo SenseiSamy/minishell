@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 22:20:26 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/04 19:19:09 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/08 19:20:46 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	loop_here_doc(t_exec *exec, t_hdoc *hdoc, char *limiter)
 	int		line_n;
 
 	ex_stat = 0;
-	line_n	= 0;
+	line_n = 0;
 	line = readline("> ");
 	while (line && ft_strcmp(line, limiter) != 0)
 	{
