@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:03:52 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/08 17:10:36 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/09 00:04:59 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	for_var_conv(const char *str, char **res, t_var *var, char quote)
 		return ;
 	if (name[0] == '?')
 		value = env_get_value("?");
-	else if (name[0] == '\0' && str[*var->i] == ' ')
+	else if (name[0] == '\0' && (str[*var->i] == ' ' || str[*var->i] == '\0'))
 	{
 		(*res)[(*var->j)++] = '$';
 		free(name);

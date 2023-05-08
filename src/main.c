@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/08 20:03:44 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/08 22:14:03 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static char	*get_prompt(void)
 		if (pwd == NULL)
 			return (NULL);
 	}
-	prompt = ft_strjoin("\e[107m\e[41mm\e[42m\e[43mi\e[44mn\e[45mi\e[46ms\e[47mh\e[100me\e[101ml\e[102ml:\e[103m", pwd);
+	prompt = ft_strjoin("\e[1;32mminishell\e[0m:\e[1;34m", pwd);
 	if (is_crash(prompt))
 		return (NULL);
-	tmp = ft_strjoin(prompt, "$ \e[49m");
+	tmp = ft_strjoin(prompt, "$ \e[0m");
 	if (is_crash(tmp))
 		return (NULL);
 	free(prompt);
