@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 02:07:33 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/02 16:17:24 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/09 01:08:28 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*conv_var(const char *str, size_t *i)
 	word = ft_calloc(sizeof(char), (ft_strlen(str) + 2));
 	if (!word)
 		return (NULL);
-	while (str[*i] && (isalnum(str[*i]) || str[*i] == '_'))
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		word[j++] = str[(*i)++];
 	key = env_get_value(word);
 	if (!key)

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:03:52 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/09 01:04:53 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/09 01:11:02 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	for_var_conv(const char *str, char **res, t_var *var, char quote)
 
 	(*var->i)++;
 	name = get_name(str, *var->i);
-	printf("name = %s\n", name);
 	if (is_crash(name))
 		return ;
 	if (name[0] == '?')

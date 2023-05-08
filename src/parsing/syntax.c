@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 21:20:30 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/07 00:10:50 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/09 01:09:21 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 static int	syntax_error(char *str)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected", 2);
-	ft_putstr_fd(" token `", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("'\n", 2);
+	ft_dprintf(2, "minishell: syntax error near unexpected token `%s'\n", str);
 	free(str);
 	return (1);
 }
@@ -31,6 +28,8 @@ static int	is_error(const char *str, int i)
 	if (!str[i])
 		return (syntax_error(ft_strdup("newline")));
 	error = ft_calloc(sizeof(char), 3);
+	if (is_crash(error))
+		return (1);
 	if (str[i] == '<' || str[i] == '>')
 	{
 		error[0] = str[i];

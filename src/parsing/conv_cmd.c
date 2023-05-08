@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 04:07:11 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/08 17:10:47 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/09 01:10:15 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ static void	alloc_redir(const char *str, char *word, t_cmd *cmd, t_var *var)
 
 	next = next_word(str, &var->i_str);
 	tmp = ft_strjoin(word, " ");
+	if (is_crash(tmp))
+		return ;
 	result = ft_strjoin(tmp, next);
+	if (is_crash(result))
+		return ;
 	free(next);
 	free(tmp);
 	cmd[var->i_cmd].redirect[var->i_redir] = result;
@@ -44,8 +48,14 @@ static void	alloc_args(char *word, t_cmd *cmd, t_var *var)
 	if (!tmp)
 		return ;
 	cmd[var->i_cmd].args[var->i_args] = ft_strdup(tmp);
+	if (is_crash(cmd[var->i_cmd].args[var->i_args]))
+		return ;
 	if (var->i_args == 0)
+	{
 		cmd[var->i_cmd].cmd = ft_strdup(tmp);
+		if (is_crash(cmd[var->i_cmd].cmd))
+			return ;
+	}
 	var->i_args++;
 	free(tmp);
 }
