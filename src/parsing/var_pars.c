@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:03:52 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/07 18:40:48 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:10:36 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ char	*get_name(const char *str, size_t i)
 	char	*res;
 	size_t	j;
 
-	res = calloc(strlen(str) + 1, sizeof(char));
+	if (str[i] == '?')
+		return (ft_strdup("?"));
+	res = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	if (is_crash(res))
+		return (NULL);
 	j = 0;
-	while (str[i] && (isalnum(str[i]) || str[i] == '_'))
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		res[j++] = str[i++];
 	return (res);
 }
@@ -63,18 +67,22 @@ void	for_var_conv(const char *str, char **res, t_var *var, char quote)
 
 	(*var->i)++;
 	name = get_name(str, *var->i);
-	if (!name[0])
+	if (is_crash(name))
+		return ;
+	if (name[0] == '?')
+		value = env_get_value("?");
+	else if (name[0] == '\0' && str[*var->i] == ' ')
 	{
 		(*res)[(*var->j)++] = '$';
 		free(name);
 		return ;
 	}
-	value = env_get_value(name);
+	else
+		value = env_get_value(name);
 	if (value)
 		copy_value(res, value, var->j, quote);
+	*var->i += ft_strlen(name);
 	free(name);
-	while (str[*var->i] && (ft_isalnum(str[*var->i]) || str[*var->i] == '_'))
-		(*var->i)++;
 }
 
 char	*var_conv(const char *str)

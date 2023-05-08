@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:02:36 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/04/23 00:09:07 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/08 15:39:03 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t size)
 {
 	void	*new_ptr;
 
+	new_ptr = NULL;
 	if (size)
 	{
 		if (!ptr)

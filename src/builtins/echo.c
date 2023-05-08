@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:04:34 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/07 18:47:33 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:10:30 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ int	ft_echo(int argc, char **argv)
 		++start_arg;
 	}
 	if (!no_newline)
-		printf("\n");
+		ft_dprintf(1, "\n");
 	return (0);
 }

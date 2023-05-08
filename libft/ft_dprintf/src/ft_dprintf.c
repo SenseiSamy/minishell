@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:51:39 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/07 18:17:20 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/08 15:40:44 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	ft_dprintf(int fd, const char *str, ...)
 
 	ret = 0;
 	va_start(args, str);
-	while ((c = *str++))
+	c = *str++;
+	while (c)
 	{
 		if (c == '%')
 		{
@@ -64,6 +65,7 @@ int	ft_dprintf(int fd, const char *str, ...)
 			ft_putchar_fd(c, fd);
 			ret++;
 		}
+		c = *str++;
 	}
 	va_end(args);
 	return (ret);

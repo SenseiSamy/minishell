@@ -6,13 +6,13 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/07 21:02:05 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/08 15:47:07 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 LIBS = -Llibft -lft -lreadline
 INCS = -Iinc -Ilibft
 
