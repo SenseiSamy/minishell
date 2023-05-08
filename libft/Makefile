@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/08 18:13:50 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/09 01:05:38 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,10 +116,9 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
 	@rm -rf ./bin
 
 fclean: clean
-	$(RM) $(NAME)
+	@rm $(NAME)
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 18:17:08 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/04 18:19:03 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/09 01:04:16 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ size_t	calcule_res_size(const char *str)
 		{
 			var.i++;
 			var.tmp = get_name(str, var.i);
-			if (!var.tmp[0])
+			if (!var.tmp[0] || ft_isdigit(var.tmp[0]))
 			{
 				var.res++;
 				free(var.tmp);

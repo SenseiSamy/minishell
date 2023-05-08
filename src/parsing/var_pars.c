@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:03:52 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/09 00:04:59 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/09 01:04:53 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*get_name(const char *str, size_t i)
 	if (is_crash(res))
 		return (NULL);
 	j = 0;
+	if (ft_isdigit(str[i]))
+		return (res[j++] = str[i++], res);
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		res[j++] = str[i++];
 	return (res);
@@ -67,6 +69,7 @@ void	for_var_conv(const char *str, char **res, t_var *var, char quote)
 
 	(*var->i)++;
 	name = get_name(str, *var->i);
+	printf("name = %s\n", name);
 	if (is_crash(name))
 		return ;
 	if (name[0] == '?')
