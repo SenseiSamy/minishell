@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 18:17:08 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/09 01:04:16 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:38:17 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static size_t	lenvar(char *key)
 			quote = key[i];
 		else if (quote && quote == key[i])
 			quote = '\0';
-		else if (!quote && (key[i] == '>' || key[i] == '<'))
+		else if (!quote && (key[i] == '>' || key[i] == '<' || key[i] == '|'))
 		{
-			if (key[i] == key[i + 1])
+			if (key[i] == key[i + 1] && key[i] != '|')
 				i++;
-			res += 2;
+			res += 4;
 		}
 		else
 			res++;

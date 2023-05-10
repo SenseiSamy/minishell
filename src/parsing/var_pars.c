@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:03:52 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/09 01:11:02 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:31:05 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ void	copy_value(char **res, char *value, size_t *j, char g_quote)
 			quote = value[i];
 		else if (quote && quote == value[i])
 			quote = '\0';
-		else if ((!quote && !g_quote) && (value[i] == '>' || value[i] == '<'))
+		else if ((!quote && !g_quote)
+			&& (value[i] == '>' || value[i] == '<' || value[i] == '|'))
 		{
 			(*res)[(*j)++] = '"';
-			if (value[i] == value[i + 1])
+			while (value[i] == '>' || value[i] == '<' || value[i] == '|')
 				(*res)[(*j)++] = value[i++];
-			(*res)[(*j)++] = value[i++];
 			(*res)[(*j)++] = '"';
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 04:07:11 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/09 01:10:15 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:25:47 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,10 @@ t_cmd	*conv_cmd(const char *str)
 		return (NULL);
 	while (word)
 	{
-		if (!ft_strcmp(word, "|") && !on_quote(str, var.i_str))
+		if (!ft_strcmp(word, "|")
+			&& !on_quote(str, var.i_str - ft_strlen(word)))
 			var = (t_var){var.i_cmd + 1, 0, 0, var.i_str};
-		else if (is_redir(word) && !on_quote(str, var.i_str))
+		else if (is_redir(word) && !on_quote(str, var.i_str - ft_strlen(word)))
 			alloc_redir(str, word, cmd, &var);
 		else
 			alloc_args(word, cmd, &var);

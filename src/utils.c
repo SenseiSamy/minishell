@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:51:00 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/10 15:58:25 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/10 16:58:17 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*void	print_cmd(t_cmd *cmd)
+void	print_cmd(t_cmd *cmd)
 {
 	size_t	i;
 	size_t	j;
@@ -32,7 +32,7 @@
 				printf(" redirect[%zu]: %s\n", j, cmd[i].redirect[j]);
 		++i;
 	}
-}*/
+}
 
 int	is_crash(void *str)
 {

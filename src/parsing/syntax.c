@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 21:20:30 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/09 01:09:21 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:05:19 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,49 +19,67 @@ static int	syntax_error(char *str)
 	return (1);
 }
 
-static int	is_error(const char *str, int i)
+int	pipe_syntax(const char *str, size_t *i)
 {
-	char	*error;
-
-	while (str[i] && ft_isspace(str[i]))
-		++i;
-	if (!str[i])
+	if (is_end(str, *i))
 		return (syntax_error(ft_strdup("newline")));
-	error = ft_calloc(sizeof(char), 3);
-	if (is_crash(error))
-		return (1);
-	if (str[i] == '<' || str[i] == '>')
+	if (str[*i] == '|')
 	{
-		error[0] = str[i];
-		if (str[i + 1] && (str[i + 1] == '<' || str[i + 1] == '>'))
-		{
-			error[1] = str[i + 1];
-			return (syntax_error(error));
-		}
-		return (syntax_error(error));
+		(*i)++;
+		if (str[*i] == '|')
+			return (syntax_error(ft_strdup("||")));
+		while (ft_isspace(str[*i]))
+			(*i)++;
+		if (is_end(str, *i) || str[*i] == '|')
+			return (syntax_error(ft_strdup("|")));
 	}
-	free(error);
 	return (0);
 }
 
-static int	syntax_utils(const char *str, size_t *i, char *quote)
+int	redir_syntax(const char *str, size_t *i)
 {
-	if (str[*i] == '\'' || str[*i] == '"')
+	char	*buff;
+	char	tmp;
+
+	buff = ft_calloc(3, sizeof(char));
+	tmp = str[*i];
+	if (str[*i + 1] == tmp)
+		(*i)++;
+	(*i)++;
+	if (is_end(str, *i))
+		return (free(buff), syntax_error(ft_strdup("newline")));
+	if (str[*i] == '>' || str[*i] == '<')
+	{
+		buff[0] = str[*i];
+		if (str[*i + 1] == '>' || str[*i + 1] == '<')
+			buff[1] = str[++(*i)];
+		return (syntax_error(buff));
+	}
+	else if (str[*i] == '|')
+	{
+		if (str[*i + 1] == '|')
+			return (free(buff), syntax_error(ft_strdup("||")));
+		return (free(buff), syntax_error(ft_strdup("|")));
+	}
+	return (free(buff), 0);
+}
+
+static int	ft_loop(const char *str, size_t *i, char *quote)
+{
+	if (!quote && (str[*i] == '"' || str[*i] == '\''))
 		*quote = str[(*i)++];
-	else if (*quote == '\0' && (str[*i] == '>' || str[*i] == '<'))
+	else if (*quote && str[*i] == *quote)
 	{
-		if (str[*i] == str[*i + 1])
-			(*i)++;
-		if (is_error(str, *i + 1))
-			return (1);
+		*quote = '\0';
+		(*i)++;
 	}
-	else if (*quote == '\0' && str[*i] == '|')
-	{
-		while (str[*i] && ft_isspace(str[*i]))
-			++(*i);
-		if (!str[*i])
-			return (syntax_error(ft_strdup("newline")));
-	}
+	else if (!*quote && str[*i] == '|' && pipe_syntax(str, i))
+		return (1);
+	else if (!*quote && (str[*i] == '>' || str[*i] == '<')
+		&& redir_syntax(str, i))
+		return (1);
+	else
+		(*i)++;
 	return (0);
 }
 
@@ -72,17 +90,16 @@ int	syntax_check(const char *str)
 
 	i = 0;
 	quote = '\0';
+	if (is_start(str, &i))
+	{
+		if (str[i + 1] == '|')
+			return (syntax_error(ft_strdup("||")));
+		return (syntax_error(ft_strdup("|")));
+	}
 	while (i < ft_strlen(str))
 	{
-		if (str[i] == quote)
-		{
-			quote = '\0';
-			++i;
-		}
-		else
-			if (syntax_utils(str, &i, &quote))
-				return (1);
-		++i;
+		if (ft_loop(str, &i, &quote))
+			return (1);
 	}
 	return (0);
 }

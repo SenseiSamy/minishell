@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/09 01:13:44 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:15:05 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ static void	utils_prompt(char *str, t_cmd *cmds)
 {
 	char	*line;
 
-	line = var_conv(str);
-	free(str);
-	if (!isampty(line) && !syntax_check(line))
+	line = NULL;
+	if (!isampty(str) && !syntax_check(str))
 	{
+		line = var_conv(str);
+		free(str);
 		cmds = conv_cmd(line);
 		free(line);
 		exec(cmds);
