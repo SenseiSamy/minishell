@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/09 01:05:09 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/10 18:54:13 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS_PARSING = src/parsing/conv_cmd.c \
                src/parsing/syntax.c \
                src/parsing/utils.c \
                src/parsing/utils_conv.c \
+			   src/parsing/utils_syntax.c \
                src/parsing/utils_var.c \
                src/parsing/var_pars.c
 
