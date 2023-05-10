@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 21:31:16 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/03 16:23:01 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/10 19:23:02 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int	ft_export(char **args)
 	{
 		if (args[i] && ft_isalpha(args[i][0]) == false && args[i][0] != '_')
 		{
-			error_message("export", args[i], "not a valid identifier");
+			ft_dprintf(2, "minishell: export: `%s': not a valid identifier\n",
+				args[i]);
 			exit_status = 1;
 		}
 		else if (export_one(args[i]) == EXIT_FAILURE)
