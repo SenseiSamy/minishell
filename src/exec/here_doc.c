@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 22:20:26 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/10 15:59:00 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/10 16:03:13 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	loop_here_doc(t_exec *exec, t_hdoc *hdoc, char *limiter)
 		free(line);
 	*interruption_hdoc() = 0;
 	close_all_fds(exec);
-	return (cleanup(exec->cmds), free_exec(exec), env_free(), exit(ex_stat), 0);
+	return (free_exec(exec), cleanup(exec->cmds), env_free(), exit(ex_stat), 0);
 }
 
 static int	here_doc_fork(t_exec *exec, int n, int i, char *limiter)
