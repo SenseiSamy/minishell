@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/10 18:15:05 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:15:50 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ static char	*get_prompt(void)
 		if (pwd == NULL)
 			return (NULL);
 	}
-	prompt = ft_strjoin("\e[1;32mminishell\e[0m:\e[1;34m", pwd);
+	prompt = ft_strjoin("\001\e[1;32m\002minishell\001\e[0m\002:\001\e[1;34m"
+			"\002", pwd);
 	if (is_crash(prompt))
 		return (NULL);
-	tmp = ft_strjoin(prompt, "$ \e[0m");
+	tmp = ft_strjoin(prompt, "$ \001\e[0m\002");
 	if (is_crash(tmp))
 		return (NULL);
 	free(prompt);
