@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:52:49 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/02 20:44:23 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/10 15:58:38 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,3 @@ int	ft_cd(char **args)
 		return (perror2("pwd"), 1);
 	return (0);
 }
-
-/*
-int	main(int argc, char *argv[])
-{
-	char	*path;
-	char cwd[PATH_MAX];
-
-	path = NULL;
-	if (argc == 2)
-		path = argv[1];
-	else if (argc > 2)
-	{
-		fprintf(stderr, "Usage: %s [<path>]\n", argv[0]);
-		return (1);
-	}
-	if (cd(path) == 0)
-	{
-		if (getcwd(cwd, sizeof(cwd)) != NULL)
-			printf("Current directory: %s\n", cwd);
-		else
-		{
-			perror("getcwd");
-			return (1);
-		}
-	}
-	return (0);
-}
-*/

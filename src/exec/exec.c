@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/08 18:56:26 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/10 15:57:41 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	wait_cmds(t_exec *exec)
 			if (exit_status_to_env(128 + WTERMSIG(status)) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			if (WTERMSIG(status) == 3)
-				write(1, "Quit (core dumped)", 18);
+				write(2, "Quit (core dumped)", 18);
 			if (WTERMSIG(status) == 3 || WTERMSIG(status) == 2)
-				write(1, "\n", 1);
+				write(2, "\n", 1);
 		}
 		++i;
 	}

@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:38:33 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/26 17:24:15 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/10 15:57:34 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	handle_sigint_prompt(int sig)
 {
 	(void)sig;
 	exit_status_to_env(130);
-	write(1, "\n", 1);
+	write(2, "\n", 1);
 	rl_replace_line("", 1);
 	rl_on_new_line();
 	rl_redisplay();

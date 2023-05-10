@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 22:20:26 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/08 19:20:46 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/10 15:59:00 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	sighdoc(int sig)
 	(void)sig;
 	close(0);
 	*interruption_hdoc() = 1;
-	write(1, "> ^C\n", 5);
+	write(2, "> ^C\n", 5);
 }
 
 int	add_hdoc(t_hdoc **hdocs, t_hdoc *new)
