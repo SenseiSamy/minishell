@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:52:49 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/10 15:58:38 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/13 22:06:57 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_cd(char **args)
 {
 	char	*key;
 	char	*value;
+	char	*str;
 
 	key = ft_strdup("OLDPWD");
 	value = ft_strdup(env_get_value("PWD"));
@@ -25,11 +26,13 @@ int	ft_cd(char **args)
 		return (error_message("cd", "too many arguments", NULL), 1);
 	if (args[1] == NULL)
 	{
-		args[1] = env_get_value("HOME");
-		if (args[1] == NULL)
+		str = env_get_value("HOME");
+		if (str == NULL)
 			return (error_message("cd", "HOME not set", NULL), 1);
 	}
-	if (chdir(args[1]) != 0)
+	else
+		str = args[1];
+	if (chdir(str) != 0)
 		return (error_message("cd", args[1], strerror(errno)), 1);
 	if (env_add_pwd() == EXIT_FAILURE)
 		return (perror2("pwd"), 1);
