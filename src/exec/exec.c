@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/10 15:57:41 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/13 22:42:01 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ static int	wait_cmds(t_exec *exec)
 {
 	int	i;
 	int	status;
+	int	ex_sig;
 
-	i = 0;
+	i = -1;
 	status = 0;
-	while (i < exec->n_cmd)
+	ex_sig = 0;
+	while (++i < exec->n_cmd)
 	{
 		waitpid(exec->cmds[i].pid, &status, 0);
 		if (WIFEXITED(status))
@@ -29,12 +31,12 @@ static int	wait_cmds(t_exec *exec)
 		{
 			if (exit_status_to_env(128 + WTERMSIG(status)) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			if (WTERMSIG(status) == 3)
+			if (WTERMSIG(status) == 3 && ex_sig == 0)
 				write(2, "Quit (core dumped)", 18);
-			if (WTERMSIG(status) == 3 || WTERMSIG(status) == 2)
+			if ((WTERMSIG(status) == 3 || WTERMSIG(status) == 2) && ex_sig == 0)
 				write(2, "\n", 1);
+			ex_sig = 1;
 		}
-		++i;
 	}
 	return (EXIT_SUCCESS);
 }
