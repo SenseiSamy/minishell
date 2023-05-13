@@ -5,49 +5,42 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 21:20:30 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/10 19:05:19 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/05/12 02:35:21 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/05/12 16:39:07 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static int	syntax_error(char *str)
-{
-	ft_dprintf(2, "minishell: syntax error near unexpected token `%s'\n", str);
-	free(str);
-	return (1);
-}
-
-int	pipe_syntax(const char *str, size_t *i)
+static int	pipe_syntax(const char *str, size_t *i)
 {
 	if (is_end(str, *i))
-		return (syntax_error(ft_strdup("newline")));
+		return (syntax_error(strdup("newline")));
 	if (str[*i] == '|')
 	{
 		(*i)++;
 		if (str[*i] == '|')
-			return (syntax_error(ft_strdup("||")));
-		while (ft_isspace(str[*i]))
+			return (syntax_error(strdup("||")));
+		while (isspace(str[*i]))
 			(*i)++;
 		if (is_end(str, *i) || str[*i] == '|')
-			return (syntax_error(ft_strdup("|")));
+			return (syntax_error(strdup("|")));
 	}
 	return (0);
 }
 
-int	redir_syntax(const char *str, size_t *i)
+static int	redir_syntax(const char *str, size_t *i)
 {
 	char	*buff;
 	char	tmp;
 
-	buff = ft_calloc(3, sizeof(char));
+	buff = calloc(3, sizeof(char));
 	tmp = str[*i];
 	if (str[*i + 1] == tmp)
 		(*i)++;
 	(*i)++;
 	if (is_end(str, *i))
-		return (free(buff), syntax_error(ft_strdup("newline")));
+		return (free(buff), syntax_error(strdup("newline")));
 	if (str[*i] == '>' || str[*i] == '<')
 	{
 		buff[0] = str[*i];
@@ -58,8 +51,8 @@ int	redir_syntax(const char *str, size_t *i)
 	else if (str[*i] == '|')
 	{
 		if (str[*i + 1] == '|')
-			return (free(buff), syntax_error(ft_strdup("||")));
-		return (free(buff), syntax_error(ft_strdup("|")));
+			return (free(buff), syntax_error(strdup("||")));
+		return (free(buff), syntax_error(strdup("|")));
 	}
 	return (free(buff), 0);
 }
@@ -83,7 +76,7 @@ static int	ft_loop(const char *str, size_t *i, char *quote)
 	return (0);
 }
 
-int	syntax_check(const char *str)
+bool	syntax_check(const char *str)
 {
 	size_t	i;
 	char	quote;
@@ -93,13 +86,13 @@ int	syntax_check(const char *str)
 	if (is_start(str, &i))
 	{
 		if (str[i + 1] == '|')
-			return (syntax_error(ft_strdup("||")));
-		return (syntax_error(ft_strdup("|")));
+			return (syntax_error(strdup("||")));
+		return (syntax_error(strdup("|")));
 	}
-	while (i < ft_strlen(str))
+	while (i < strlen(str))
 	{
 		if (ft_loop(str, &i, &quote))
-			return (1);
+			return (true);
 	}
-	return (0);
+	return (false);
 }

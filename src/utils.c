@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:51:00 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/10 16:58:17 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/13 15:55:44 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 
 void	print_cmd(t_cmd *cmd)
 {
+	size_t	i_cmd;
 	size_t	i;
-	size_t	j;
 
-	i = 0;
-	while (cmd[i].cmd && cmd[i].redirect)
+	i_cmd = 0;
+	while (cmd[i_cmd].cmd || cmd[i_cmd].args || cmd[i_cmd].redirect)
 	{
-		if (cmd[i].cmd)
-			printf("cmd[%zu]: %s\n", i, cmd[i].cmd);
-		j = -1;
-		while (cmd[i].args[++j])
-			if (cmd[i].args[j])
-				printf(" args[%zu]: %s\n", j, cmd[i].args[j]);
-		j = -1;
-		while (cmd[i].redirect[++j])
-			if (cmd[i].redirect[j])
-				printf(" redirect[%zu]: %s\n", j, cmd[i].redirect[j]);
-		++i;
+		printf("cmd[%zu].cmd = \"%s\"\n", i_cmd, cmd[i_cmd].cmd);
+		i = -1;
+		while (cmd[i_cmd].args[++i])
+			printf("cmd[%zu].args[%zu] = \"%s\"\n", i_cmd, i,
+				cmd[i_cmd].args[i]);
+		i = -1;
+		while (cmd[i_cmd].redirect[++i])
+			printf("cmd[%zu].redirect[%zu] = \"%s\"\n", i_cmd, i,
+				cmd[i_cmd].redirect[i]);
+		i_cmd++;
 	}
 }
 
@@ -67,22 +66,26 @@ void	print_mininishell(void)
 
 void	cleanup(t_cmd *cmd)
 {
+	size_t	i_cmd;
 	size_t	i;
 
-	i = 0;
-	while (cmd[i].cmd || cmd[i].redirect || cmd[i].args)
+	i_cmd = 0;
+	while (cmd[i_cmd].cmd || cmd[i_cmd].args || cmd[i_cmd].redirect)
 	{
-		if (cmd[i].cmd != NULL)
-			free(cmd[i].cmd);
-		if (cmd[i].redirect != NULL)
-			ft_free_array(cmd[i].redirect);
-		if (cmd[i].args != NULL)
-			ft_free_array(cmd[i].args);
-		i++;
+		free(cmd[i_cmd].cmd);
+		i = -1;
+		while (cmd[i_cmd].args[++i])
+			free(cmd[i_cmd].args[i]);
+		free(cmd[i_cmd].args);
+		i = -1;
+		while (cmd[i_cmd].redirect[++i])
+			free(cmd[i_cmd].redirect[i]);
+		free(cmd[i_cmd].redirect);
+		i_cmd++;
 	}
-	free(cmd[i].cmd);
-	free(cmd[i].redirect);
-	free(cmd[i].args);
+	free(cmd[i_cmd].cmd);
+	free(cmd[i_cmd].args);
+	free(cmd[i_cmd].redirect);
 	free(cmd);
 }
 
