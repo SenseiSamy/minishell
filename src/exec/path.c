@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:38:14 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/02 16:14:04 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/15 22:37:17 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ char	*get_path(char *prog_name)
 
 	if (!prog_name || ft_strlen(prog_name) == 0)
 		return (NULL);
-	if (prog_name[0] == '/' || (prog_name[0] == '.' && prog_name[1] == '/')
-		|| (prog_name[0] == '.' && prog_name[1] == '.' && prog_name[2] == '/'))
+	if (ft_strchr(prog_name, '/') != NULL)
 	{
 		if (access(prog_name, F_OK) == 0)
 			return (ft_strdup(prog_name));
