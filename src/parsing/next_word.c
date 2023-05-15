@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 19:25:10 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/13 16:16:57 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 02:32:50 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@ static void	ft_loop(char *str, const char *line, size_t *il)
 			quote = line[*il];
 		else if (quote && line[*il] == quote)
 			quote = 0;
-		else if (line[*il] == '$' && quote != '\'')
-		{
-			if (isspace(line[*il + 1])
-				|| (!isalnum(line[*il + 1]) && line[*il + 1] != '_' && line[*il + 1] != '?'))
-				str[i++] = '$';
-			else
-				convert_variable(line, il, str, &i);
-		}
 		else
 			str[i++] = line[*il];
 		(*il)++;
@@ -56,6 +48,8 @@ char	*next_word(const char *line, char str[], size_t *il)
 	memset(str, 0, ARG_MAX);
 	while (isspace(line[*il]))
 		(*il)++;
+	if (line[*il] == '\0')
+		return (NULL);
 	if (line[*il] == '>' || line[*il] == '<' || line[*il] == '|')
 	{
 		str[i++] = line[(*il)++];
@@ -65,5 +59,7 @@ char	*next_word(const char *line, char str[], size_t *il)
 	}
 	else
 		ft_loop(str, line, il);
+	while (isspace(line[*il]))
+		(*il)++;
 	return (str);
 }

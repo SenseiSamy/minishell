@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/13 16:02:19 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/15 02:44:32 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,12 @@ SRCS_EXEC = src/exec/builtins.c \
             src/exec/utils2.c \
             src/exec/utils.c
 
-SRCS_PARSING = src/parsing/conv_cmd.c \
+SRCS_PARSING = src/parsing/ambigus_syntax.c \
+               src/parsing/conv_cmd.c \
                src/parsing/next_word.c \
+               src/parsing/pre_parsing.c \
                src/parsing/syntax_norm.c \
-               src/parsing/syntax.c \
-               src/parsing/var.c
+               src/parsing/syntax.c
 
 SRCS = src/environment.c \
        src/environment_utils2.c \

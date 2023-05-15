@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 02:35:21 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/12 16:39:07 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/14 17:43:09 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,44 @@ static int	pipe_syntax(const char *str, size_t *i)
 	return (0);
 }
 
-static int	redir_syntax(const char *str, size_t *i)
+static int	redir_norme(const char *str, size_t *i)
 {
 	char	*buff;
-	char	tmp;
 
 	buff = calloc(3, sizeof(char));
-	tmp = str[*i];
-	if (str[*i + 1] == tmp)
-		(*i)++;
-	(*i)++;
-	if (is_end(str, *i))
-		return (free(buff), syntax_error(strdup("newline")));
+	if (!buff)
+		return (1);
 	if (str[*i] == '>' || str[*i] == '<')
 	{
+		if (str[*i] == '<' && str[*i + 1] == '>')
+			return (free(buff), syntax_error(strdup("<>")));
 		buff[0] = str[*i];
-		if (str[*i + 1] == '>' || str[*i + 1] == '<')
-			buff[1] = str[++(*i)];
+		if (str[*i] == str[*i + 1])
+			buff[1] = str[(*i)++];
 		return (syntax_error(buff));
 	}
-	else if (str[*i] == '|')
+	return (free(buff), 0);
+}
+
+static int	redir_syntax(const char *str, size_t *i)
+{
+
+	if (str[*i] == str[*i + 1])
+		(*i)++;
+	(*i)++;
+	while (isspace(str[*i]))
+		(*i)++;
+	if (!str[*i])
+		return (syntax_error(strdup("newline")));
+	if (redir_norme(str, i))
+		return (1);
+	if (str[*i] == '|')
 	{
 		if (str[*i + 1] == '|')
-			return (free(buff), syntax_error(strdup("||")));
-		return (free(buff), syntax_error(strdup("|")));
+			return (syntax_error(strdup("||")));
+		return (syntax_error(strdup("|")));
 	}
-	return (free(buff), 0);
+	return (0);
 }
 
 static int	ft_loop(const char *str, size_t *i, char *quote)

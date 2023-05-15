@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:53:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/13 16:10:29 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 02:33:15 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,12 @@ static void	assign_redirect(const char *line, t_cmd *cmd, t_var *var)
 	var->i_red++;
 }
 
-t_cmd	*convert_cmd(const char *line)
+static void	ft_loop(char new_line[], t_cmd *cmd, t_var var)
 {
-	t_cmd	*cmd;
-	t_var	var;
-
-	cmd = alloc_cmd(line);
-	var = (t_var){.i_arg = 0, .i_red = 0, .i_cmd = 0, .i_lin = 0};
-	while (next_word(line, var.word, &var.i_lin))
+	while (next_word(new_line, var.word, &var.i_lin))
 	{
 		if (var.word[0] == '|'
-			&& !is_on_quote(line, var.i_lin - strlen(var.word)))
+			&& !is_on_quote(new_line, var.i_lin - strlen(var.word)))
 		{
 			cmd[var.i_cmd].args[var.i_arg] = NULL;
 			cmd[var.i_cmd].redirect[var.i_red] = NULL;
@@ -95,8 +90,8 @@ t_cmd	*convert_cmd(const char *line)
 				.i_lin = var.i_lin};
 		}
 		else if ((var.word[0] == '>' || var.word[0] == '<')
-			&& !is_on_quote(line, var.i_lin - strlen(var.word)))
-			assign_redirect(line, cmd, &var);
+			&& !is_on_quote(new_line, var.i_lin - strlen(var.word)))
+			assign_redirect(new_line, cmd, &var);
 		else
 		{
 			if (var.i_arg == 0)
@@ -104,5 +99,19 @@ t_cmd	*convert_cmd(const char *line)
 			cmd[var.i_cmd].args[var.i_arg++] = strdup(var.word);
 		}
 	}
+}
+
+t_cmd	*convert_cmd(const char *line)
+{
+	t_cmd	*cmd;
+	t_var	var;
+	char	new_line[ARG_MAX];
+
+	pre_parsing(line, new_line);
+	if (is_empty(new_line))
+		return (NULL);
+	cmd = alloc_cmd(new_line);
+	var = (t_var){.i_arg = 0, .i_red = 0, .i_cmd = 0, .i_lin = 0};
+	ft_loop(new_line, cmd, var);
 	return (cmd);
 }

@@ -1,5 +1,5 @@
 minishell
-libft.a
 ignoreliberror
 .gitignore
+libft.a
 bin/

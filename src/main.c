@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/13 16:02:47 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 02:56:19 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,16 @@ static char	*get_prompt(void)
 	return (tmp);
 }
 
-static int	isampty(const char *str)
+static void	utils_prompt(char *line, t_cmd *cmds)
 {
-	size_t	i;
-
-	i = 0;
-	while (str[i] && isspace(str[i]))
-		++i;
-	return (!str[i]);
+	if (syntax_check(line) || ambigus_syntax(line))
+		return ;
+	cmds = convert_cmd(line);
+	if (cmds == NULL)
+		return ;
+	exec(cmds);
+	cleanup(cmds);
 }
-
-// static void	utils_prompt(char *str, t_cmd *cmds)
-// {
-// 	char	*line;
-
-// 	line = NULL;
-// 	if (!isampty(str) && !syntax_check(str))
-// 	{
-// 		line = var_conv(str);
-// 		free(str);
-// 		cmds = conv_cmd(line);
-// 		free(line);
-// 		exec(cmds);
-// 		cleanup(cmds);
-// 	}
-// 	else
-// 		free(line);
-// }
 
 static int	ft_prompt(t_cmd *cmds)
 {
@@ -84,13 +67,7 @@ static int	ft_prompt(t_cmd *cmds)
 	free(prompt);
 	signal_exec();
 	add_history(line);
-	if (!isampty(line) && !syntax_check(line))
-	{
-		cmds = convert_cmd(line);
-		exec(cmds);
-		cleanup(cmds);
-	}
-	free(line);
+	utils_prompt(line, cmds);
 	return (0);
 }
 

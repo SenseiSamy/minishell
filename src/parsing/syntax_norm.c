@@ -6,11 +6,25 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:12:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/12 18:46:30 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 00:04:10 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+bool	is_empty(const char *line)
+{
+	size_t	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (!isspace(line[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 bool	syntax_error(char *str)
 {
