@@ -6,11 +6,31 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:12:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 03:12:03 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/16 00:07:57 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+bool	is_on_quote(const char *line, size_t end)
+{
+	size_t	i;
+	char	quote;
+
+	i = 0;
+	quote = 0;
+	while (line[i] && i < end)
+	{
+		if (!quote && (line[i] == '\'' || line[i] == '"'))
+			quote = line[i];
+		else if (quote && line[i] == quote)
+			quote = 0;
+		i++;
+	}
+	if (quote)
+		return (true);
+	return (false);
+}
 
 bool	is_empty(const char *line)
 {

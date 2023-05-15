@@ -6,13 +6,13 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/15 03:15:30 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/16 00:22:40 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -ggdb
 LIBS = -Llibft -lft -lreadline
 INCS = -I./inc -I./libft
 
@@ -53,8 +53,7 @@ SRCS = src/environment.c \
 
 OBJS = $(SRCS:%.c=./bin/%.o)
 
-
-all: libft $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C libft

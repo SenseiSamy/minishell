@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 03:10:02 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/16 00:22:19 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct s_var
 	char	quote;
 }			t_var;
 
-bool	is_on_quote(const char *line, size_t end)
+static bool	after_herdocs(const char *line, size_t end)
 {
 	size_t	i;
 	char	quote;
@@ -32,10 +32,16 @@ bool	is_on_quote(const char *line, size_t end)
 			quote = line[i];
 		else if (quote && line[i] == quote)
 			quote = 0;
+		else if (!quote && (line[i] == '<' && line[i + 1] == '<'))
+		{
+			i += 2;
+			while (ft_isspace(line[i]) && i < end)
+				i++;
+			if (i == end)
+				return (true);
+		}
 		i++;
 	}
-	if (quote)
-		return (true);
 	return (false);
 }
 
@@ -121,7 +127,8 @@ void	pre_parsing(const char *line, char str[])
 			var.quote = line[var.il];
 		else if (var.quote && line[var.il] == var.quote)
 			var.quote = 0;
-		if (var.quote != '\'' && line[var.il] == '$')
+		if (var.quote != '\'' && line[var.il] == '$'
+			&& !after_herdocs(line, var.il))
 			convert_variable(line, str, &var);
 		else
 			str[var.is++] = line[var.il++];
