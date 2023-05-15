@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/08 19:19:21 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/15 03:04:04 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int					ft_dprintf(int fd, const char *str, ...);
 
 /**
  * @brief checks for an alphanumeric character; it is equivalent to 
- * (isalpha(c) || isdigit(c)).
+ * (isalpha(c) || ft_isdigit(c)).
  * 
  * @param c 
  * @return true 

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:12:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 00:04:10 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 03:12:03 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	is_empty(const char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (!isspace(line[i]))
+		if (!ft_isspace(line[i]))
 			return (false);
 		i++;
 	}
@@ -28,21 +28,21 @@ bool	is_empty(const char *line)
 
 bool	syntax_error(char *str)
 {
-	printf("minishell: syntax error near unexpected token `%s'\n", str);
+	ft_dprintf(2, "minishell: syntax error near unexpected token `%s'\n", str);
 	free(str);
 	return (true);
 }
 
 bool	is_end(const char *str, size_t i)
 {
-	while (isspace(str[i]))
+	while (ft_isspace(str[i]))
 		i++;
 	return (!str[i]);
 }
 
 bool	is_start(const char *str, size_t *i)
 {
-	while (isspace(str[*i]))
+	while (ft_isspace(str[*i]))
 		(*i)++;
 	return (str[*i] == '|');
 }

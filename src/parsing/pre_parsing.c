@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 02:43:21 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 03:10:02 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ char	*get_name(const char *str, size_t i)
 	size_t	j;
 
 	if (str[i] == '?')
-		return (strdup("?"));
-	name = calloc(strlen(str) + 1, sizeof(char));
+		return (ft_strdup("?"));
+	name = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (!name)
 		return (NULL);
 	j = 0;
-	if (isdigit(str[i]))
+	if (ft_isdigit(str[i]))
 		return (name[j++] = str[i++], name);
-	while (str[i] && (isalnum(str[i]) || str[i] == '_'))
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		name[j++] = str[i++];
 	return (name);
 }
@@ -95,7 +95,7 @@ static void	convert_variable(const char *line, char str[], t_var *var)
 	if (name[0] == '?')
 		value = env_get_value(name);
 	else if (name[0] == '\0'
-		&& (isspace(line[var->il]) || line[var->il] == '\0'))
+		&& (ft_isspace(line[var->il]) || line[var->il] == '\0'))
 	{
 		str[var->is++] = '$';
 		free(name);
@@ -105,7 +105,7 @@ static void	convert_variable(const char *line, char str[], t_var *var)
 		value = env_get_value(name);
 	if (value)
 		copy_var(str, value, &var->is, var->quote);
-	var->il += strlen(name);
+	var->il += ft_strlen(name);
 	free(name);
 }
 
@@ -114,7 +114,7 @@ void	pre_parsing(const char *line, char str[])
 	t_var	var;
 
 	var = (t_var){0, 0, 0};
-	memset(str, 0, ARG_MAX);
+	ft_memset(str, 0, ARG_MAX);
 	while (line[var.il])
 	{
 		if (!var.quote && (line[var.il] == '\'' || line[var.il] == '"'))

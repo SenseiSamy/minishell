@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 16:45:16 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 02:41:18 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 03:02:17 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	get_value(const char *str, size_t *i)
 	if (!value)
 	{
 		tmp = ft_strjoin("$", name);
-		printf("minishell: %s: ambiguous redirect\n", tmp);
+		ft_dprintf(2, "minishell: %s: ambiguous redirect\n", tmp);
 		free(tmp);
 		free(name);
 		return (-1);

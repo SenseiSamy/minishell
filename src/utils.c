@@ -6,12 +6,12 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:51:00 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/13 15:55:44 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 03:11:31 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 void	print_cmd(t_cmd *cmd)
 {
 	size_t	i_cmd;
@@ -32,6 +32,7 @@ void	print_cmd(t_cmd *cmd)
 		i_cmd++;
 	}
 }
+*/
 
 int	is_crash(void *str)
 {

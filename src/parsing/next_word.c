@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 19:25:10 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 02:32:50 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 03:10:03 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	ft_issep(char c, char quote)
 {
-	if (!quote && ((c == '|' || c == '<' || c == '>') || isspace(c)))
+	if (!quote && ((c == '|' || c == '<' || c == '>') || ft_isspace(c)))
 		return (true);
 	return (false);
 }
@@ -45,8 +45,8 @@ char	*next_word(const char *line, char str[], size_t *il)
 	if (line[*il] == '\0')
 		return (NULL);
 	i = 0;
-	memset(str, 0, ARG_MAX);
-	while (isspace(line[*il]))
+	ft_memset(str, 0, ARG_MAX);
+	while (ft_isspace(line[*il]))
 		(*il)++;
 	if (line[*il] == '\0')
 		return (NULL);
@@ -59,7 +59,7 @@ char	*next_word(const char *line, char str[], size_t *il)
 	}
 	else
 		ft_loop(str, line, il);
-	while (isspace(line[*il]))
+	while (ft_isspace(line[*il]))
 		(*il)++;
 	return (str);
 }

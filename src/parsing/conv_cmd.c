@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:53:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 02:33:15 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 03:04:26 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,16 @@ static t_cmd	*alloc_cmd(const char *line)
 
 	i = 0;
 	count = count_pipe(line);
-	cmd = (t_cmd *)calloc(sizeof(t_cmd), (count + 2));
+	cmd = (t_cmd *)ft_calloc(sizeof(t_cmd), (count + 2));
 	if (!cmd)
 		return (NULL);
 	while (i < count + 1)
 	{
 		cmd[i].cmd = NULL;
-		cmd[i].args = (char **)calloc(sizeof(char *), (strlen(line) + 1));
-		cmd[i].redirect = (char **)calloc(sizeof(char *), (strlen(line) + 1));
+		cmd[i].args = (char **)ft_calloc(sizeof(char *),
+				(ft_strlen(line) + 1));
+		cmd[i].redirect = (char **)ft_calloc(sizeof(char *),
+				(ft_strlen(line) + 1));
 		i++;
 	}
 	cmd[i].cmd = NULL;
@@ -67,7 +69,7 @@ static void	assign_redirect(const char *line, t_cmd *cmd, t_var *var)
 	char	*tmp;
 	char	*tmp2;
 
-	res = strdup(var->word);
+	res = ft_strdup(var->word);
 	tmp = next_word(line, var->word, &var->i_lin);
 	tmp2 = ft_strjoin(res, " ");
 	free(res);
@@ -82,7 +84,7 @@ static void	ft_loop(char new_line[], t_cmd *cmd, t_var var)
 	while (next_word(new_line, var.word, &var.i_lin))
 	{
 		if (var.word[0] == '|'
-			&& !is_on_quote(new_line, var.i_lin - strlen(var.word)))
+			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word)))
 		{
 			cmd[var.i_cmd].args[var.i_arg] = NULL;
 			cmd[var.i_cmd].redirect[var.i_red] = NULL;
@@ -90,13 +92,13 @@ static void	ft_loop(char new_line[], t_cmd *cmd, t_var var)
 				.i_lin = var.i_lin};
 		}
 		else if ((var.word[0] == '>' || var.word[0] == '<')
-			&& !is_on_quote(new_line, var.i_lin - strlen(var.word)))
+			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word)))
 			assign_redirect(new_line, cmd, &var);
 		else
 		{
 			if (var.i_arg == 0)
-				cmd[var.i_cmd].cmd = strdup(var.word);
-			cmd[var.i_cmd].args[var.i_arg++] = strdup(var.word);
+				cmd[var.i_cmd].cmd = ft_strdup(var.word);
+			cmd[var.i_cmd].args[var.i_arg++] = ft_strdup(var.word);
 		}
 	}
 }

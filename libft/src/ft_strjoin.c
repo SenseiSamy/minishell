@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:14:38 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/04 00:26:37 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/15 03:10:16 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	res = calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
+	res = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	if (!res)
 		return (NULL);
 	i = 0;
