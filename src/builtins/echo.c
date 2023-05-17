@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:04:34 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/17 17:27:31 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:29:32 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ int	ft_echo(int argc, char **argv)
 		if (write(1, argv[start_arg], ft_strlen(argv[start_arg])) == -1)
 			ft_dprintf(2, "minishell: echo: write error: %s\n",
 				strerror(errno));
-		if (start_arg < argc - 1)
-			ft_dprintf(1, " ");
+		if (start_arg < argc - 1 && write(1, " ", 1) == -1)
+			ft_dprintf(2, "minishell: echo: write error: %s\n",
+				strerror(errno));
 		++start_arg;
 	}
 	if (!no_newline && write(1, "\n", 1) == -1)
