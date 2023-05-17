@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/17 15:18:08 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/17 15:22:18 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,6 @@ int	exec_one_builtin(t_exec *exec)
 	if (dup2(exec->cmds[0].fd_out, 1) == -1)
 		return (EXIT_FAILURE);
 	close_all_fds(exec);
-	if (strcmp(exec->cmds[0].cmd, "exit") == 0)
-	{
-		close(stdin_fd);
-		close(stdout_fd);
-	}
 	status = builtin(exec, 0, 0);
 	if (dup2(stdin_fd, 0) == -1)
 		return (EXIT_FAILURE);
