@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:18:48 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/13 22:25:42 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/17 15:55:29 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ static int	is_valid_arg(char *arg)
 	return (true);
 }
 
-int	ft_exit(t_exec *exec, char **args)
+int	ft_exit(t_exec *exec, char **args, struct s_std std)
 {
 	int		status;
-	t_cmd	*cmds;
 
 	status = 0;
 	write(2, "exit\n", 5);
@@ -49,9 +48,10 @@ int	ft_exit(t_exec *exec, char **args)
 		else
 			status = ft_atoi(args[1]);
 	}
-	cmds = exec->cmds;
+	close(std.stdin);
+	close(std.stdout);
 	free_exec(exec);
-	cleanup(cmds);
+	cleanup(exec->cmds);
 	env_free();
 	exit(status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/08 18:26:44 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:55:48 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 
 typedef struct s_exec	t_exec;
 typedef struct s_hdoc	t_hdoc;
+
+struct s_std
+{
+	int	stdin;
+	int	stdout;
+};
 
 struct s_hdoc
 {
@@ -74,9 +80,9 @@ int		count_cmds(t_cmd *cmds);
 char	**pass_env_to_cmd(void);
 char	*get_path(char *prog_name);
 int		is_a_builtin(t_cmd *cmd);
-int		builtin(t_exec *exec, int i, int free);
+int		builtin(t_exec *exec, int i, int free, struct s_std std);
 int		exec_one_builtin(t_exec *exec);
-int		ft_exit(t_exec *exec, char **args);
+int		ft_exit(t_exec *exec, char **args, struct s_std std);
 int		exec(t_cmd *cmds);
 
 #endif

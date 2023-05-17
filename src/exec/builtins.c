@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/17 15:23:14 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/17 15:55:57 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_a_builtin(t_cmd *cmd)
 	return (0);
 }
 
-int	builtin(t_exec *exec, int i, int free)
+int	builtin(t_exec *exec, int i, int free, struct s_std std)
 {
 	int	exit_status;
 
@@ -43,7 +43,7 @@ int	builtin(t_exec *exec, int i, int free)
 	else if (ft_strcmp(exec->cmds[i].cmd, "pwd") == 0)
 		exit_status = ft_pwd();
 	else if (ft_strcmp(exec->cmds[i].cmd, "exit") == 0)
-		exit_status = ft_exit(exec, exec->cmds[i].args);
+		exit_status = ft_exit(exec, exec->cmds[i].args, std);
 	if (free == 1)
 	{
 		free_exec(exec);
@@ -55,23 +55,22 @@ int	builtin(t_exec *exec, int i, int free)
 
 int	exec_one_builtin(t_exec *exec)
 {
-	int	status;
-	int	stdin_fd;
-	int	stdout_fd;
+	int				status;
+	struct s_std	std;
 
 	if (open_redirections_one_builtin(exec, 0) == EXIT_FAILURE)
 		return (EXIT_SUCCESS);
-	stdin_fd = dup(0);
-	stdout_fd = dup(1);
+	std.stdin = dup(0);
+	std.stdout = dup(1);
 	if (dup2(exec->cmds[0].fd_in, 0) == -1)
 		return (EXIT_FAILURE);
 	if (dup2(exec->cmds[0].fd_out, 1) == -1)
 		return (EXIT_FAILURE);
 	close_all_fds(exec);
-	status = builtin(exec, 0, 0);
-	if (dup2(stdin_fd, 0) == -1)
+	status = builtin(exec, 0, 0, std);
+	if (dup2(std.stdin, 0) == -1)
 		return (EXIT_FAILURE);
-	if (dup2(stdout_fd, 1) == -1)
+	if (dup2(std.stdout, 1) == -1)
 		return (EXIT_FAILURE);
-	return (close(stdin_fd), close(stdout_fd), exit_status_to_env(status));
+	return (close(std.stdin), close(std.stdout), exit_status_to_env(status));
 }
