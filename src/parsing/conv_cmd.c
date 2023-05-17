@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:53:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 03:04:26 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/17 19:12:45 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	ft_loop(char new_line[], t_cmd *cmd, t_var var)
 	while (next_word(new_line, var.word, &var.i_lin))
 	{
 		if (var.word[0] == '|'
-			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word)))
+			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word) - 1))
 		{
 			cmd[var.i_cmd].args[var.i_arg] = NULL;
 			cmd[var.i_cmd].redirect[var.i_red] = NULL;
@@ -92,7 +92,7 @@ static void	ft_loop(char new_line[], t_cmd *cmd, t_var var)
 				.i_lin = var.i_lin};
 		}
 		else if ((var.word[0] == '>' || var.word[0] == '<')
-			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word)))
+			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word) - 1))
 			assign_redirect(new_line, cmd, &var);
 		else
 		{
