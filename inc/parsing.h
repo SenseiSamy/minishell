@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:35:53 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/16 00:08:10 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:58:30 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
-
-# define ARG_MAX 2048
 
 # include "minishell.h"
 

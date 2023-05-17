@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/02 20:42:49 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/17 16:59:04 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define MINISHELL_H
 
 /* ************************************************************************** */
+
+# define ARG_MAX 1
+# define EMEM 132
+# define MALLOC_ERROR "A memory allocation failed"
 
 # include "libft.h"
 # include <curses.h>
@@ -30,9 +34,6 @@
 # include <termios.h>
 # include <unistd.h>
 # include <errno.h>
-
-# define EMEM 132
-# define MALLOC_ERROR "A memory allocation failed"
 
 /* ************************************************************************** */
 

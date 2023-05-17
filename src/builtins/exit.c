@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:18:48 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/17 15:55:29 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/17 17:02:50 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	ft_exit(t_exec *exec, char **args, struct s_std std)
 	}
 	close(std.stdin);
 	close(std.stdout);
+	delete_tmp_files(exec);
 	free_exec(exec);
 	cleanup(exec->cmds);
 	env_free();
