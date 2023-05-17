@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/16 00:22:19 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:45:51 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	convert_variable(const char *line, char str[], t_var *var)
 	if (name[0] == '?')
 		value = env_get_value(name);
 	else if (name[0] == '\0'
-		&& (ft_isspace(line[var->il]) || line[var->il] == '\0'))
+		&& !(ft_isalnum(line[var->il]) || line[var->il] == '_'))
 	{
 		str[var->is++] = '$';
 		free(name);
