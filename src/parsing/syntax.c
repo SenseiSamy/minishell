@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 02:35:21 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 03:04:57 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/17 19:16:34 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	redir_syntax(const char *str, size_t *i)
 
 static int	ft_loop(const char *str, size_t *i, char *quote)
 {
-	if (!quote && (str[*i] == '"' || str[*i] == '\''))
+	if (!*quote && (str[*i] == '"' || str[*i] == '\''))
 		*quote = str[(*i)++];
 	else if (*quote && str[*i] == *quote)
 	{
