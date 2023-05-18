@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 03:28:18 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/02 20:47:46 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/18 15:36:17 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,7 @@ int	ft_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (cwd != NULL)
 		return (ft_putendl_fd(cwd, 1), free(cwd), 0);
-	return (perror("pwd"), 1);
+	ft_dprintf(2, "pwd: error retrieving current directory: getcwd: "
+		"cannot access parent directories: %s\n", strerror(errno));
+	return (1);
 }
