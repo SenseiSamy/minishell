@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/18 15:53:52 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:02:16 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,6 @@ typedef struct s_var
 	char	quote;
 	char	*new_line;
 }			t_var;
-
-bool	after_herdocs(const char *line, size_t end)
-{
-	size_t	i;
-	char	quote;
-
-	i = 0;
-	quote = 0;
-	while (line[i] && i < end)
-	{
-		if (!quote && (line[i] == '\'' || line[i] == '"'))
-			quote = line[i];
-		else if (quote && line[i] == quote)
-			quote = 0;
-		else if (!quote && (line[i] == '<' && line[i + 1] == '<'))
-		{
-			i += 2;
-			while (ft_isspace(line[i]) && i < end)
-				i++;
-			if (i == end)
-				return (true);
-		}
-		i++;
-	}
-	return (false);
-}
 
 char	*get_name(const char *str, size_t i)
 {
@@ -131,8 +105,7 @@ char	*pre_parsing(const char *line)
 			var.quote = line[var.il];
 		else if (var.quote && line[var.il] == var.quote)
 			var.quote = 0;
-		if (var.quote != '\'' && line[var.il] == '$'
-			&& !after_herdocs(line, var.il))
+		if (var.quote != '\'' && line[var.il] == '$')
 			convert_variable(line, &var);
 		else
 			var.new_line[var.is++] = line[var.il++];

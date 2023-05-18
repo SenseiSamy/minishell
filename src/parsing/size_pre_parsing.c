@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:28:16 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/18 15:58:41 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:02:25 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ size_t	size_pre_parsing(const char *line)
 			var.quote = line[var.il];
 		else if (var.quote && line[var.il] == var.quote)
 			var.quote = 0;
-		if (var.quote != '\'' && line[var.il] == '$'
-			&& !after_herdocs(line, var.il))
+		if (var.quote != '\'' && line[var.il] == '$')
 			convert_variable(line, &var);
 		else
 			var = (t_var){var.is + 1, var.il + 1, var.quote};
