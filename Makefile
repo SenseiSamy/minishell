@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/16 00:22:40 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/18 15:42:03 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ SRCS_PARSING = src/parsing/ambigus_syntax.c \
                src/parsing/next_word.c \
                src/parsing/pre_parsing.c \
                src/parsing/syntax_norm.c \
-               src/parsing/syntax.c
+               src/parsing/syntax.c \
+			   src/parsing/size_pre_parsing.c
 
 SRCS = src/environment.c \
        src/environment_utils2.c \

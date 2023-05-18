@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:53:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/17 19:12:45 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:55:00 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	assign_redirect(const char *line, t_cmd *cmd, t_var *var)
 	var->i_red++;
 }
 
-static void	ft_loop(char new_line[], t_cmd *cmd, t_var var)
+static void	ft_loop(char *new_line, t_cmd *cmd, t_var var)
 {
 	while (next_word(new_line, var.word, &var.i_lin))
 	{
@@ -107,13 +107,15 @@ t_cmd	*convert_cmd(const char *line)
 {
 	t_cmd	*cmd;
 	t_var	var;
-	char	new_line[ARG_MAX];
+	char	*new_line;
 
-	pre_parsing(line, new_line);
-	if (is_empty(new_line))
+	new_line = pre_parsing(line);
+	if (!new_line)
 		return (NULL);
+	if (is_empty(new_line))
+		return (free(new_line), NULL);
 	cmd = alloc_cmd(new_line);
 	var = (t_var){.i_arg = 0, .i_red = 0, .i_cmd = 0, .i_lin = 0};
 	ft_loop(new_line, cmd, var);
-	return (cmd);
+	return (free(new_line), cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:57:07 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 03:04:04 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:21:01 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -682,7 +682,7 @@ void				ft_putstr_fd(char *s, int fd);
  * @param size 
  * @return void* 
  */
-//void				*ft_realloc(void *ptr, size_t old_size, size_t size);
+void				*ft_realloc(void *ptr, size_t old_size, size_t size);
 
 /**
  * @brief The ft_putstr() function writes the string 's' to the standard output.

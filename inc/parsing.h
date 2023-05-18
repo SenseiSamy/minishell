@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:35:53 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/17 16:58:30 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/18 15:52:41 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ bool		is_start(const char *str, size_t *i);
 /*syntax*/
 bool		syntax_check(const char *str);
 /*pre_parsing*/
+bool		after_herdocs(const char *line, size_t end);
 char		*get_name(const char *line, size_t il);
-void		pre_parsing(const char *line, char str[]);
+char		*pre_parsing(const char *line);
+/*size_preparsing*/
+size_t		size_pre_parsing(const char *line);
 
 #endif

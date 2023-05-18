@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pre_parsing.c                                      :+:      :+:    :+:   */
+/*   size_pre_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/18 15:53:52 by cfrancie         ###   ########.fr       */
+/*   Created: 2023/05/18 15:28:16 by cfrancie          #+#    #+#             */
+/*   Updated: 2023/05/18 15:58:41 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,52 +17,21 @@ typedef struct s_var
 	size_t	is;
 	size_t	il;
 	char	quote;
-	char	*new_line;
 }			t_var;
 
-bool	after_herdocs(const char *line, size_t end)
+static size_t	copy_redir_pipe(const char *value, t_var *var)
 {
 	size_t	i;
-	char	quote;
 
 	i = 0;
-	quote = 0;
-	while (line[i] && i < end)
+	var->is += 2;
+	while (value[i] == '>' || value[i] == '<' || value[i] == '|')
 	{
-		if (!quote && (line[i] == '\'' || line[i] == '"'))
-			quote = line[i];
-		else if (quote && line[i] == quote)
-			quote = 0;
-		else if (!quote && (line[i] == '<' && line[i + 1] == '<'))
-		{
-			i += 2;
-			while (ft_isspace(line[i]) && i < end)
-				i++;
-			if (i == end)
-				return (true);
-		}
+		var->is++;
 		i++;
 	}
-	return (false);
-}
-
-char	*get_name(const char *str, size_t i)
-{
-	char	*name;
-	size_t	j;
-
-	if (str[i] == '?')
-		return (ft_strdup("?"));
-	name = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-	if (!name)
-		return (NULL);
-	j = 0;
-	if (ft_isdigit(str[i]))
-		return (name[j++] = str[i++], name);
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-		name[j++] = str[i++];
-	return (name);
-}
+	return (i);
+}	
 
 static void	copy_var(char *value, t_var *var)
 {
@@ -79,14 +48,12 @@ static void	copy_var(char *value, t_var *var)
 			quote = '\0';
 		else if ((!quote && !var->quote)
 			&& (value[i] == '>' || value[i] == '<' || value[i] == '|'))
-		{
-			var->new_line[var->is++] = '"';
-			while (value[i] == '>' || value[i] == '<' || value[i] == '|')
-				var->new_line[var->is++] = value[i++];
-			var->new_line[var->is++] = '"';
-		}
+			i += copy_redir_pipe(&value[i], var);
 		else
-			var->new_line[var->is++] = value[i++];
+		{
+			var->is++;
+			i++;
+		}
 	}
 }
 
@@ -106,7 +73,7 @@ static void	convert_variable(const char *line, t_var *var)
 			&& !is_on_quote(line, var->il))
 		&& !(ft_isalnum(line[var->il]) || line[var->il] == '_'))
 	{
-		var->new_line[var->is++] = '$';
+		var->is++;
 		free(name);
 		return ;
 	}
@@ -118,13 +85,11 @@ static void	convert_variable(const char *line, t_var *var)
 	free(name);
 }
 
-char	*pre_parsing(const char *line)
+size_t	size_pre_parsing(const char *line)
 {
 	t_var	var;
 
-	var = (t_var){0, 0, 0, ft_calloc(sizeof(char), size_pre_parsing(line) + 1)};
-	if (!var.new_line)
-		return (NULL);
+	var = (t_var){0, 0, 0};
 	while (line[var.il])
 	{
 		if (!var.quote && (line[var.il] == '\'' || line[var.il] == '"'))
@@ -135,7 +100,7 @@ char	*pre_parsing(const char *line)
 			&& !after_herdocs(line, var.il))
 			convert_variable(line, &var);
 		else
-			var.new_line[var.is++] = line[var.il++];
+			var = (t_var){var.is + 1, var.il + 1, var.quote};
 	}
-	return (free((char *)line), var.new_line);
+	return (var.is);
 }
