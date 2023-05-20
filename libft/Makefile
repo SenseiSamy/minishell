@@ -6,119 +6,116 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/15 03:16:27 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/20 17:39:40 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fno-builtin -ffreestanding
 
-SRCS_FT_DPRINTF = ft_dprintf/src/ft_dprintf.c \
-                  ft_dprintf/src/ft_putchar_fd.c \
-                  ft_dprintf/src/ft_puthex_fd.c \
-                  ft_dprintf/src/ft_putnbr_base_fd.c \
-                  ft_dprintf/src/ft_putnbr_fd.c \
-                  ft_dprintf/src/ft_putptr_fd.c \
-                  ft_dprintf/src/ft_putstr_fd.c \
-                  ft_dprintf/src/ft_putunbr_fd.c
+SDIR = src/
+ODIR = bin/
+IDIR = include/
 
-SRCS_SRC =	src/ft_isascii.c \
-			src/ft_ldabs.c \
-			src/ft_isgraph.c \
-			src/ft_strnlen.c \
-			src/ft_ispunct.c \
-			src/ft_strncmp.c \
-			src/ft_isalpha.c \
-			src/ft_strjoin.c \
-			src/ft_intlen.c \
-			src/ft_memcmp.c \
-			src/ft_lstmap.c \
-			src/ft_strndup.c \
-			src/ft_max.c \
-			src/ft_strstr.c \
-			src/ft_memchr.c \
-			src/ft_strncpy.c \
-			src/ft_strcmp.c \
-			src/ft_isdigit.c \
-			src/ft_strlcpy.c \
-			src/ft_lstnew.c \
-			src/ft_isspace.c \
-			src/ft_strcat.c \
-			src/ft_bzero.c \
-			src/ft_strrev.c \
-			src/ft_atol.c \
-			src/ft_strlen.c \
-			src/ft_isalnum.c \
-			src/ft_strtrim.c \
-			src/ft_iscntrl.c \
-			src/ft_putendl_fd.c \
-			src/ft_swap.c \
-			src/ft_memset.c \
-			src/ft_isprint.c \
-			src/ft_strcpy.c \
-			src/ft_strmapi.c \
-			src/ft_lstsize.c \
-			src/ft_putstr.c \
-			src/ft_free_array.c \
-			src/ft_striteri.c \
-			src/ft_strdup.c \
-			src/ft_tolower.c \
-			src/ft_strchr.c \
-			src/ft_isxdigit.c \
-			src/ft_min.c \
-			src/ft_strnstr.c \
-			src/ft_putnbr_fd.c \
-			src/ft_search_char.c \
-			src/ft_putstr_fd.c \
-			src/ft_strrchr.c \
-			src/ft_memcpy.c \
-			src/ft_toupper.c \
-			src/ft_lstdelone.c \
-			src/ft_lstlast.c \
-			src/ft_putchar.c \
-			src/ft_arraylen.c \
-			src/ft_split.c \
-			src/ft_isblank.c \
-			src/ft_atoi.c \
-			src/ft_abs.c \
-			src/ft_putchar_fd.c \
-			src/ft_calloc.c \
-			src/ft_realloc.c \
-			src/ft_substr.c \
-			src/ft_lstadd_back.c \
-			src/ft_strlcat.c \
-			src/ft_strtok.c \
-			src/ft_memmove.c \
-			src/ft_lstadd_front.c \
-			src/ft_itoa.c \
-			src/ft_lstclear.c \
-			src/ft_strnjoin.c \
-			src/ft_atof.c \
-			src/ft_strncat.c \
-			src/ft_lstiter.c
+CTYPE =		ctype/ft_isspace.c \
+			ctype/ft_isxdigit.c \
+			ctype/ft_isalnum.c \
+			ctype/ft_isdigit.c \
+			ctype/ft_tolower.c \
+			ctype/ft_toupper.c \
+			ctype/ft_isgraph.c \
+			ctype/ft_iscntrl.c \
+			ctype/ft_isprint.c \
+			ctype/ft_isupper.c \
+			ctype/ft_islower.c \
+			ctype/ft_ispunct.c \
+			ctype/ft_isalpha.c
 
-SRCS = $(SRCS_FT_DPRINTF) $(SRCS_SRC)
+STRING =	string/ft_memset.c \
+			string/ft_strncmp.c \
+			string/ft_strchr.c \
+			string/ft_strlen.c \
+			string/ft_strlcpy.c \
+			string/ft_strndup.c \
+			string/ft_strcpy.c \
+			string/ft_strrchr.c \
+			string/ft_strncpy.c \
+			string/ft_bzero.c \
+			string/ft_memcpy.c \
+			string/ft_memchr.c \
+			string/ft_memcmp.c \
+			string/ft_strnstr.c \
+			string/ft_strnlen.c \
+			string/ft_strlcat.c \
+			string/ft_strcmp.c
 
-OBJS = $(SRCS:%.c=./bin/%.o)
+STDIO =		stdio/ft_dprintf/ft_putstr_fd.c \
+			stdio/ft_dprintf/ft_dprintf.c \
+			stdio/ft_dprintf/ft_puthex_fd.c \
+			stdio/ft_dprintf/ft_putptr_fd.c \
+			stdio/ft_dprintf/ft_putchar_fd.c \
+			stdio/ft_dprintf/ft_putunbr_fd.c \
+			stdio/ft_dprintf/ft_putnbr_base_fd.c \
+			stdio/ft_dprintf/ft_putnbr_fd.c
 
-INCS = -I./ft_dprintf/include -I.
+STDLIB =	stdlib/ft_atoll.c \
+			stdlib/ft_atol.c \
+			stdlib/ft_strdup.c \
+			stdlib/ft_calloc.c \
+			stdlib/ft_realloc.c \
+			stdlib/ft_atoi.c
 
-.PHONY: all clean fclean re
+LIBFT =		libft/ft_len_array.c \
+			libft/ft_free_array.c \
+			libft/ft_putstr_fd.c \
+			libft/ft_split.c \
+			libft/ft_strmapi.c \
+			libft/ft_striteri.c \
+			libft/ft_putchar_fd.c \
+			libft/ft_free_array.c \
+			libft/ft_strtrim.c \
+			libft/ft_strjoin.c \
+			libft/ft_substr.c \
+			libft/ft_putnbr_fd.c \
+			libft/ft_itoa.c \
+			libft/ft_putendl_fd.c
+
+CFILE = $(addprefix $(SDIR), $(CTYPE)) \
+		$(addprefix $(SDIR), $(STRING)) \
+		$(addprefix $(SDIR), $(STDIO)) \
+		$(addprefix $(SDIR), $(STDLIB)) \
+		$(addprefix $(SDIR), $(LIBFT))
+
+OFILE = $(addprefix $(ODIR), $(CTYPE:.c=.o)) \
+		$(addprefix $(ODIR), $(STRING:.c=.o)) \
+		$(addprefix $(ODIR), $(STDIO:.c=.o)) \
+		$(addprefix $(ODIR), $(STDLIB:.c=.o)) \
+		$(addprefix $(ODIR), $(LIBFT:.c=.o))
+
+TOTALFILES = $(words $(CFILE))
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@ar rcs $@ $^
+$(NAME): $(OFILE)
+	@echo -e "\033[32m[OK] \033[0m\033[36mObject files are ready!\033[0m"
+	@ar rc $(NAME) $(OFILE)
+	@ranlib $(NAME)
+	@echo -e "\033[32m[OK] \033[0m\033[36mLibft.a is ready!\033[0m"
 
-./bin/%.o: %.c
+$(ODIR)%.o: $(SDIR)%.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(IDIR) -o $@ -c $<
 
 clean:
-	@rm -rf ./bin
+	@rm -rf $(ODIR)
+	@rm -f compile_progress
+	@echo -e "\033[32m[OK] \033[0m\033[36mObject files are deleted!\033[0m"
 
 fclean: clean
 	@rm -f $(NAME)
+	@echo -e "\033[32m[OK] \033[0m\033[36mLibft.a is deleted!\033[0m"
 
 re: fclean all
+
+.PHONY: all clean fclean re

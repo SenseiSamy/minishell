@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:12:41 by snaji             #+#    #+#             */
-/*   Updated: 2023/04/28 18:47:40 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/20 01:16:54 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**pass_env_to_cmd(void)
 	{
 		new_env[i] = concatenate_env_var(env);
 		if (new_env[i] == NULL)
-			return (ft_free_array(new_env), NULL);
+			return (ft_free_array((void **)new_env), NULL);
 		env = env->next;
 		++i;
 	}

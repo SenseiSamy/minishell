@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 21:31:16 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/10 19:23:02 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/20 01:16:20 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ static int	export_no_arg2(char **env, int len)
 		{
 			split = ft_split(env[i], '=');
 			if (split == NULL)
-				return (ft_free_array(env), EXIT_FAILURE);
+				return (ft_free_array((void **)env), EXIT_FAILURE);
 			ft_dprintf(1, "export %s=\"%s\"\n", split[0],
 				ft_strchr(env[i], '=') + 1);
-			ft_free_array(split);
+			ft_free_array((void **)split);
 		}
 	}
-	ft_free_array(env);
+	ft_free_array((void **)env);
 	return (EXIT_SUCCESS);
 }
 
@@ -58,7 +58,7 @@ static int	export_no_arg(void)
 	env = pass_env_to_cmd();
 	if (env == NULL)
 		return (EXIT_FAILURE);
-	len = ft_arraylen(env);
+	len = ft_len_array((void **)env);
 	i = 0;
 	while (i < len - 1)
 	{

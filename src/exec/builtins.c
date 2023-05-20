@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/17 15:55:57 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/20 01:16:33 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	builtin(t_exec *exec, int i, int free, struct s_std std)
 	else if (ft_strcmp(exec->cmds[i].cmd, "cd") == 0)
 		exit_status = ft_cd(exec->cmds[i].args);
 	else if (ft_strcmp(exec->cmds[i].cmd, "echo") == 0)
-		exit_status = ft_echo(ft_arraylen(exec->cmds[i].args),
+		exit_status = ft_echo(ft_len_array((void **)exec->cmds[i].args),
 				exec->cmds[i].args);
 	else if (ft_strcmp(exec->cmds[i].cmd, "pwd") == 0)
 		exit_status = ft_pwd();
