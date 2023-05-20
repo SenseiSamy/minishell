@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:53:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/18 15:55:00 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/21 01:12:59 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,18 @@ static size_t	count_pipe(const char *line)
 {
 	size_t	i;
 	size_t	count;
+	char	quote;
 
 	i = 0;
 	count = 0;
+	quote = 0;
 	while (line[i])
 	{
-		if (line[i] == '|' && !is_on_quote(line, i))
+		if (!quote && (line[i] == '\'' || line[i] == '\"'))
+			quote = line[i];
+		else if (quote && line[i] == quote)
+			quote = 0;
+		else if (!quote && line[i] == '|')
 			count++;
 		i++;
 	}
@@ -84,7 +90,7 @@ static void	ft_loop(char *new_line, t_cmd *cmd, t_var var)
 	while (next_word(new_line, var.word, &var.i_lin))
 	{
 		if (var.word[0] == '|'
-			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word) - 1))
+			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word)))
 		{
 			cmd[var.i_cmd].args[var.i_arg] = NULL;
 			cmd[var.i_cmd].redirect[var.i_red] = NULL;
@@ -92,7 +98,7 @@ static void	ft_loop(char *new_line, t_cmd *cmd, t_var var)
 				.i_lin = var.i_lin};
 		}
 		else if ((var.word[0] == '>' || var.word[0] == '<')
-			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word) - 1))
+			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word)))
 			assign_redirect(new_line, cmd, &var);
 		else
 		{
