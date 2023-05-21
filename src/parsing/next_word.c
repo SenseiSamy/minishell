@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 19:25:10 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 03:10:03 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/21 03:06:18 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,5 @@ char	*next_word(const char *line, char str[], size_t *il)
 	}
 	else
 		ft_loop(str, line, il);
-	while (ft_isspace(line[*il]))
-		(*il)++;
 	return (str);
 }
