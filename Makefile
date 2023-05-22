@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/20 02:11:58 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/22 23:52:01 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,10 @@ SRCS = 			src/environment.c \
 
 OBJS = $(SRCS:%.c=./bin/%.o)
 
+TOTAL_SRCS := $(words $(SRCS))
+CURRENT_SRC := 0
+PERCENTAGE := 0
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
@@ -62,7 +66,10 @@ $(NAME): $(OBJS)
 
 ./bin/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@
+	@$(eval CURRENT_SRC := $(shell echo $$(($(CURRENT_SRC) + 1))))
+	@$(eval PERCENTAGE := $(shell echo $$(($(CURRENT_SRC) * 100 / $(TOTAL_SRCS)))))
+	@printf "\e[?25l\e[38;5;208m[$(NAME): $(PERCENTAGE)%%]\e[0m \e[38;5;221mCompiling $<\e[0m\r\n"
 
 clean:
 	@rm -rf ./bin
