@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/22 17:52:32 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:59:39 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,5 @@ char	*pre_parsing(const char *line)
 		else
 			var.new_line[var.is++] = line[var.il++];
 	}
-	printf("new_line = '%s'\n", var.new_line);
 	return (free((char *)line), var.new_line);
 }

@@ -6,13 +6,13 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 22:20:26 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/18 16:06:33 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/22 17:58:44 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-char	*pre_parsing(const char *line);
+char	*pre_parsing(const char *line, bool is_heredoc);
 
 static void	sighdoc(int sig)
 {
@@ -48,12 +48,13 @@ static int	loop_here_doc(t_exec *exec, t_hdoc *hdoc, char *limiter)
 
 	ex_stat = 0;
 	line_n = 0;
-	line = pre_parsing(readline("> "));
+	line = readline("> ");
 	while (line && ft_strcmp(line, limiter) != 0)
 	{
+		line = pre_parsing(line, true);
 		ft_putendl_fd(line, hdoc->fd);
 		free(line);
-		line = pre_parsing(readline("> "));
+		line = readline("> ");
 		++line_n;
 	}
 	if (*interruption_hdoc() == 1)
