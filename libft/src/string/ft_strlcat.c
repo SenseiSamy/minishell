@@ -6,11 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:36:16 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/20 17:31:12 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/21 03:16:35 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "ft_string.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {

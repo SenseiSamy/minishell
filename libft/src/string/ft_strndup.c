@@ -6,13 +6,12 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 01:06:28 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/20 17:30:07 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/21 03:19:13 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
-#include <stdlib.h>
-#include <stddef.h>
+#include "ft_stdlib.h"
 
 char	*ft_strndup(const char *s, size_t n)
 {

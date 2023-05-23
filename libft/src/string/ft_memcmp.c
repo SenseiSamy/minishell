@@ -6,11 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:35:56 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/20 17:30:41 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/21 03:16:21 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "ft_string.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {

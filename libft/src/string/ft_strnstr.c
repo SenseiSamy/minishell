@@ -6,12 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:36:35 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/20 17:31:03 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/21 03:16:52 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
-#include <stddef.h>
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {

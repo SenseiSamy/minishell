@@ -6,11 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:35:59 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/20 17:30:32 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/21 03:16:24 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "ft_string.h"
 
 void	*ft_memcpy(void *restrict dest, const void *restrict src, size_t n)
 {

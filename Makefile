@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/23 18:52:45 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/23 18:55:26 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,8 +77,6 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@$(MAKE) -C libft
 	$(CC) $(CFLAGS) $(INCS) -o $@ $^ $(LIBS)
-
-# 	@echo $(BOLD)$(UNDERLINE)$(BLUE)"Compiling "$(NAME)"... "$(DEFAULT)$(PERCENTAGE)$(BOLD)$(UNDERLINE)$(BLUE)"%"$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)" ["$(DEFAULT)$(GREEN)$(CURRENT_SRC)$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)"/"$(DEFAULT)$(GREEN)$(TOTAL_SRCS)$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)"]"$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)" "$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)"["$<"]"$(DEFAULT)
 
 ./bin/%.o: %.c
 	@mkdir -p $(@D)

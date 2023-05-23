@@ -6,11 +6,11 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:35:43 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/20 17:30:27 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/21 03:16:15 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "ft_string.h"
 
 void	ft_bzero(void *s, size_t n)
 {

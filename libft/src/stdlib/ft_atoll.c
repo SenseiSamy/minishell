@@ -6,11 +6,12 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:43:45 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/20 17:31:22 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/21 03:17:15 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ctype.h"
+#include "ft_stdlib.h"
 
 long long	ft_atoll(const char *nptr)
 {
