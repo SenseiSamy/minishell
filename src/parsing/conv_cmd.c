@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:53:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/23 18:05:37 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:53:45 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ typedef struct s_var
 	size_t		i_arg;
 	size_t		i_red;
 	size_t		i_lin;
-	char		word[ARG_MAX];
+	char		*word;
 }				t_var;
 
 static size_t	count_pipe(const char *line)
@@ -73,40 +73,45 @@ static void	assign_redirect(const char *line, t_cmd *cmd, t_var *var)
 {
 	char	*res;
 	char	*tmp;
-	char	*tmp2;
 
 	res = ft_strdup(var->word);
-	tmp = next_word(line, var->word, &var->i_lin);
-	tmp2 = ft_strjoin(res, " ");
+	free(var->word);
+	var->word = next_word(line, &var->i_lin);
+	tmp = ft_strjoin(res, " ");
 	free(res);
-	res = ft_strjoin(tmp2, tmp);
-	free(tmp2);
+	res = ft_strjoin(tmp, var->word);
+	free(tmp);
 	cmd[var->i_cmd].redirect[var->i_red] = res;
 	var->i_red++;
 }
 
-static void	ft_loop(char *new_line, t_cmd *cmd, t_var var)
+static void	ft_loop(char *new_line, t_cmd *cmd, t_var *var)
 {
-	while (next_word(new_line, var.word, &var.i_lin))
+	var->word = next_word(new_line, &var->i_lin);
+	while (var->word)
 	{
-		if (var.word[0] == '|'
-			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word)))
+		if (var->word[0] == '|'
+			&& !is_on_quote(new_line, var->i_lin - ft_strlen(var->word)))
 		{
-			cmd[var.i_cmd].args[var.i_arg] = NULL;
-			cmd[var.i_cmd].redirect[var.i_red] = NULL;
-			var = (t_var){.i_arg = 0, .i_red = 0, .i_cmd = var.i_cmd + 1,
-				.i_lin = var.i_lin};
+			cmd[var->i_cmd].args[var->i_arg] = NULL;
+			cmd[var->i_cmd].redirect[var->i_red] = NULL;
+			free(var->word);
+			*var = (t_var){.i_arg = 0, .i_red = 0, .i_cmd = var->i_cmd + 1,
+				.i_lin = var->i_lin};
 		}
-		else if ((var.word[0] == '>' || var.word[0] == '<')
-			&& !is_on_quote(new_line, var.i_lin - ft_strlen(var.word)))
-			assign_redirect(new_line, cmd, &var);
+		else if ((var->word[0] == '>' || var->word[0] == '<')
+			&& !is_on_quote(new_line, var->i_lin - ft_strlen(var->word)))
+			assign_redirect(new_line, cmd, var);
 		else
 		{
-			if (var.i_arg == 0)
-				cmd[var.i_cmd].cmd = ft_strdup(var.word);
-			cmd[var.i_cmd].args[var.i_arg++] = ft_strdup(var.word);
+			if (var->i_arg == 0)
+				cmd[var->i_cmd].cmd = ft_strdup(var->word);
+			cmd[var->i_cmd].args[var->i_arg++] = ft_strdup(var->word);
 		}
+		free(var->word);
+		var->word = next_word(new_line, &var->i_lin);
 	}
+	free(var->word);
 }
 
 t_cmd	*convert_cmd(const char *line)
@@ -121,7 +126,9 @@ t_cmd	*convert_cmd(const char *line)
 	if (is_empty(new_line))
 		return (free(new_line), NULL);
 	cmd = alloc_cmd(new_line);
-	var = (t_var){.i_arg = 0, .i_red = 0, .i_cmd = 0, .i_lin = 0};
-	ft_loop(new_line, cmd, var);
+	if (!cmd)
+		return (NULL);
+	var = (t_var){0, 0, 0, 0, NULL};
+	ft_loop(new_line, cmd, &var);
 	return (free(new_line), cmd);
 }

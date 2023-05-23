@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:35:53 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/23 18:05:08 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:35:28 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool		ambigus_syntax(const char *str);
 /*conv_cmd*/
 t_cmd		*convert_cmd(const char *line);
 /*next_word*/
-char		*next_word(const char *line, char str[], size_t *il);
+char		*next_word(const char *line, size_t *il);
 /*syntax_norm*/
 bool		is_on_quote(const char *line, size_t end);
 bool		is_empty(const char *line);
