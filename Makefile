@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/22 23:52:01 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/23 17:36:26 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 LIBS = -Llibft -lft -lreadline
 INCS = -I./include -I./libft/include
+
 
 SRCS_BUILTINS = src/builtins/cd.c \
                 src/builtins/echo.c \
@@ -58,18 +59,33 @@ TOTAL_SRCS := $(words $(SRCS))
 CURRENT_SRC := 0
 PERCENTAGE := 0
 
+# Couleurs du texte
+DEFAULT = "\033[0m"
+BOLD = "\033[1m"
+UNDERLINE = "\033[4m"
+BLACK = "\033[30m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BLUE = "\033[34m"
+MAGENTA = "\033[35m"
+CYAN = "\033[36m"
+WHITE = "\033[37m"
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C libft
 	$(CC) $(CFLAGS) $(INCS) -o $@ $^ $(LIBS)
 
+# 	@echo $(BOLD)$(UNDERLINE)$(BLUE)"Compiling "$(NAME)"... "$(DEFAULT)$(PERCENTAGE)$(BOLD)$(UNDERLINE)$(BLUE)"%"$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)" ["$(DEFAULT)$(GREEN)$(CURRENT_SRC)$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)"/"$(DEFAULT)$(GREEN)$(TOTAL_SRCS)$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)"]"$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)" "$(DEFAULT)$(BOLD)$(UNDERLINE)$(BLUE)"["$<"]"$(DEFAULT)
+
 ./bin/%.o: %.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 	@$(eval CURRENT_SRC := $(shell echo $$(($(CURRENT_SRC) + 1))))
 	@$(eval PERCENTAGE := $(shell echo $$(($(CURRENT_SRC) * 100 / $(TOTAL_SRCS)))))
-	@printf "\e[?25l\e[38;5;208m[$(NAME): $(PERCENTAGE)%%]\e[0m \e[38;5;221mCompiling $<\e[0m\r\n"
+	@echo [$(GREEN)$(PERCENTAGE)%$(DEFAULT): $(GREEN)$(CURRENT_SRC)$(DEFAULT)/$(GREEN)$(TOTAL_SRCS)$(DEFAULT)] [$(BOLD)$(UNDERLINE)$(BLUE)$<$(DEFAULT)]
 
 clean:
 	@rm -rf ./bin

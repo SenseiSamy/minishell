@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:35:53 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/18 16:02:36 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:05:08 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool		is_start(const char *str, size_t *i);
 bool		syntax_check(const char *str);
 /*pre_parsing*/
 char		*get_name(const char *line, size_t il);
-char		*pre_parsing(const char *line);
+char		*pre_parsing(const char *line, bool is_heredoc);
 /*size_preparsing*/
 size_t		size_pre_parsing(const char *line);
 

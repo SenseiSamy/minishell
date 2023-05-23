@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/22 17:59:39 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/23 17:49:11 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ static void	copy_var(char *value, t_var *var)
 			quote = value[i];
 		else if (quote && quote == value[i])
 			quote = '\0';
-		else if ((!quote && !var->quote)
-			&& (value[i] == '>' || value[i] == '<' || value[i] == '|'))
+		else if ((!quote && !var->quote) && (value[i] == '>' || value[i] == '<'
+				|| value[i] == '|'))
 		{
 			var->new_line[var->is++] = '"';
 			while (value[i] == '>' || value[i] == '<' || value[i] == '|')
@@ -101,9 +101,8 @@ static void	convert_variable(const char *line, t_var *var)
 		return ;
 	if (name[0] == '?')
 		value = env_get_value(name);
-	else if (name[0] == '\0'
-		&& !((line[var->il] == '\'' || line[var->il] == '"')
-			&& !is_on_quote(line, var->il))
+	else if (name[0] == '\0' && !((line[var->il] == '\''
+				|| line[var->il] == '"') && !is_on_quote(line, var->il))
 		&& !(ft_isalnum(line[var->il]) || line[var->il] == '_'))
 	{
 		var->new_line[var->is++] = '$';
@@ -118,7 +117,7 @@ static void	convert_variable(const char *line, t_var *var)
 	free(name);
 }
 
-char	*pre_parsing(const char *line)
+char	*pre_parsing(const char *line, bool is_heredoc)
 {
 	t_var	var;
 
@@ -131,8 +130,8 @@ char	*pre_parsing(const char *line)
 			var.quote = line[var.il];
 		else if (var.quote && line[var.il] == var.quote)
 			var.quote = 0;
-		if (var.quote != '\'' && line[var.il] == '$' && !after_herdocs(line,
-				var.il))
+		if ((var.quote != '\'' || is_heredoc) && line[var.il] == '$'
+			&& !after_herdocs(line, var.il))
 			convert_variable(line, &var);
 		else
 			var.new_line[var.is++] = line[var.il++];
