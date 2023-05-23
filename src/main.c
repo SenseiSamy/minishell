@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:24:32 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/20 16:41:04 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/23 23:53:37 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "parsing.h"
 #include "minishell.h"
+#include "ft_color.h"
+
+#define COLOR1 "\e[38;5;181m"
+#define COLOR2 "\e[38;5;111m"
 
 static char	*get_prompt(void)
 {
@@ -27,11 +31,11 @@ static char	*get_prompt(void)
 		if (pwd == NULL)
 			return (NULL);
 	}
-	prompt = ft_strjoin("\001\e[1;32m\002minishell\001\e[0m\002:\001\e[1;34m"
-			"\002", pwd);
+	prompt = ft_strjoin("\001"COLOR1 BASH_BOLD"\002minishell\001"BASH_DEFAULT
+			"\002:\001"COLOR2"\002", pwd);
 	if (is_crash(prompt))
 		return (NULL);
-	tmp = ft_strjoin(prompt, "$ \001\e[0m\002");
+	tmp = ft_strjoin(prompt, "$ \001\e"BASH_DEFAULT"\002");
 	if (is_crash(tmp))
 		return (NULL);
 	free(prompt);
