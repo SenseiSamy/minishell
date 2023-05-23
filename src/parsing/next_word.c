@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 19:25:10 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 03:10:03 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:06:51 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*next_word(const char *line, char str[], size_t *il)
 	if (line[*il] == '\0')
 		return (NULL);
 	i = 0;
-	ft_memset(str, 0, ARG_MAX);
+	ft_memset(str, 0, ft_strlen(str) + 1);
 	while (ft_isspace(line[*il]))
 		(*il)++;
 	if (line[*il] == '\0')

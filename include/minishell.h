@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:28:37 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/20 01:12:50 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:06:28 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /* ************************************************************************** */
 
-# define ARG_MAX 1
+# define ARG_MAX 1024
 # define EMEM 132
 # define MALLOC_ERROR "A memory allocation failed"
 

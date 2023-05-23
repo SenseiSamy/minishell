@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:53:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/21 01:12:59 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:05:37 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_cmd	*convert_cmd(const char *line)
 	t_var	var;
 	char	*new_line;
 
-	new_line = pre_parsing(line);
+	new_line = pre_parsing(line, false);
 	if (!new_line)
 		return (NULL);
 	if (is_empty(new_line))
