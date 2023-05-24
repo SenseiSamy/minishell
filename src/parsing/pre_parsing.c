@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/24 21:23:52 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:45:21 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	after_herdocs(const char *line, size_t end)
 	return (false);
 }
 
-static void	copy_var(char *value, t_var *var)
+static void	copy_var(char *value, t_var *var, bool after_redir)
 {
 	char	quote;
 	size_t	i;
@@ -62,10 +62,12 @@ static void	copy_var(char *value, t_var *var)
 		else if ((!quote && !var->quote) && (value[i] == '>' || value[i] == '<'
 				|| value[i] == '|'))
 		{
-			var->new_line[var->is++] = '"';
+			if (!after_redir)
+				var->new_line[var->is++] = '"';
 			while (value[i] == '>' || value[i] == '<' || value[i] == '|')
 				var->new_line[var->is++] = value[i++];
-			var->new_line[var->is++] = '"';
+			if (!after_redir)
+				var->new_line[var->is++] = '"';
 		}
 		else
 			var->new_line[var->is++] = value[i++];
@@ -78,7 +80,7 @@ static void	take_var(char *value, t_var *var, bool after_redir)
 	{
 		if (after_redir)
 			var->new_line[var->is++] = '"';
-		copy_var(value, var);
+		copy_var(value, var, after_redir);
 		if (after_redir)
 			var->new_line[var->is++] = '"';
 	}
@@ -130,5 +132,6 @@ char	*pre_parsing(const char *line, bool is_heredoc)
 		else
 			var.new_line[var.is++] = line[var.il++];
 	}
+	printf("new_line = '%s'\n", var.new_line);
 	return (free((char *)line), var.new_line);
 }

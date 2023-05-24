@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:28:16 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/24 21:22:31 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:41:38 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ static void	size_var(char *value, t_var *var, bool after_redir)
 	if (value)
 	{
 		if (after_redir)
-			var->is += ft_strlen(value) + 2;
-		else
-			copy_var(value, var);
+			var->is += 2;
+		copy_var(value, var);
 	}
 }
 
