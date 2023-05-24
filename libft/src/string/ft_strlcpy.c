@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:36:20 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/21 03:16:37 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 03:41:10 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,14 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
 
+	if (size == 0)
+		return (ft_strlen(src));
 	i = 0;
-	while (src[i] && i + 1 < size)
+	while (src[i] && i < size - 1)
 	{
 		dst[i] = src[i];
-		++i;
+		i++;
 	}
-	if (size)
-		dst[i] = '\0';
-	while (src[i])
-		++i;
-	return (i);
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }
