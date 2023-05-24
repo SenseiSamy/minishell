@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:59:44 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/02 16:53:28 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/24 19:59:53 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ static void	open_redirect_out(t_exec *exec, int n, int i, char **lfo)
 	if (exec->cmds[n].redirect[i][1] == '>')
 	{
 		exec->cmds[n].fd_out = open(&exec->cmds[n].redirect[i][3],
-				O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
+				O_WRONLY | O_APPEND | O_CREAT, 0644);
 		*lfo = &exec->cmds[n].redirect[i][3];
 	}
 	else
 	{
 		exec->cmds[n].fd_out = open(&exec->cmds[n].redirect[i][2],
-				O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
+				O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		*lfo = &exec->cmds[n].redirect[i][2];
 	}
 }

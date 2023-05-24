@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/24 14:07:14 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/24 21:14:04 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	exec_command2(t_exec *exec, int i, char *path)
 	}
 	execve(path, exec->cmds[i].args, env);
 	free(path);
-	free(env);
+	ft_free_array((void **)env);
 	process_exit(exec, exec->cmds[i].args[0], strerror(errno));
 }
 

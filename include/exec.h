@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:02:43 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/17 15:55:48 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/24 20:05:41 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ struct s_hdoc
 	int		cmd_n;
 	int		hd_n;
 	int		fd;
+	int		expend;
 	char	*path;
 	t_hdoc	*next;
 };

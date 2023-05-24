@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:38:14 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/20 01:16:50 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:04:28 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static char	*find_path(char *prog_name, char *paths)
 	size_t	i;
 	char	**split_paths;
 	char	*path;
+	char	*first_found;
 
+	first_found = NULL;
 	split_paths = ft_split(paths, ':');
 	if (!split_paths)
 		return (NULL);
@@ -27,12 +29,15 @@ static char	*find_path(char *prog_name, char *paths)
 		path = ft_strjoin(split_paths[i], prog_name);
 		if (!path)
 			return (ft_free_array((void **)split_paths), free(prog_name), NULL);
-		if (access(path, F_OK) == 0)
-			return (ft_free_array((void **)split_paths), free(prog_name), path);
+		if (access(path, F_OK) == 0 && access(path, X_OK) == 0)
+			return (ft_free_array((void **)split_paths), free(prog_name),
+				free(first_found), path);
+		else if (access(path, F_OK) == 0 && first_found == NULL)
+			first_found = ft_strdup(path);
 		free(path);
 		++i;
 	}
-	return (ft_free_array((void **)split_paths), free(prog_name), NULL);
+	return (ft_free_array((void **)split_paths), free(prog_name), first_found);
 }
 
 char	*get_path(char *prog_name)

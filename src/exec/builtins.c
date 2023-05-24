@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:32 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/20 01:16:33 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 20:02:46 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	exec_one_builtin(t_exec *exec)
 	struct s_std	std;
 
 	if (open_redirections_one_builtin(exec, 0) == EXIT_FAILURE)
-		return (EXIT_SUCCESS);
+		return (exit_status_to_env(1), EXIT_SUCCESS);
 	std.stdin = dup(0);
 	std.stdout = dup(1);
 	if (dup2(exec->cmds[0].fd_in, 0) == -1)
