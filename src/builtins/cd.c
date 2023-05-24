@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:52:49 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/13 22:06:57 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/24 14:38:03 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	ft_cd(char **args)
 	}
 	else
 		str = args[1];
-	if (chdir(str) != 0)
+	if (chdir(str) == -1)
 		return (error_message("cd", args[1], strerror(errno)), 1);
 	if (env_add_pwd() == EXIT_FAILURE)
-		return (perror2("pwd"), 1);
+		return (perror2("cd"), 1);
 	return (0);
 }

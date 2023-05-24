@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:36:09 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/24 03:40:16 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:37:35 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,4 @@ char	*ft_strchr(const char *s, int c)
 	if (s[i] == tmp)
 		return ((char *)s + i);
 	return (NULL);
-
 }
