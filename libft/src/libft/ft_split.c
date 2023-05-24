@@ -10,64 +10,86 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_libft.h"
 #include <stdlib.h>
 
-static size_t	get_size_array(char const *s, char c)
+static int	get_size(char const	*s, char c)
 {
-	size_t	size;
-	size_t	i;
+	int	count;
+	int	i;
 
-	size = 0;
-	i = 0;
-	while (s[i])
+	i = 1;
+	count = 0;
+	if (s[0] && s[0] != c)
+		++count;
+	while (s[i - 1] && s[i])
 	{
-		if (s[i] != c)
-		{
-			size++;
-			while (s[i] != c && s[i] != '\0')
-				i++;
-		}
-		else
-			i++;
+		if (s[i - 1] == c && s[i] != c)
+			++count;
+		++i;
 	}
-	return (size);
+	return (count);
 }
 
-static size_t	size_next_word(char const *s, char c)
+static char	**verif(char **result, int j)
 {
-	size_t	size;
+	int	i;
+	int	fail;
 
-	size = 0;
-	while (s[size] != '\0' && s[size] != c)
-		size++;
-	return (size);
+	i = 0;
+	fail = 0;
+	while (i < j)
+		if (!result[i++])
+			fail = 1;
+	if (fail == 0)
+		return (result);
+	i = 0;
+	while (i < j)
+		if (result[i++])
+			free(result[i - 1]);
+	free(result);
+	return (NULL);
+}
+
+static char	*malloc_and_cpy(char const *s, char c)
+{
+	char	*word;
+	int		len;
+
+	len = 0;
+	while (s[len] && s[len] != c)
+		++len;
+	word = (char *)malloc((len + 1) * sizeof (*word));
+	if (!word)
+		return (NULL);
+	len = 0;
+	while (s[len] && s[len] != c)
+	{
+		word[len] = s[len];
+		++len;
+	}
+	word[len] = '\0';
+	return (word);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**array;
-	size_t	i;
-	size_t	j;
+	char	**result;
+	int		i;
+	int		j;
 
-	if (s == NULL)
+	result = (char **)malloc((get_size(s, c) + 1) * sizeof (*result));
+	if (!result)
 		return (NULL);
-	array = (char **)malloc(sizeof(char *) * (get_size_array(s, c) + 1));
-	if (array == NULL)
-		return (NULL);
-	i = 0;
+	i = 1;
 	j = 0;
-	while (s[i])
+	if (s[0] && s[0] != c)
+		result[j++] = malloc_and_cpy(s, c);
+	while (s[i - 1] && s[i])
 	{
-		while (s[i] == c)
-			i++;
-		array[j] = ft_substr(s, i, size_next_word(&s[i], c));
-		if (array[j] == NULL)
-			return (NULL);
-		j++;
-		while (s[i] != '\0' && s[i] != c)
-			i++;
+		if (s[i - 1] == c && s[i] != c)
+			result[j++] = malloc_and_cpy(&s[i], c);
+		++i;
 	}
-	array[j] = NULL;
-	return (array);
+	result[j] = NULL;
+	return (verif(result, j));
 }
