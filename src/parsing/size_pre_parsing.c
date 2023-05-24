@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:28:16 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/24 03:13:48 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:22:31 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,18 @@ static void	copy_var(char *value, t_var *var)
 	}
 }
 
-static void	convert_variable(const char *line, t_var *var)
+static void	size_var(char *value, t_var *var, bool after_redir)
+{
+	if (value)
+	{
+		if (after_redir)
+			var->is += ft_strlen(value) + 2;
+		else
+			copy_var(value, var);
+	}
+}
+
+static void	convert_variable(const char *line, t_var *var, bool after_redir)
 {
 	char	*name;
 	char	*value;
@@ -79,8 +90,7 @@ static void	convert_variable(const char *line, t_var *var)
 	}
 	else
 		value = env_get_value(name);
-	if (value)
-		copy_var(value, var);
+	size_var(value, var, after_redir);
 	var->il += ft_strlen(name);
 	free(name);
 }
@@ -98,7 +108,7 @@ size_t	size_pre_parsing(const char *line, bool is_heredoc)
 			var.quote = 0;
 		if ((var.quote != '\'' || is_heredoc) && line[var.il] == '$'
 			&& !after_herdocs(line, var.il))
-			convert_variable(line, &var);
+			convert_variable(line, &var, after_redir(line, var.il));
 		else
 			var = (t_var){var.is + 1, var.il + 1, var.quote};
 	}

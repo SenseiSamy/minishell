@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:35:53 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/24 03:14:12 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:21:31 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "minishell.h"
 
 /*ambigus_syntax*/
+bool		has_quote(const char *line, const size_t start, const size_t end);
+bool		after_redir(const char *str, size_t end);
 bool		ambigus_syntax(const char *str);
 /*conv_cmd*/
 t_cmd		*convert_cmd(const char *line);

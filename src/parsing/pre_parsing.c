@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/24 03:15:19 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:23:52 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,6 @@ bool	after_herdocs(const char *line, size_t end)
 	return (false);
 }
 
-char	*get_name(const char *str, size_t i)
-{
-	char	*name;
-	size_t	j;
-
-	if (str[i] == '?')
-		return (ft_strdup("?"));
-	name = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-	if (!name)
-		return (NULL);
-	j = 0;
-	if (ft_isdigit(str[i]))
-		return (name[j++] = str[i++], name);
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-		name[j++] = str[i++];
-	return (name);
-}
-
 static void	copy_var(char *value, t_var *var)
 {
 	char	quote;
@@ -90,7 +72,19 @@ static void	copy_var(char *value, t_var *var)
 	}
 }
 
-static void	convert_variable(const char *line, t_var *var)
+static void	take_var(char *value, t_var *var, bool after_redir)
+{
+	if (value)
+	{
+		if (after_redir)
+			var->new_line[var->is++] = '"';
+		copy_var(value, var);
+		if (after_redir)
+			var->new_line[var->is++] = '"';
+	}
+}
+
+static void	convert_variable(const char *line, t_var *var, bool after_redir)
 {
 	char	*name;
 	char	*value;
@@ -111,8 +105,7 @@ static void	convert_variable(const char *line, t_var *var)
 	}
 	else
 		value = env_get_value(name);
-	if (value)
-		copy_var(value, var);
+	take_var(value, var, after_redir);
 	var->il += ft_strlen(name);
 	free(name);
 }
@@ -133,7 +126,7 @@ char	*pre_parsing(const char *line, bool is_heredoc)
 			var.quote = 0;
 		if ((var.quote != '\'' || is_heredoc) && line[var.il] == '$'
 			&& !after_herdocs(line, var.il))
-			convert_variable(line, &var);
+			convert_variable(line, &var, after_redir(line, var.il));
 		else
 			var.new_line[var.is++] = line[var.il++];
 	}

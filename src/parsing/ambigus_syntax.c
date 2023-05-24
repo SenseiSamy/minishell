@@ -6,11 +6,43 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 16:45:16 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/15 03:02:17 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:23:01 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+char	*get_name(const char *str, size_t i)
+{
+	char	*name;
+	size_t	j;
+
+	if (str[i] == '?')
+		return (ft_strdup("?"));
+	name = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	if (!name)
+		return (NULL);
+	j = 0;
+	if (ft_isdigit(str[i]))
+		return (name[j++] = str[i++], name);
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+		name[j++] = str[i++];
+	return (name);
+}
+
+bool	has_quote(const char *line, const size_t start, const size_t end)
+{
+	size_t	i;
+
+	i = start;
+	while (i < end)
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 static int	get_value(const char *str, size_t *i)
 {
@@ -34,7 +66,7 @@ static int	get_value(const char *str, size_t *i)
 	return (free(name), 1);
 }
 
-static bool	after_redir(const char *str, size_t end)
+bool	after_redir(const char *str, size_t end)
 {
 	size_t	i;
 	char	quote;
