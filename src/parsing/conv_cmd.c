@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:53:25 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/23 18:53:45 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:54:06 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,37 @@ static t_cmd	*alloc_cmd(const char *line)
 	return (cmd);
 }
 
+static bool	has_quote(const char *line, const size_t start, const size_t end)
+{
+	size_t	i;
+
+	i = start;
+	while (i < end)
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 static void	assign_redirect(const char *line, t_cmd *cmd, t_var *var)
 {
+	size_t	start;
 	char	*res;
 	char	*tmp;
 
 	res = ft_strdup(var->word);
 	free(var->word);
+	start = var->i_lin;
 	var->word = next_word(line, &var->i_lin);
+	if (has_quote(line, start, var->i_lin) && !ft_strcmp(res, "<<"))
+	{
+		free(res);
+		res = ft_strdup("<<<");
+		if (!res)
+			return ;
+	}
 	tmp = ft_strjoin(res, " ");
 	free(res);
 	res = ft_strjoin(tmp, var->word);
