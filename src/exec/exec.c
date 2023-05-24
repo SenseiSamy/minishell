@@ -6,7 +6,7 @@
 /*   By: snaji <snaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:50:47 by snaji             #+#    #+#             */
-/*   Updated: 2023/05/17 15:57:12 by snaji            ###   ########.fr       */
+/*   Updated: 2023/05/24 14:07:14 by snaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,8 @@ int	exec(t_cmd *cmds)
 	if (exit == EXIT_FAILURE)
 		return (free_exec(&exec), perror2("minishell"), EXIT_FAILURE);
 	else if (exit == 3)
-		return (exit_status_to_env(130), free_exec(&exec), EXIT_SUCCESS);
+		return (exit_status_to_env(130), delete_tmp_files(&exec),
+			free_exec(&exec), EXIT_SUCCESS);
 	if (exec_commands(&exec) == EXIT_FAILURE)
 		return (free_exec(&exec), perror2("minishell"), EXIT_FAILURE);
 	return (delete_tmp_files(&exec), free_exec(&exec), EXIT_SUCCESS);
