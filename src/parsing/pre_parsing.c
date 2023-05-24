@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/24 21:45:21 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:57:34 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,5 @@ char	*pre_parsing(const char *line, bool is_heredoc)
 		else
 			var.new_line[var.is++] = line[var.il++];
 	}
-	printf("new_line = '%s'\n", var.new_line);
 	return (free((char *)line), var.new_line);
 }
