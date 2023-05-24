@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:24:06 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/23 17:49:11 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 03:15:19 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_var
 	char	*new_line;
 }			t_var;
 
-static bool	after_herdocs(const char *line, size_t end)
+bool	after_herdocs(const char *line, size_t end)
 {
 	size_t	i;
 	char	quote;
@@ -121,7 +121,8 @@ char	*pre_parsing(const char *line, bool is_heredoc)
 {
 	t_var	var;
 
-	var = (t_var){0, 0, 0, ft_calloc(sizeof(char), size_pre_parsing(line) + 1)};
+	var = (t_var){0, 0, 0, ft_calloc(sizeof(char),
+			size_pre_parsing(line, is_heredoc) + 1)};
 	if (!var.new_line)
 		return (NULL);
 	while (line[var.il])

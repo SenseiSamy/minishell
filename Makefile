@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 15:45:28 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/23 18:55:26 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/24 03:09:07 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 	@$(eval CURRENT_SRC := $(shell echo $$(($(CURRENT_SRC) + 1))))
 	@$(eval PERCENTAGE := $(shell echo $$(($(CURRENT_SRC) * 100 / $(TOTAL_SRCS)))))
-	@echo [$(GREEN)$(PERCENTAGE)%$(DEFAULT): $(GREEN)$(CURRENT_SRC)$(DEFAULT)/$(GREEN)$(TOTAL_SRCS)$(DEFAULT)] [$(BOLD)$(UNDERLINE)$(BLUE)$<$(DEFAULT)]
+	@echo -e [$(GREEN)$(PERCENTAGE)%$(DEFAULT): $(GREEN)$(CURRENT_SRC)$(DEFAULT)/$(GREEN)$(TOTAL_SRCS)$(DEFAULT)] [$(BOLD)$(UNDERLINE)$(BLUE)$<$(DEFAULT)]
 
 clean:
 	@rm -rf ./bin

@@ -6,7 +6,7 @@
 /*   By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:28:16 by cfrancie          #+#    #+#             */
-/*   Updated: 2023/05/18 16:02:25 by cfrancie         ###   ########.fr       */
+/*   Updated: 2023/05/24 03:13:48 by cfrancie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	convert_variable(const char *line, t_var *var)
 	free(name);
 }
 
-size_t	size_pre_parsing(const char *line)
+size_t	size_pre_parsing(const char *line, bool is_heredoc)
 {
 	t_var	var;
 
@@ -96,7 +96,8 @@ size_t	size_pre_parsing(const char *line)
 			var.quote = line[var.il];
 		else if (var.quote && line[var.il] == var.quote)
 			var.quote = 0;
-		if (var.quote != '\'' && line[var.il] == '$')
+		if ((var.quote != '\'' || is_heredoc) && line[var.il] == '$'
+			&& !after_herdocs(line, var.il))
 			convert_variable(line, &var);
 		else
 			var = (t_var){var.is + 1, var.il + 1, var.quote};

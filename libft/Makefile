@@ -6,7 +6,7 @@
 #    By: cfrancie <cfrancie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:04:31 by cfrancie          #+#    #+#              #
-#    Updated: 2023/05/23 19:08:42 by cfrancie         ###   ########.fr        #
+#    Updated: 2023/05/24 03:09:19 by cfrancie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,22 +126,22 @@ all: $(NAME)
 $(NAME): $(OFILE)
 	@ar rc $(NAME) $(OFILE)
 	@ranlib $(NAME)
-	@echo "[$(GREEN)OK$(DEFAULT)] $(BOLD)$(UNDERLINE)$(BLUE)$(NAME)$(DEFAULT) is created!"
+	@echo -e "[$(GREEN)OK$(DEFAULT)] $(BOLD)$(UNDERLINE)$(BLUE)$(NAME)$(DEFAULT) is created!"
 
 $(ODIR)%.o: $(SDIR)%.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -I $(IDIR) -o $@ -c $<
 	@$(eval CURRENT_SRC := $(shell echo $$(($(CURRENT_SRC) + 1))))
 	@$(eval PERCENTAGE := $(shell echo $$(($(CURRENT_SRC) * 100 / $(TOTAL_SRCS)))))
-	@echo "[$(GREEN)$(PERCENTAGE)%$(DEFAULT): $(GREEN)$(CURRENT_SRC)$(DEFAULT)/$(GREEN)$(TOTAL_SRCS)$(DEFAULT)] [$(BOLD)$(UNDERLINE)$(BLUE)$<$(DEFAULT)]"
+	@echo -e "[$(GREEN)$(PERCENTAGE)%$(DEFAULT): $(GREEN)$(CURRENT_SRC)$(DEFAULT)/$(GREEN)$(TOTAL_SRCS)$(DEFAULT)] [$(BOLD)$(UNDERLINE)$(BLUE)$<$(DEFAULT)]"
 
 clean:
 	@rm -rf $(ODIR)
-	@echo "[$(RED)OK$(DEFAULT)] $(BOLD)$(UNDERLINE)$(BLUE)$(ODIR) is deleted!$(DEFAULT)"
+	@echo -e "[$(RED)OK$(DEFAULT)] $(BOLD)$(UNDERLINE)$(BLUE)$(ODIR) is deleted!$(DEFAULT)"
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "[$(RED)OK$(DEFAULT)] $(BOLD)$(UNDERLINE)$(BLUE)$(NAME) is deleted!$(DEFAULT)"
+	@echo -e "[$(RED)OK$(DEFAULT)] $(BOLD)$(UNDERLINE)$(BLUE)$(NAME) is deleted!$(DEFAULT)"
 
 re: fclean all
 
