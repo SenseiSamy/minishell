@@ -32,7 +32,7 @@ static char	*get_prompt(void)
 			return (NULL);
 	}
 	prompt = ft_strjoin("\001"COLOR1 BASH_BOLD"\002minishell\001"BASH_DEFAULT
-			"\002:\001"COLOR2"\002", pwd);
+			"\002:\001"COLOR2 BASH_BOLD"\002", pwd);
 	if (is_crash(prompt))
 		return (NULL);
 	tmp = ft_strjoin(prompt, "$ \001\e"BASH_DEFAULT"\002");

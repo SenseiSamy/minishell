@@ -33,16 +33,15 @@ int	ft_exit(t_exec *exec, char **args, struct s_std std)
 	int		status;
 
 	status = 0;
-	write(2, "exit\n", 5);
+	if (exec->n_cmd == 1)
+		write(2, "exit\n", 5);
 	if (args[1] == NULL)
 		status = ft_atoi(env_get_value("?"));
 	else
 	{
+		status = 2;
 		if (is_valid_arg(args[1]) == false)
-		{
 			error_message("exit", args[1], "numeric arguement required");
-			status = 2;
-		}
 		else if (args[1] != NULL && args[2] != NULL)
 			return (error_message("exit", "too many arguments", NULL), 1);
 		else

@@ -19,22 +19,22 @@ int			ft_putptr_fd(unsigned long long ptr, int fd);
 int			ft_putstr_fd(char *s, int fd);
 int			ft_putunbr_fd(unsigned int n, int fd);
 
-static void	process_conversion(char c, va_list args, int fd, int *ret)
+static void	process_conversion(char c, va_list *args, int fd, int *ret)
 {
 	if (c == 'c')
-		*ret += ft_putchar_fd(va_arg(args, int), fd);
+		*ret += ft_putchar_fd(va_arg(*args, int), fd);
 	else if (c == 's')
-		*ret += ft_putstr_fd(va_arg(args, char *), fd);
+		*ret += ft_putstr_fd(va_arg(*args, char *), fd);
 	else if (c == 'p')
-		*ret += ft_putptr_fd(va_arg(args, unsigned long long), fd);
+		*ret += ft_putptr_fd(va_arg(*args, unsigned long long), fd);
 	else if (c == 'd' || c == 'i')
-		*ret += ft_putnbr_fd(va_arg(args, int), fd);
+		*ret += ft_putnbr_fd(va_arg(*args, int), fd);
 	else if (c == 'u')
-		*ret += ft_putunbr_fd(va_arg(args, unsigned int), fd);
+		*ret += ft_putunbr_fd(va_arg(*args, unsigned int), fd);
 	else if (c == 'x')
-		*ret += ft_puthex_fd(va_arg(args, unsigned int), fd, 0);
+		*ret += ft_puthex_fd(va_arg(*args, unsigned int), fd, 0);
 	else if (c == 'X')
-		*ret += ft_puthex_fd(va_arg(args, unsigned int), fd, 1);
+		*ret += ft_puthex_fd(va_arg(*args, unsigned int), fd, 1);
 	else if (c == '%')
 		*ret += ft_putchar_fd('%', fd);
 	else
@@ -55,7 +55,7 @@ int	ft_dprintf(int fd, const char *str, ...)
 		if (c == '%')
 		{
 			c = *str++;
-			process_conversion(c, args, fd, &ret);
+			process_conversion(c, &args, fd, &ret);
 		}
 		else
 		{
